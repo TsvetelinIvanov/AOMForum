@@ -7,4 +7,24 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="CommandLineParser" Version="2.9.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="6.0.10" />
+    <PackageReference Include="Microsoft.Extensions.Configuration" Version="6.0.1" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="6.0.1" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="6.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="6.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\AOMForum.Common\AOMForum.Common.csproj" />
+    <ProjectReference Include="..\..\Data\AOMForum.Data.Common\AOMForum.Data.Common.csproj" />
+    <ProjectReference Include="..\..\Data\AOMForum.Data.Models\AOMForum.Data.Models.csproj" />
+    <ProjectReference Include="..\..\Data\AOMForum.Data\AOMForum.Data.csproj" />
+    <ProjectReference Include="..\..\Services\AOMForum.Services.Data\AOMForum.Services.Data.csproj" />
+    <ProjectReference Include="..\..\Services\AOMForum.Services.Mapping\AOMForum.Services.Mapping.csproj" />
+    <ProjectReference Include="..\..\Services\AOMForum.Services.Messaging\AOMForum.Services.Messaging.csproj" />
+    <ProjectReference Include="..\..\Services\AOMForum.Services\AOMForum.Services.csproj" />
+  </ItemGroup>
+
 </Project>
