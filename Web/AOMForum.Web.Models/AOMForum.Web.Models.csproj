@@ -6,4 +6,10 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\AOMForum.Common\AOMForum.Common.csproj" />
+    <ProjectReference Include="..\..\Data\AOMForum.Data.Models\AOMForum.Data.Models.csproj" />
+    <ProjectReference Include="..\..\Services\AOMForum.Services.Mapping\AOMForum.Services.Mapping.csproj" />
+  </ItemGroup>
+
 </Project>

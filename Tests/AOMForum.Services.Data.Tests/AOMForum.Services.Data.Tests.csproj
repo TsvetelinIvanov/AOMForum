@@ -21,4 +21,10 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\Data\AOMForum.Data\AOMForum.Data.csproj" />
+    <ProjectReference Include="..\..\Services\AOMForum.Services.Data\AOMForum.Services.Data.csproj" />
+    <ProjectReference Include="..\..\Web\AOMForum.Web.Models\AOMForum.Web.Models.csproj" />
+  </ItemGroup>
+
 </Project>

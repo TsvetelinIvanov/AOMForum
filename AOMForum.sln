@@ -37,6 +37,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AOMForum.Web.Infrastructure
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AOMForum.Web.Models", "Web\AOMForum.Web.Models\AOMForum.Web.Models.csproj", "{47D12931-E0F6-4BD8-A523-20978680139B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AOMForum.Web.Tests", "AOMForum.Web.Tests\AOMForum.Web.Tests.csproj", "{16269225-B750-4C49-AF18-687DBD8C0978}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -95,6 +97,10 @@ Global
 		{47D12931-E0F6-4BD8-A523-20978680139B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{47D12931-E0F6-4BD8-A523-20978680139B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{47D12931-E0F6-4BD8-A523-20978680139B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{16269225-B750-4C49-AF18-687DBD8C0978}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{16269225-B750-4C49-AF18-687DBD8C0978}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{16269225-B750-4C49-AF18-687DBD8C0978}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{16269225-B750-4C49-AF18-687DBD8C0978}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -112,6 +118,7 @@ Global
 		{FC10474C-1DFD-4995-B76F-DE70FBD626F3} = {B85ED4F2-BB46-4ECD-ACE2-DA717BA6294C}
 		{29327056-D70A-4A61-ACB3-D5EB6EB2C0CB} = {B85ED4F2-BB46-4ECD-ACE2-DA717BA6294C}
 		{47D12931-E0F6-4BD8-A523-20978680139B} = {B85ED4F2-BB46-4ECD-ACE2-DA717BA6294C}
+		{16269225-B750-4C49-AF18-687DBD8C0978} = {721116F5-E9E7-4519-B21D-DE0B2C75EA61}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {64A2478C-6970-4A7F-9D29-74FDC236C22E}

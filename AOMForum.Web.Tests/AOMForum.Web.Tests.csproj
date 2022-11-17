@@ -6,8 +6,4 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\..\AOMForum.Common\AOMForum.Common.csproj" />
-  </ItemGroup>
-
 </Project>

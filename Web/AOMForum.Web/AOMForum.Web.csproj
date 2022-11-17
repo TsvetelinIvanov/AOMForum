@@ -15,4 +15,16 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.10" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\AOMForum.Common\AOMForum.Common.csproj" />
+    <ProjectReference Include="..\..\Data\AOMForum.Data.Models\AOMForum.Data.Models.csproj" />
+    <ProjectReference Include="..\..\Data\AOMForum.Data\AOMForum.Data.csproj" />
+    <ProjectReference Include="..\..\Services\AOMForum.Services.Data\AOMForum.Services.Data.csproj" />
+    <ProjectReference Include="..\..\Services\AOMForum.Services.Mapping\AOMForum.Services.Mapping.csproj" />
+    <ProjectReference Include="..\..\Services\AOMForum.Services.Messaging\AOMForum.Services.Messaging.csproj" />
+    <ProjectReference Include="..\..\Services\AOMForum.Services\AOMForum.Services.csproj" />
+    <ProjectReference Include="..\AOMForum.Web.Infrastructure\AOMForum.Web.Infrastructure.csproj" />
+    <ProjectReference Include="..\AOMForum.Web.Models\AOMForum.Web.Models.csproj" />
+  </ItemGroup>
+
 </Project>
