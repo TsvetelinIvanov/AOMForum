@@ -18,7 +18,7 @@ namespace AOMForum.Web.Models.Settings
         {
             configuration.CreateMap<Setting, SettingViewModel>().ForMember(
                 m => m.NameAndValue,
-                opt => opt.MapFrom(x => x.Name + " = " + x.Value));
+                opt => opt.MapFrom(s => s.Name + " = " + s.Content));
         }
     }
 }

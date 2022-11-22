@@ -7,8 +7,10 @@ namespace AOMForum.Data.Common.Models
         [Key]
         public TKey Id { get; set; }
 
+        [DataType(DataType.Date)]
         public DateTime CreatedOn { get; set; }
 
+        [DataType(DataType.Date)]
         public DateTime? ModifiedOn { get; set; }
     }
 }

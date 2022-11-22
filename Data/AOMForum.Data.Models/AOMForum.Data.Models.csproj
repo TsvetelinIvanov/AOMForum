@@ -11,6 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\AOMForum.Common\AOMForum.Common.csproj" />
     <ProjectReference Include="..\AOMForum.Data.Common\AOMForum.Data.Common.csproj" />
   </ItemGroup>
 

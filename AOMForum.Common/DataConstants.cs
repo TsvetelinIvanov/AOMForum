@@ -16,15 +16,27 @@
             public const int PhoneNumberMinLength = 4;
             public const int PhoneNumberMaxLength = 40;
 
+            public const int FirstNameMinLength = 1;
+            public const int FirstNameMaxLength = 30;
+            public const int SecondNameMinLength = 1;
+            public const int SecondNameMaxLength = 30;
+            public const int LastNameMinLength = 1;
+            public const int LastNameMaxLength = 30;
+
+            public const int BiographyMinLength = 30;
             public const int BiographyMaxLength = 600;
-            public const int UserMaxAge = 130;
-            public const int UserMinAge = 18;
+
+            public const int AgeMinValue = 18;
+            public const int AgeMaxValue = 130;
         }
 
         public static class Category
         {
             public const int NameMinLength = 3;
             public const int NameMaxLength = 60;
+
+            public const int DescriptionMinLength = 6;
+            public const int DescriptionMaxLength = 1000;
         }
 
         public static class Tag
