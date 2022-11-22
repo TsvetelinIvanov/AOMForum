@@ -1,12 +1,13 @@
 ﻿namespace AOMForum.Common
 {
     public static class DataConstants
-    {
-        public const int IdStringMaxLength = 40;
+    {        
         public const int ShortContentMaxLength = 60;
 
         public static class ApplicationUser
         {
+            public const int MaxFailedAccessAttemptsCount = 6;
+
             public const int UserNameMinLength = 3;
             public const int UserNameMaxLength = 30;
             public const int EmailMinLength = 8;

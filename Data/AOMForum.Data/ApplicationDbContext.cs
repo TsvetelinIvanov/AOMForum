@@ -16,8 +16,30 @@ namespace AOMForum.Data
         {
         }
 
-        public DbSet<Setting> Settings { get; set; }
+        public DbSet<Category> Categories { get; set; }
 
+        public DbSet<Tag> Tags { get; set; }
+
+        public DbSet<PostTag> PostsTags { get; set; }
+
+        public DbSet<Post> Posts { get; set; }
+
+        public DbSet<PostReport> PostReports { get; set; }
+
+        public DbSet<PostVote> PostVotes { get; set; }
+                
+        public DbSet<Comment> Comments { get; set; }
+
+        public DbSet<CommentReport> CommentReports { get; set; }
+
+        public DbSet<CommentVote> CommentVotes { get; set; }
+
+        public DbSet<Message> Messages { get; set; }
+               
+        public DbSet<Relationship> Relationships { get; set; }
+
+        public DbSet<Setting> Settings { get; set; }
+        
         public override int SaveChanges() => this.SaveChanges(true);
 
         public override int SaveChanges(bool acceptAllChangesOnSuccess)
@@ -48,8 +70,7 @@ namespace AOMForum.Data
             List<IMutableEntityType> entityTypes = builder.Model.GetEntityTypes().ToList();
 
             // Set global query filter for not deleted entities only
-            IEnumerable<IMutableEntityType> deletableEntityTypes = entityTypes
-                .Where(et => et.ClrType != null && typeof(IDeletableEntity).IsAssignableFrom(et.ClrType));
+            IEnumerable<IMutableEntityType> deletableEntityTypes = entityTypes.Where(et => et.ClrType != null && typeof(IDeletableEntity).IsAssignableFrom(et.ClrType));
             foreach (IMutableEntityType deletableEntityType in deletableEntityTypes)
             {
                 MethodInfo method = SetIsDeletedQueryFilterMethod.MakeGenericMethod(deletableEntityType.ClrType);

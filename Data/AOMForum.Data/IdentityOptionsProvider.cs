@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using static AOMForum.Common.DataConstants.ApplicationUser;
 
 namespace AOMForum.Data
 {
@@ -10,7 +11,9 @@ namespace AOMForum.Data
             options.Password.RequireLowercase = false;
             options.Password.RequireUppercase = false;
             options.Password.RequireNonAlphanumeric = false;
-            options.Password.RequiredLength = 6;
+            options.Password.RequiredLength = PasswordMinLength;
+            options.Lockout.AllowedForNewUsers = true;
+            options.Lockout.MaxFailedAccessAttempts = MaxFailedAccessAttemptsCount;
         }
     }
 }
