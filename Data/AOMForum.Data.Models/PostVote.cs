@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace AOMForum.Data.Models
 {
-    public class PostVote : BaseModel<int>
+    public class PostVote : BaseDeletableModel<int>
     {
         public VoteType Type { get; set; }
 

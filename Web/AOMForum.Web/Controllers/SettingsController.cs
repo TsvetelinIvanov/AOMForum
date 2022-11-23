@@ -29,7 +29,7 @@ namespace AOMForum.Web.Controllers
         public async Task<IActionResult> InsertSetting()
         {
             Random random = new Random();
-            Setting setting = new Setting { Name = $"Name_{random.Next()}", Value = $"Value_{random.Next()}" };
+            Setting setting = new Setting { Name = $"Name_{random.Next()}", Content = $"Value_{random.Next()}" };
 
             await this.settingsRepository.AddAsync(setting);
             await this.settingsRepository.SaveChangesAsync();

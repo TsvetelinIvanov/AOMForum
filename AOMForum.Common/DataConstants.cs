@@ -52,7 +52,7 @@
             public const int TitleMaxLength = 60;
             
             public const int ContentMinLength = 10;
-            public const int ContentMaxLength = 10000;
+            public const int ContentMaxLength = 3000;
         }
 
         public static class PostReport
@@ -64,7 +64,7 @@
         public static class Comment
         {
             public const int ContentMinLength = 3;
-            public const int ContentMaxLength = 10000;
+            public const int ContentMaxLength = 3000;
         }
 
         public static class CommentReport
@@ -85,7 +85,7 @@
             public const int NameMaxLength = 60;
 
             public const int ContentMinLength = 1;
-            public const int ContentMaxLength = 10000;
+            public const int ContentMaxLength = 3000;
         }
     }
 }

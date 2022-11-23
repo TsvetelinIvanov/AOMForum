@@ -67,6 +67,20 @@ namespace AOMForum.Data
 
             EntityIndexesConfiguration.Configure(builder);
 
+            builder.Entity<Relationship>()
+                .HasOne(r => r.Leader)
+                .WithMany(au => au.Relationships)
+                .HasForeignKey(r => r.LeaderId)
+                .IsRequired()
+                .OnDelete(DeleteBehavior.Restrict);
+
+            builder.Entity<Relationship>()
+                .HasOne(r => r.Follower)
+                .WithMany()
+                .HasForeignKey(r => r.FollowerId)
+                .IsRequired()
+                .OnDelete(DeleteBehavior.Restrict);
+
             List<IMutableEntityType> entityTypes = builder.Model.GetEntityTypes().ToList();
 
             // Set global query filter for not deleted entities only
