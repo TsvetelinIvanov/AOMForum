@@ -4,7 +4,7 @@
     {
         public const string RequiredErrorMessage = "Моля въведете \"{0}\"!";
 
-        public const string StringLengthErrorMessage = "\"{0}\" трябва да бъде с дължина между \"{2}\" и \"{1}\" знака!";
+        public const string StringLengthErrorMessage = "Въведеният текст в полето \"{0}\" трябва да бъде с дължина между \"{2}\" и \"{1}\" знака!";
 
         public const string ConfirmPasswordErrorMessage = "Паролата и потвърждението и се различават!";
         public const string EmailErrorMessage = "Адресът на електронната поща трябва да бъде във валиден формат!";

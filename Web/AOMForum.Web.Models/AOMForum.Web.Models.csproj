@@ -12,4 +12,8 @@
     <ProjectReference Include="..\..\Services\AOMForum.Services.Mapping\AOMForum.Services.Mapping.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="HtmlSanitizer" Version="8.0.601" />
+  </ItemGroup>
+
 </Project>

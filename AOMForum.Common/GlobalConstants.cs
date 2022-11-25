@@ -38,6 +38,8 @@
 
         public const string NotAllowedFileExtensionExceptionMessage = "This picture extension is not allowed!";
 
+        public const string IFrameTag = "iframe";
+
         public static readonly string[] AllowedPictureFileExtensions = { ".jpg", ".jpeg", ".png", ".gif" };
     }
 }

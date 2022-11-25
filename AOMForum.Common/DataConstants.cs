@@ -1,9 +1,7 @@
 ﻿namespace AOMForum.Common
 {
     public static class DataConstants
-    {        
-        public const int ShortContentMaxLength = 60;
-
+    {
         public static class ApplicationUser
         {
             public const int MaxFailedAccessAttemptsCount = 6;
@@ -53,12 +51,16 @@
             
             public const int ContentMinLength = 10;
             public const int ContentMaxLength = 3000;
+
+            public const int ShortContentMaxLength = 100;
         }
 
         public static class PostReport
         {
             public const int ContentMinLength = 3;
             public const int ContentMaxLength = 1000;
+
+            public const int ShortContentMaxLength = 100;
         }
 
         public static class Comment
@@ -71,6 +73,8 @@
         {
             public const int ContentMinLength = 3;
             public const int ContentMaxLength = 1000;
+
+            public const int ShortContentMaxLength = 100;
         }        
 
         public static class Message
