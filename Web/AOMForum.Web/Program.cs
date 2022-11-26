@@ -52,7 +52,17 @@ builder.Services.AddScoped<IDbQueryRunner, DbQueryRunner>();
 
 // Application services
 builder.Services.AddTransient<IEmailSender, NullMessageSender>();
-builder.Services.AddTransient<ISettingsService, SettingsService>(); 
+builder.Services.AddTransient<ICategoriesService, CategoriesService>();
+builder.Services.AddTransient<ITagsService, TagsService>();
+builder.Services.AddTransient<IPostsService, PostsService>();
+builder.Services.AddTransient<IPostReportsService, PostReportsService>();
+builder.Services.AddTransient<IPostVotesService, PostVotesService>();
+builder.Services.AddTransient<ICommentsService, CommentsService>();
+builder.Services.AddTransient<ICommentReportsService, CommentReportsService>();
+builder.Services.AddTransient<ICommentVotesService, CommentVotesService>();
+builder.Services.AddTransient<IRelationshipsService, RelationshipsService>();
+builder.Services.AddTransient<IMessagesService, MessagesService>();
+builder.Services.AddTransient<ISettingsService, SettingsService>();
 
 WebApplication app = builder.Build();
 
