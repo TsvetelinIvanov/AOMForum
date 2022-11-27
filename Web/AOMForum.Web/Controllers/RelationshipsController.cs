@@ -10,7 +10,7 @@ using AOMForum.Data.Models;
 
 namespace AOMForum.Web.Controllers
 {
-    public class RelationshipsController : Controller
+    public class RelationshipsController : BaseController
     {
         private readonly ApplicationDbContext _context;
 
@@ -26,7 +26,7 @@ namespace AOMForum.Web.Controllers
             return View(await applicationDbContext.ToListAsync());
         }
 
-        // GET: Relationships/Details/5
+        // GET: Relationships/Details/1
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null || _context.Relationships == null)
@@ -55,8 +55,6 @@ namespace AOMForum.Web.Controllers
         }
 
         // POST: Relationships/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("LeaderId,FollowerId,IsDeleted,DeletedOn,Id,CreatedOn,ModifiedOn")] Relationship relationship)
@@ -72,7 +70,7 @@ namespace AOMForum.Web.Controllers
             return View(relationship);
         }
 
-        // GET: Relationships/Edit/5
+        // GET: Relationships/Edit/1
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null || _context.Relationships == null)
@@ -90,9 +88,7 @@ namespace AOMForum.Web.Controllers
             return View(relationship);
         }
 
-        // POST: Relationships/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        // POST: Relationships/Edit/1
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("LeaderId,FollowerId,IsDeleted,DeletedOn,Id,CreatedOn,ModifiedOn")] Relationship relationship)
@@ -127,7 +123,7 @@ namespace AOMForum.Web.Controllers
             return View(relationship);
         }
 
-        // GET: Relationships/Delete/5
+        // GET: Relationships/Delete/1
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null || _context.Relationships == null)
@@ -147,7 +143,7 @@ namespace AOMForum.Web.Controllers
             return View(relationship);
         }
 
-        // POST: Relationships/Delete/5
+        // POST: Relationships/Delete/1
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)

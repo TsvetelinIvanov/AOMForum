@@ -3,7 +3,7 @@ using static AOMForum.Common.DisplayNames.ApplicationUser;
 
 namespace AOMForum.Web.Models.Users
 {
-    public class UserDetailsViewModel
+    public class UserRelationshipDetailsViewModel
     {
         public string? Id { get; init; }
 
@@ -23,7 +23,7 @@ namespace AOMForum.Web.Models.Users
         [Display(Name = DisplayFollowingsCount)]
         public int FollowingsCount { get; init; }
 
-        public IEnumerable<UserCoilViewModel> Threads { get; set; } = new HashSet<UserCoilViewModel>();
+        public IEnumerable<UserRelationshipViewModel> Threads { get; set; } = new HashSet<UserRelationshipViewModel>();
 
         public IEnumerable<UserCommentViewModel> Replies { get; set; } = new HashSet<UserCommentViewModel>();
 

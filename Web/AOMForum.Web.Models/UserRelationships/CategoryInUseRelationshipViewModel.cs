@@ -3,7 +3,7 @@ using static AOMForum.Common.DisplayNames.Category;
 
 namespace AOMForum.Web.Models.Users
 {
-    public class CategoryInUserCoilViewModel
+    public class CategoryInUseRelationshipViewModel
     {
         public int Id { get; init; }
 

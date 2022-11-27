@@ -3,7 +3,7 @@ using static AOMForum.Common.DisplayNames.Post;
 
 namespace AOMForum.Web.Models.Users
 {
-    public class UserCoilViewModel
+    public class UserRelationshipViewModel
     {
         public int Id { get; init; }
 
@@ -20,8 +20,8 @@ namespace AOMForum.Web.Models.Users
 
         public string? Activity { get; init; }        
 
-        public CategoryInUserCoilViewModel? Category { get; set; }
+        public CategoryInUseRelationshipViewModel? Category { get; set; }
 
-        public IEnumerable<TagInUserCoilViewModel> Tags { get; set; } = new HashSet<TagInUserCoilViewModel>();
+        public IEnumerable<TagInUserRelationshipViewModel> Tags { get; set; } = new HashSet<TagInUserRelationshipViewModel>();
     }
 }
