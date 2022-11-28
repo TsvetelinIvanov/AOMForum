@@ -15,14 +15,11 @@ namespace AOMForum.Web.Models.Categories
         [Display(Name = DisplayDescription)]
         public string? Description { get; init; }
 
-        public string? ImageURL { get; init; }
+        [Display(Name = DisplayImageUrl)]
+        public string? ImageUrl { get; init; }
 
         [Display(Name = DisplayPostsCount)]
         public int PostsCount { get; init; }
-
-        //public int CurrentPage { get; init; }
-
-        //public int PagesCount { get; init; }
 
         public IEnumerable<PostInCategoryViewModel> Posts { get; set; } = new HashSet<PostInCategoryViewModel>();
     }

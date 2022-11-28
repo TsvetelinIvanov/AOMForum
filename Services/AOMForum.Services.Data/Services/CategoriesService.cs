@@ -15,23 +15,71 @@ namespace AOMForum.Services.Data.Services
             this.categoriesRepository = categoriesRepository;
         }
 
-        public async Task<bool> IsExistingByIdAsync(int id) => await this.categoriesRepository.All().AnyAsync(c => c.Id == id);
+        public async Task<CategoriesAllViewModel> GetAllViewModelAsync(string? search = null)
+        {
+            IQueryable<Category> categories = this.categoriesRepository.All().AsNoTracking();
+            if (!string.IsNullOrWhiteSpace(search))
+            {
+                categories = categories.Where(c => c.Name != null && c.Name.Contains(search));
+            }
 
-        public async Task<bool> IsExistingByNameAsync(string? name) => await this.categoriesRepository.All().AnyAsync(c => c.Name == name);
+            List<CategoryListViewModel> categoryModels = await categories.OrderByDescending(c => c.CreatedOn).Select(c => new CategoryListViewModel()
+            {
+                Id = c.Id,
+                Name = c.Name,
+                Description = c.Description,
+                ImageUrl = c.ImageUrl,
+                PostsCount = c.Posts.Count,
+                Posts = c.Posts.Select(p => new PostInCategoryViewModel()
+                {
+                    Id = p.Id,
+                    Title = p.Title,
+                    Content = p.Content,
+                    CommentsCount = p.Comments.Count
+                })
+            }).ToListAsync();
 
-        public async Task<int> CreateAsync(string? name, string? description, string? imageURL)
+            CategoriesAllViewModel viewModel = new CategoriesAllViewModel
+            {
+                Search = search,
+                Categories = categoryModels
+            };
+
+            return viewModel;
+        }
+
+        public async Task<int> CreateAsync(string? name, string? description, string? imageUrl)
         {
             Category category = new Category
             {
                 Name = name,
                 Description = description,
-                ImageUrl= imageURL
+                ImageUrl = imageUrl
             };
 
             await this.categoriesRepository.AddAsync(category);
             await this.categoriesRepository.SaveChangesAsync();
 
             return category.Id;
+        }
+
+        public async Task<CategoryEditModel?> GetEditModelAsync(int id)
+        {
+            Category? category = await this.categoriesRepository.All().AsNoTracking().Where(c => c.Id == id).FirstOrDefaultAsync();
+            if (category == null)
+            {
+                return null;
+            }
+
+            CategoryEditModel? model = new CategoryEditModel()
+            {
+                Id = category.Id,
+                Name = category.Name,
+                Description = category.Description,
+                ImageUrl = category.ImageUrl
+            };
+
+            return model;
         }
 
         public async Task<bool> EditAsync(int id, string? name, string? description, string? imageURL)
@@ -45,12 +93,31 @@ namespace AOMForum.Services.Data.Services
             category.Name = name;
             category.Description = description;
             category.ImageUrl = imageURL;
-            
+
             await this.categoriesRepository.SaveChangesAsync();
 
             return category.ModifiedOn != null;
         }
 
+        public async Task<CategoryDeleteModel?> GetDeleteModelAsync(int id)
+        {
+            Category? category = await this.categoriesRepository.All().AsNoTracking().Where(c => c.Id == id).FirstOrDefaultAsync();
+            if (category == null)
+            {
+                return null;
+            }
+
+            CategoryDeleteModel? model = new CategoryDeleteModel()
+            {
+                Id = category.Id,
+                Name = category.Name,
+                Description = category.Description,
+                ImageUrl = category.ImageUrl,
+                PostsCount = category.Posts.Count
+            };
+
+            return model;
+        }
         public async Task<bool> DeleteAsync(int id)
         {
             Category? category = await this.categoriesRepository.All().Where(c => c.Id == id).FirstOrDefaultAsync();
@@ -63,87 +130,6 @@ namespace AOMForum.Services.Data.Services
             await this.categoriesRepository.SaveChangesAsync();
 
             return category.IsDeleted;
-        }
-
-        public async Task<CategoryListViewModel?> GetByIdAsync(int id)
-        {
-            Category? category = await this.categoriesRepository.All().AsNoTracking().Where(c => c.Id == id).FirstOrDefaultAsync();
-            if (category == null)
-            {
-                return null;
-            }
-
-            CategoryListViewModel? model = new CategoryListViewModel()
-            {
-                Id = category.Id,
-                Name = category.Name,
-                Description = category.Description,
-                ImageURL = category.ImageUrl,
-                PostsCount = category.Posts.Count,
-                Posts = category.Posts.Select(p => new PostInCategoryViewModel()
-                {
-                    Id = p.Id,
-                    Title = p.Title,
-                    Content = p.Content,
-                    CommentsCount= p.Comments.Count                    
-                })
-            };
-
-            return model;
-        }
-
-        public async Task<CategoryListViewModel?> GetByNameAsync(string? name)
-        {
-            Category? category = await this.categoriesRepository.All().AsNoTracking().Where(c => c.Name == name).FirstOrDefaultAsync();
-            if (category == null)
-            {
-                return null;
-            }
-
-            CategoryListViewModel? model = new CategoryListViewModel()
-            {
-                Id = category.Id,
-                Name = category.Name,
-                Description = category.Description,
-                ImageURL = category.ImageUrl,
-                PostsCount = category.Posts.Count,
-                Posts = category.Posts.Select(p => new PostInCategoryViewModel()
-                {
-                    Id = p.Id,
-                    Title = p.Title,
-                    Content = p.Content,
-                    CommentsCount = p.Comments.Count
-                })
-            };
-
-            return model;
-        }
-
-        public async Task<IEnumerable<CategoryListViewModel?>> GetAllAsync(string? search = null)
-        {
-            IQueryable<Category> categories = this.categoriesRepository.All().AsNoTracking();
-            if (!string.IsNullOrWhiteSpace(search))
-            {
-                categories = categories.Where(c => c.Name != null && c.Name.Contains(search));
-            }
-
-            List<CategoryListViewModel> categoryModels = await categories.OrderByDescending(c => c.CreatedOn).Select(c => new CategoryListViewModel()
-            {
-                Id = c.Id,
-                Name = c.Name,
-                Description = c.Description,
-                ImageURL = c.ImageUrl,
-                PostsCount = c.Posts.Count,
-                Posts = c.Posts.Select(p => new PostInCategoryViewModel()
-                {
-                    Id = p.Id,
-                    Title = p.Title,
-                    Content = p.Content,
-                    CommentsCount = p.Comments.Count
-                })
-            }).ToListAsync();
-
-            return categoryModels;
         }
     }
 }

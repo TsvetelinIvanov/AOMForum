@@ -29,7 +29,7 @@ namespace AOMForum.Web.Models.CommentReports
             {
                 string sanitizedContent = this.sanitizer.Sanitize(this.Content ?? string.Empty);
 
-                return this.Content?.Length > ShortContentMaxLength ? sanitizedContent.Substring(0, ShortContentMaxLength) + "..." : sanitizedContent;
+                return this.Content?.Length > ShortContentMaxLength ? sanitizedContent[..ShortContentMaxLength] + "..." : sanitizedContent;
             }
         }
 

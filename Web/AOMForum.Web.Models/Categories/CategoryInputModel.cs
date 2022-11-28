@@ -17,6 +17,7 @@ namespace AOMForum.Web.Models.Categories
         [StringLength(DescriptionMaxLength, MinimumLength = DescriptionMinLength, ErrorMessage = StringLengthErrorMessage)]
         public string? Description { get; init; }
 
-        public string? ImageURL { get; init; }
+        [Display(Name = DisplayImageUrl)]
+        public string? ImageUrl { get; init; }
     }
 }

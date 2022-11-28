@@ -33,10 +33,12 @@
 
         public static class Category
         {
-            
+            public const string DisplaySearch = "Търсене";
+
             public const string DisplayName = "Име";
             public const string DisplayDescription = "Описание";
             public const string DisplayPostsCount = "Брой на постовете";
+            public const string DisplayImageUrl = "Образ";
         }
 
         public static class Tag

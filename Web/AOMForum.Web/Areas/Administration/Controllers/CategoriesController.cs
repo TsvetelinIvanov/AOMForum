@@ -7,127 +7,91 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using AOMForum.Data;
 using AOMForum.Data.Models;
+using AOMForum.Services.Data.Interfaces;
+using AOMForum.Web.Models.Categories;
+using static Humanizer.On;
 
 namespace AOMForum.Web.Areas.Administration.Controllers
 {
     public class CategoriesController : AdministrationController
     {
-        private readonly ApplicationDbContext _context;
+        private readonly ICategoriesService categoriesService;
 
-        public CategoriesController(ApplicationDbContext context)
+        public CategoriesController(ICategoriesService categoriesService)
         {
-            _context = context;
+            this.categoriesService = categoriesService;
         }
 
         // GET: Administration/Categories
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string? search = null)
         {
-              return View(await _context.Categories.ToListAsync());
-        }
+            CategoriesAllViewModel viewModel = await this.categoriesService.GetAllViewModelAsync(search);
 
-        // GET: Administration/Categories/Details/1
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null || _context.Categories == null)
-            {
-                return NotFound();
-            }
-
-            var category = await _context.Categories
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (category == null)
-            {
-                return NotFound();
-            }
-
-            return View(category);
+            return this.View(viewModel);
         }
 
         // GET: Administration/Categories/Create
         public IActionResult Create()
         {
-            return View();
+            return this.View();
         }
 
         // POST: Administration/Categories/Create 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Name,Description,ImageUrl,IsDeleted,DeletedOn,Id,CreatedOn,ModifiedOn")] Category category)
+        public async Task<IActionResult> Create(CategoryInputModel inputModel)
         {
-            if (ModelState.IsValid)
+            if (!this.ModelState.IsValid)
             {
-                _context.Add(category);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return this.View(inputModel);
             }
-            return View(category);
+
+            int categoyId = await this.categoriesService.CreateAsync(inputModel.Name, inputModel.Description, inputModel.ImageUrl);
+
+            return this.RedirectToAction("Details", "Categories", new { id = categoyId, area = "" });
         }
 
         // GET: Administration/Categories/Edit/1
-        public async Task<IActionResult> Edit(int? id)
+        public async Task<IActionResult> Edit(int id)
         {
-            if (id == null || _context.Categories == null)
+            CategoryEditModel? model = await this.categoriesService.GetEditModelAsync(id);
+            if (model == null)
             {
-                return NotFound();
+                return this.NotFound();
             }
 
-            var category = await _context.Categories.FindAsync(id);
-            if (category == null)
-            {
-                return NotFound();
-            }
-            return View(category);
+            return this.View(model);
         }
 
         // POST: Administration/Categories/Edit/1
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Name,Description,ImageUrl,IsDeleted,DeletedOn,Id,CreatedOn,ModifiedOn")] Category category)
+        public async Task<IActionResult> Edit(CategoryEditModel model)
         {
-            if (id != category.Id)
+            if (!this.ModelState.IsValid)
             {
-                return NotFound();
+                return this.View(model);
             }
 
-            if (ModelState.IsValid)
+            bool isEdited = await this.categoriesService.EditAsync(model.Id, model.Name, model.Description, model.ImageUrl);
+            if (!isEdited)
             {
-                try
-                {
-                    _context.Update(category);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!CategoryExists(category.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
+                return this.BadRequest();
             }
-            return View(category);
+
+            return this.RedirectToAction("Details", "Categories", new { id = model.Id, area = "" });
         }
 
         // GET: Administration/Categories/Delete/1
-        public async Task<IActionResult> Delete(int? id)
+        public async Task<IActionResult> Delete(int id)
         {
-            if (id == null || _context.Categories == null)
+            CategoryDeleteModel? model = await this.categoriesService.GetDeleteModelAsync(id);
+            if (model == null)
             {
-                return NotFound();
+                return this.NotFound();
             }
 
-            var category = await _context.Categories
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (category == null)
-            {
-                return NotFound();
-            }
-
-            return View(category);
+            return this.View(model);
         }
 
         // POST: Administration/Categories/Delete/1
@@ -135,23 +99,13 @@ namespace AOMForum.Web.Areas.Administration.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.Categories == null)
+            bool isDeleted = await this.categoriesService.DeleteAsync(id);
+            if (!isDeleted)
             {
-                return Problem("Entity set 'ApplicationDbContext.Categories'  is null.");
+                return this.BadRequest();
             }
-            var category = await _context.Categories.FindAsync(id);
-            if (category != null)
-            {
-                _context.Categories.Remove(category);
-            }
-            
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
-        }
 
-        private bool CategoryExists(int id)
-        {
-          return _context.Categories.Any(e => e.Id == id);
+            return RedirectToAction(nameof(Index));
         }
     }
 }

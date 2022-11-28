@@ -5,20 +5,16 @@ namespace AOMForum.Services.Data.Interfaces
 {
     public interface ICategoriesService
     {
-        Task<bool> IsExistingByIdAsync(int id);
+        Task<CategoriesAllViewModel> GetAllViewModelAsync(string? search = null);
 
-        Task<bool> IsExistingByNameAsync(string? name);
+        Task<int> CreateAsync(string? name, string? description, string? imageUrl);
 
-        Task<int> CreateAsync(string? name, string? description, string? imageURL);
+        Task<CategoryEditModel?> GetEditModelAsync(int id);
 
-        Task<bool> EditAsync(int id, string? name, string? description, string? imageURL);
+        Task<bool> EditAsync(int id, string? name, string? description, string? imageUrl);
+
+        Task<CategoryDeleteModel?> GetDeleteModelAsync(int id);
 
         Task<bool> DeleteAsync(int id);
-
-        Task<CategoryListViewModel?> GetByIdAsync(int id);
-
-        Task<CategoryListViewModel?> GetByNameAsync(string? name);
-
-        Task<IEnumerable<CategoryListViewModel?>> GetAllAsync(string? search = null);
     }
 }

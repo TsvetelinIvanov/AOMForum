@@ -28,7 +28,7 @@ namespace AOMForum.Web.Models.Categories
             {
                 string content = WebUtility.HtmlDecode(Regex.Replace(this.Content ?? string.Empty, @"<[^>]+>", string.Empty));
 
-                return content.Length > ShortContentMaxLength ? content.Substring(0, ShortContentMaxLength) + "..." : content;
+                return content.Length > ShortContentMaxLength ? content[..ShortContentMaxLength] + "..." : content;
             }
         }
 
