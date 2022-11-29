@@ -17,7 +17,7 @@ namespace AOMForum.Services.Data.Services
 
         public async Task<CategoriesAllViewModel> GetAllViewModelAsync(string? search = null)
         {
-            IQueryable<Category> categories = this.categoriesRepository.All().AsNoTracking();
+            IQueryable<Category> categories = this.categoriesRepository.All().Include(c => c.Posts).AsNoTracking();
             if (!string.IsNullOrWhiteSpace(search))
             {
                 categories = categories.Where(c => c.Name != null && c.Name.Contains(search));
@@ -29,20 +29,42 @@ namespace AOMForum.Services.Data.Services
                 Name = c.Name,
                 Description = c.Description,
                 ImageUrl = c.ImageUrl,
-                PostsCount = c.Posts.Count,
-                Posts = c.Posts.Select(p => new PostInCategoryViewModel()
-                {
-                    Id = p.Id,
-                    Title = p.Title,
-                    Content = p.Content,
-                    CommentsCount = p.Comments.Count
-                })
+                PostsCount = c.Posts.Count
             }).ToListAsync();
 
             CategoriesAllViewModel viewModel = new CategoriesAllViewModel
             {
                 Search = search,
                 Categories = categoryModels
+            };
+
+            return viewModel;
+        }
+
+        public async Task<CategoryDetailsViewModel?> GetDetailsViewModelAsync(int id)
+        {
+            Category? category = await this.categoriesRepository.All().Include(c => c.Posts).ThenInclude(p => p.Comments).AsNoTracking().Where(c => c.Id == id).FirstOrDefaultAsync();
+            if (category == null)
+            {
+                return null;
+            }
+
+            CategoryDetailsViewModel viewModel =  new CategoryDetailsViewModel()
+            {
+                Id = category.Id,
+                Name = category.Name,
+                Description = category.Description,
+                ImageUrl = category.ImageUrl,
+                PostsCount = category.Posts.Count,
+                Posts = category.Posts.Select(p => new PostInCategoryViewModel()
+                {
+                    Id = p.Id,
+                    CreatedOn = p.CreatedOn,
+                    Title = p.Title,
+                    Content = p.Content,
+                    UserName = p.Author?.UserName,
+                    CommentsCount = p.Comments.Count
+                })
             };
 
             return viewModel;

@@ -1,71 +1,77 @@
-﻿@model IEnumerable<AOMForum.Data.Models.Category>
+﻿@using AOMForum.Web.Models.Categories
+@using static AOMForum.Common.ViewConstants.Categories.Index
+@using static AOMForum.Common.GlobalConstants
+@model CategoriesAllViewModel
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = ViewTitle;
 }
 
-<h1>Index</h1>
-
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
+<h1 class="text-center">@this.ViewData["Title"]</h1>
+<hr />
+<form class="text-center" asp-area="" asp-controller="Categories" asp-action="Index" method="get">
+    <div class="row">
+        <div class="form-group">
+            <label asp-for="Search"></label>
+            <input type="text" asp-for="Search" class="form-control" placeholder="@SearchCategoryPlaceholder" />
+            <button type="submit">@SubmitButtonInscription</button>
+        </div>
+    </div>
+</form>
+@if (this.User.IsInRole(AdministratorRoleName))
+{
+    <p>
+        <a asp-area="Administration" asp-controller="Categories" asp-action="Index">@GoToAdminIndexView</a>
+    </p>
+   <p>
+        <a asp-area="Administration" asp-controller="Categories" asp-action="Create">@CreateNewCategory</a>
+   </p>
+}
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Name)
+                @NameTitle
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Description)
+                @DescriptionTitle
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ImageUrl)
+                @PostsCountTitle
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.IsDeleted)
+                @ImageTitle
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.DeletedOn)
+                @ActionsTitle
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CreatedOn)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ModifiedOn)
-            </th>
-            <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Description)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ImageUrl)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IsDeleted)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DeletedOn)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CreatedOn)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ModifiedOn)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (CategoryListViewModel category in Model.Categories)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => category.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => category.Description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => category.PostsCount)
+                </td>
+                <td>
+                    <img src="@category.ImageUrl" alt="@(AltImage + category.Name)" width="100" />
+                </td>
+                <td>
+                    @if (this.User.IsInRole(AdministratorRoleName))
+                    {
+                         <a asp-area="Administration" asp-controller="Categories" asp-action="Edit" asp-route-id="@category.Id">@EditAction</a> @:| 
+                         <a asp-area="Administration" asp-controller="Categories" asp-action="Delete" asp-route-id="@category.Id">@DeleteAction</a><br />
+                    }
+                    <a asp-area="" asp-controller="Categories" asp-action="Details" asp-route-id="@category.Id">@DetailsAction</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

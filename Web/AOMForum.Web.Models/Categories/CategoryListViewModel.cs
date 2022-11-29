@@ -20,7 +20,5 @@ namespace AOMForum.Web.Models.Categories
 
         [Display(Name = DisplayPostsCount)]
         public int PostsCount { get; init; }
-
-        public IEnumerable<PostInCategoryViewModel> Posts { get; set; } = new HashSet<PostInCategoryViewModel>();
     }
 }

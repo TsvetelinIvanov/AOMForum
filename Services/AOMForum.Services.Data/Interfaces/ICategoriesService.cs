@@ -7,6 +7,8 @@ namespace AOMForum.Services.Data.Interfaces
     {
         Task<CategoriesAllViewModel> GetAllViewModelAsync(string? search = null);
 
+        Task<CategoryDetailsViewModel?> GetDetailsViewModelAsync(int id);
+
         Task<int> CreateAsync(string? name, string? description, string? imageUrl);
 
         Task<CategoryEditModel?> GetEditModelAsync(int id);

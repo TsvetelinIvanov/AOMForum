@@ -33,7 +33,7 @@ namespace AOMForum.Web.Models.Categories
         }
 
         [Display(Name = DisplayUserName)]
-        public string? UserUserName { get; init; }
+        public string? UserName { get; init; }
 
         [Display(Name = DisplayCommentsCount)]
         public int CommentsCount { get; init; }
