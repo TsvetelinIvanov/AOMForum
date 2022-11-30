@@ -1,14 +1,19 @@
-﻿@model AOMForum.Data.Models.Post
+﻿@using AOMForum.Web.Models.Posts
+@using AOMForum.Web.Infrastructure
+@using static AOMForum.Common.ViewConstants.Posts.Details
+@using static AOMForum.Common.GlobalConstants
+@model PostDetailsViewModel
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = ViewTitle + Model.Title;
 }
 
-<h1>Details</h1>
+<h1 class="text-center">@this.ViewData["Title"]</h1>
+<hr />
 
-<div>
-    <h4>Post</h4>
-    <hr />
+@*<vc:create-comment post-id="@Model.Id" parent-id="null"></vc:create-comment>*@
+
+<div>    
     <dl class="row">
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Title)
@@ -17,62 +22,145 @@
             @Html.DisplayFor(model => model.Title)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Type)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Type)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Content)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Content)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ImageUrl)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ImageUrl)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Author)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Author.Id)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Category)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Category.Description)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.IsDeleted)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.IsDeleted)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.DeletedOn)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.DeletedOn)
-        </dd>
-        <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.CreatedOn)
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.CreatedOn)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ModifiedOn)
+            @Html.DisplayNameFor(model => model.SanitizedContent)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ModifiedOn)
+            @Html.DisplayFor(model => model.SanitizedContent)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.CommentsCount)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.CommentsCount)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.VotesCount)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.VotesCount)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Category)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Category.Name)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.AuthorUserName)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.AuthorUserName)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.AuthorProfilePictureURL)
+        </dt>
+        <dd class = "col-sm-10">
+            <img src="@Model.AuthorProfilePictureURL" alt="@(AltImage + Model.AuthorUserName)" width="100" />
         </dd>
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <a asp-area="" asp-controller="Posts" asp-action="Create">@CreateNewPost</a> |
+    <a asp-area="" asp-controller="Comments" asp-action="Create">@CreateComment</a> |
+    <a asp-area="" asp-controller="PostReports" asp-action="Create">@CreateReport</a> |
+    <a asp-area="" asp-controller="Categories" asp-action="Details" asp-route-id="@Model?.Category.Id">@GoToCategory</a> | 
+    <a asp-area="" asp-controller="Posts" asp-action="Index">@BackToIndex</a>
+    @if (this.Model.AuthorId == this.User.Id() || this.User.IsInRole(AdministratorRoleName))
+    {
+        @:|
+        <a asp-area="" asp-controller="Posts" asp-action="Edit" asp-route-id="@Model.Id">@EditAction</a> @:| 
+        <a asp-area="" asp-controller="Posts" asp-action="Delete" asp-route-id="@Model.Id">@DeleteAction</a>
+    }
 </div>
+
+<h3 class="text-center">@TagsHeading</h3>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @TagNameTitle
+            </th>            
+            <th>
+                @ActionsTitle
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (TagInPostViewModel tag in Model.Tags)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => tag.Name)
+                </td>                
+                <td>
+                    <a asp-area="" asp-controller="Tags" asp-action="Details" asp-route-id="@tag.Id">@DetailsAction</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<h3 class="text-center">@CommentsHeading</h3>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @CommentContentTitle
+            </th>
+            <th>
+                @CommentVotesCountTitle
+            </th>
+            <th>
+                @CommentCreatedOnTitle
+            </th>
+            <th>
+                @CommentAuthorTitle
+            </th>
+            <th>
+                @CommentAuthorImageTitle
+            </th>
+            <th>
+                @ActionsTitle
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (CommentInPostViewModel comment in Model.Comments)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => comment.SanitizedContent)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => comment.VotesCount)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => comment.CreatedOn)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => comment.AuthorUserName)
+                </td>
+                <td>
+                    <img src="@comment.AuthorProfilePictureURL" alt="@(AltImage + comment.AuthorUserName)" width="100" />
+                </td>
+                <td>
+                    <a asp-area="" asp-controller="Comments" asp-action="Details" asp-route-id="@comment.Id">@DetailsAction</a> |
+                    <a asp-area="" asp-controller="Comments" asp-action="Create">@CreateComment</a> |
+                    <a asp-area="" asp-controller="CommentReports" asp-action="Create">@CreateReport</a>
+                    @if (this.Model.AuthorId == this.User.Id() || this.User.IsInRole(AdministratorRoleName))
+                    {
+                        @:|
+                        <a asp-area="" asp-controller="Comments" asp-action="Edit" asp-route-id="@Model.Id">@EditAction</a> @:|
+                        <a asp-area="" asp-controller="Comments" asp-action="Delete" asp-route-id="@Model.Id">@DeleteAction</a>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

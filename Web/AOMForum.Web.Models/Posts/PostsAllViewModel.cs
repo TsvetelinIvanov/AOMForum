@@ -6,8 +6,6 @@
 
         public string? Search { get; set; }
 
-        public int FollowingsCount { get; init; }
-
         public int PageIndex { get; set; }
 
         public int TotalPagesCount { get; set; }

@@ -31,22 +31,21 @@ namespace AOMForum.Web.Models.Posts
         public string? SanitizedContent => this.sanitizer.Sanitize(this.Content ?? string.Empty);
 
         [Display(Name = DisplayCommentsCount)]
-        public int CommentsCount { get; init; }
-
-        public int Views { get; init; }
+        public int CommentsCount { get; init; }        
 
         [Display(Name = DisplayVotesCount)]
-        public int VotesCount { get; init; }
-
-        public string? AuthorId { get; init; }
+        public int VotesCount { get; init; }        
 
         [Display(Name = DisplayUserName)]
         public string? AuthorUserName { get; init; }
 
+        [Display(Name = DisplayProfilePictureURL)]
         public string? AuthorProfilePictureURL { get; init; }
 
+        [Display(Name = DisplayCategory)]
         public CategoryInPostViewModel? Category { get; init; }
 
+        [Display(Name = DisplayTagIds)]
         public IEnumerable<TagInPostViewModel> Tags { get; set; } = new HashSet<TagInPostViewModel>();
     }
 }

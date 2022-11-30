@@ -4,6 +4,6 @@
     {
         public const string ViewTitle = "Създай категория";
         public const string InputSubmitValue = "Създай";
-        public const string BackToIndex = "Обратно към категориите";
+        public const string BackToIndex = "Обратно към категориите";        
     }
 }

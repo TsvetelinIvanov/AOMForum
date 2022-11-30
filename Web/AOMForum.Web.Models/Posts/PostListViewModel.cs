@@ -16,17 +16,14 @@ namespace AOMForum.Web.Models.Posts
 
         [Display(Name = DisplayCommentsCount)]
         public int CommentsCount { get; init; }
-
-        public int Views { get; init; }
-
-        public string? Activity { get; init; }
-                
+        
         public string? AuthorId { get; init; }
 
         [Display(Name = DisplayUserName)]
         public string? AuthorUserName { get; init; }
 
-        public string? AuthorProfilePicture { get; init; }
+        [Display(Name = DisplayProfilePictureURL)]
+        public string? AuthorProfilePictureURL { get; init; }
 
         public CategoryInPostViewModel? Category { get; init; }
 

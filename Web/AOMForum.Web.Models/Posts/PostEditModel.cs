@@ -20,13 +20,15 @@ namespace AOMForum.Web.Models.Posts
         [DataType(DataType.MultilineText)]
         public string? Content { get; init; }
 
-        [Required]        
-        public int CategoryId { get; init; }
+        [Display(Name = DisplayImageUrl)]
+        public string? ImageUrl { get; init; }
 
-        public string? AuthorId { get; init; }
+        [Required]
+        [Display(Name = DisplayCategory)]
+        public int CategoryId { get; init; }        
 
         [Display(Name = DisplayTagIds)]
-        public IEnumerable<int> TagIds { get; init; } = new HashSet<int>();
+        public IEnumerable<int> TagIds { get; set; } = new HashSet<int>();
 
         public IEnumerable<CategoryInPostViewModel> Categories { get; set; } = new HashSet<CategoryInPostViewModel>();
         //public IEnumerable<CategoryInPostDropDownViewModel> Categories { get; set; } = new HashSet<CategoryInPostDropDownViewModel>();

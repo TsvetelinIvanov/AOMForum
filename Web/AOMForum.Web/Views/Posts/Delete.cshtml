@@ -1,12 +1,16 @@
-﻿@model AOMForum.Data.Models.Post
+﻿@using AOMForum.Web.Models.Posts
+@using AOMForum.Data.Models.Enums
+@using static AOMForum.Common.ViewConstants.Posts.Delete
+@model PostDeleteModel
 
 @{
-    ViewData["Title"] = "Delete";
+    ViewData["Title"] = ViewTitle;
 }
 
-<h1>Delete</h1>
+<h1 class="text-center">@this.ViewData["Title"]</h1>
+<hr />
 
-<h3>Are you sure you want to delete this?</h3>
+<h3 class="text-center">@SureToDelete</h3>
 <div>
     <h4>Post</h4>
     <hr />
@@ -16,66 +20,61 @@
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.Title)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Type)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Type)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Content)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Content)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ImageUrl)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ImageUrl)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Author)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Author.Id)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Category)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Category.Description)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.IsDeleted)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.IsDeleted)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.DeletedOn)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.DeletedOn)
-        </dd>
-        <dt class = "col-sm-2">
+        </dd>        
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.CreatedOn)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.CreatedOn)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ModifiedOn)
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.SanitizedContent)
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ModifiedOn)
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.SanitizedContent)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.CommentsCount)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.CommentsCount)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.VotesCount)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.VotesCount)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Category)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Category.Name)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.AuthorUserName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.AuthorUserName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.AuthorProfilePictureURL)
+        </dt>
+        <dd class="col-sm-10">
+            <img src="@Model.AuthorProfilePictureURL" alt="@(AltImage + Model.AuthorUserName)" width="100" />
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Tags)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => string.Join(", ", model.Tags.Select(t => t.Name)))
         </dd>
     </dl>
     
     <form asp-action="Delete">
         <input type="hidden" asp-for="Id" />
-        <input type="submit" value="Delete" class="btn btn-danger" /> |
-        <a asp-action="Index">Back to List</a>
+        <input type="submit" value="@InputSubmitValue" class="btn btn-danger" /> |
+        <a asp-area="" asp-controller="Posts" asp-action="Details" asp-route-id="@Model.Id">@RefuseDeleteGoToDetails</a> | 
+        <a asp-area="" asp-controller="Posts" asp-action="Index">@RefuseDeleteGoToIndex</a>
     </form>
 </div>

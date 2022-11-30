@@ -7,140 +7,144 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using AOMForum.Data;
 using AOMForum.Data.Models;
+using AOMForum.Services.Data.Interfaces;
+using static AOMForum.Common.DataConstants.Post;
+using Microsoft.AspNetCore.Authorization;
+using AOMForum.Web.Models.Posts;
+using Microsoft.AspNetCore.Mvc.RazorPages;
+using static Humanizer.On;
+using AOMForum.Web.Infrastructure;
 
 namespace AOMForum.Web.Controllers
 {
     public class PostsController : BaseController
     {
-        private readonly ApplicationDbContext _context;
+        private readonly IPostsService postsService;
 
-        public PostsController(ApplicationDbContext context)
+        public PostsController(IPostsService postsService)
         {
-            _context = context;
+            this.postsService = postsService;
         }
 
         // GET: Posts
-        public async Task<IActionResult> Index()
+        [AllowAnonymous]
+        public async Task<IActionResult> Index(int page = 1, string? search = null)
         {
-            var applicationDbContext = _context.Posts.Include(p => p.Author).Include(p => p.Category);
-            return View(await applicationDbContext.ToListAsync());
+            int skip = (page - 1) * PostsPerPage;
+            int postsCount = await this.postsService.GetPostsCountAsync(search);
+            IEnumerable<PostListViewModel> postModels = await this.postsService.GetAllPostsListViewModelsAsync(search, skip, PostsPerPage);
+
+            PostsAllViewModel viewModel = this.postsService.GetPostsAllViewModel(postsCount, PostsPerPage, postModels, page, search);
+            
+            return this.View(viewModel);
         }
 
         // GET: Posts/Details/1
-        public async Task<IActionResult> Details(int? id)
+        public async Task<IActionResult> Details(int id)
         {
-            if (id == null || _context.Posts == null)
+            PostDetailsViewModel? viewModel = await this.postsService.GetPostDetailsViewModelAsync(id);
+            if (viewModel == null)
             {
-                return NotFound();
+                return this.NotFound();
             }
 
-            var post = await _context.Posts
-                .Include(p => p.Author)
-                .Include(p => p.Category)
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (post == null)
-            {
-                return NotFound();
-            }
-
-            return View(post);
+            return this.View(viewModel);
         }
 
         // GET: Posts/Create
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
-            ViewData["AuthorId"] = new SelectList(_context.Users, "Id", "Id");
-            ViewData["CategoryId"] = new SelectList(_context.Categories, "Id", "Description");
-            return View();
+            PostInputModel inputModel = await this.postsService.GetPostInputModelAsync();
+
+            return View(inputModel);
         }
 
         // POST: Posts/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Title,Type,Content,ImageUrl,AuthorId,CategoryId,IsDeleted,DeletedOn,Id,CreatedOn,ModifiedOn")] Post post)
+        public async Task<IActionResult> Create(PostInputModel inputModel)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                _context.Add(post);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                inputModel = await this.postsService.GetPostInputModelAsync();
+                return this.View(inputModel);
             }
-            ViewData["AuthorId"] = new SelectList(_context.Users, "Id", "Id", post.AuthorId);
-            ViewData["CategoryId"] = new SelectList(_context.Categories, "Id", "Description", post.CategoryId);
-            return View(post);
+
+            int postId = await this.postsService.CreateAsync(inputModel.Title, inputModel.PostType, inputModel.Content, inputModel.ImageUrl, this.User.Id(), inputModel.CategoryId, inputModel.TagIds);
+
+            return this.RedirectToAction(nameof(Details), new { id = postId });
         }
 
         // GET: Posts/Edit/1
-        public async Task<IActionResult> Edit(int? id)
+        public async Task<IActionResult> Edit(int id)
         {
-            if (id == null || _context.Posts == null)
+            PostEditModel? editModel = await this.postsService.GetPostEditModelAsync(id);
+            if (editModel == null)
             {
-                return NotFound();
+                return this.NotFound();
             }
 
-            var post = await _context.Posts.FindAsync(id);
-            if (post == null)
+            string? authorId = await this.postsService.GetAuthorIdAsync(editModel.Id);
+            if (authorId != null && authorId != this.User.Id() && !this.User.IsAdministrator())
             {
-                return NotFound();
+                return this.Unauthorized();
             }
-            ViewData["AuthorId"] = new SelectList(_context.Users, "Id", "Id", post.AuthorId);
-            ViewData["CategoryId"] = new SelectList(_context.Categories, "Id", "Description", post.CategoryId);
-            return View(post);
+
+            return this.View(editModel);
         }
 
         // POST: Posts/Edit/1
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Title,Type,Content,ImageUrl,AuthorId,CategoryId,IsDeleted,DeletedOn,Id,CreatedOn,ModifiedOn")] Post post)
+        public async Task<IActionResult> Edit(PostEditModel? editModel)
         {
-            if (id != post.Id)
+            if (editModel == null)
             {
-                return NotFound();
+                return this.NotFound();
             }
 
-            if (ModelState.IsValid)
+            if (!this.ModelState.IsValid)
             {
-                try
+                editModel = await this.postsService.GetPostEditModelAsync(editModel.Id);
+                if (editModel == null)
                 {
-                    _context.Update(post);
-                    await _context.SaveChangesAsync();
+                    return this.NotFound();
                 }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!PostExists(post.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
+
+                return this.View(editModel);
             }
-            ViewData["AuthorId"] = new SelectList(_context.Users, "Id", "Id", post.AuthorId);
-            ViewData["CategoryId"] = new SelectList(_context.Categories, "Id", "Description", post.CategoryId);
-            return View(post);
+
+            string? authorId = await this.postsService.GetAuthorIdAsync(editModel.Id);
+            if (authorId != null && authorId != this.User.Id() && !this.User.IsAdministrator())
+            {
+                return this.Unauthorized();
+            }
+
+            bool isEdited = await this.postsService.EditAsync(editModel.Id, editModel.Title, editModel.Content, editModel.ImageUrl, editModel.CategoryId, editModel.TagIds);
+            if (!isEdited)
+            {
+                return this.BadRequest();
+            }
+
+            return this.RedirectToAction(nameof(Details), new { id = editModel.Id });
         }
 
         // GET: Posts/Delete/1
-        public async Task<IActionResult> Delete(int? id)
+        public async Task<IActionResult> Delete(int id)
         {
-            if (id == null || _context.Posts == null)
+            PostDeleteModel? deleteModel = await this.postsService.GetPostDeleteModelAsync(id);
+            if (deleteModel == null)
             {
-                return NotFound();
+                return this.NotFound();
             }
 
-            var post = await _context.Posts
-                .Include(p => p.Author)
-                .Include(p => p.Category)
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (post == null)
+            string? authorId = await this.postsService.GetAuthorIdAsync(deleteModel.Id);
+            if (authorId != null && authorId != this.User.Id() && !this.User.IsAdministrator())
             {
-                return NotFound();
+                return this.Unauthorized();
             }
 
-            return View(post);
+            return this.View(deleteModel);
         }
 
         // POST: Posts/Delete/1
@@ -148,23 +152,25 @@ namespace AOMForum.Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.Posts == null)
+            PostDeleteModel? deleteModel = await this.postsService.GetPostDeleteModelAsync(id);
+            if (deleteModel == null)
             {
-                return Problem("Entity set 'ApplicationDbContext.Posts'  is null.");
+                return this.NotFound();
             }
-            var post = await _context.Posts.FindAsync(id);
-            if (post != null)
-            {
-                _context.Posts.Remove(post);
-            }
-            
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
-        }
 
-        private bool PostExists(int id)
-        {
-          return _context.Posts.Any(e => e.Id == id);
+            string? authorId = await this.postsService.GetAuthorIdAsync(deleteModel.Id);
+            if (authorId != null && authorId != this.User.Id() && !this.User.IsAdministrator())
+            {
+                return this.Unauthorized();
+            }
+
+            bool isDeleted = await this.postsService.DeleteAsync(id);
+            if (!isDeleted)
+            {
+                return this.BadRequest();
+            }
+
+            return this.RedirectToAction(nameof(Index));
         }
     }
 }

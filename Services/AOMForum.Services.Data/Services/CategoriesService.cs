@@ -123,7 +123,7 @@ namespace AOMForum.Services.Data.Services
 
         public async Task<CategoryDeleteModel?> GetDeleteModelAsync(int id)
         {
-            Category? category = await this.categoriesRepository.All().AsNoTracking().Where(c => c.Id == id).FirstOrDefaultAsync();
+            Category? category = await this.categoriesRepository.All().Include(c => c.Posts).AsNoTracking().Where(c => c.Id == id).FirstOrDefaultAsync();
             if (category == null)
             {
                 return null;

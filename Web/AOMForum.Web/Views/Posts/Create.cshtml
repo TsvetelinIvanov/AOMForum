@@ -1,12 +1,13 @@
-﻿@model AOMForum.Data.Models.Post
+﻿@using AOMForum.Web.Models.Posts
+@using AOMForum.Data.Models.Enums
+@using static AOMForum.Common.ViewConstants.Posts.Create
+@model PostInputModel
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = ViewTitle;
 }
 
-<h1>Create</h1>
-
-<h4>Post</h4>
+<h1 class="text-center">@this.ViewData["Title"]</h1>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -18,9 +19,27 @@
                 <span asp-validation-for="Title" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Type" class="control-label"></label>
-                <select asp-for="Type" class="form-control"></select>
-                <span asp-validation-for="Type" class="text-danger"></span>
+                <label asp-for="PostType" class="control-label"></label>
+                <select asp-for="PostType" class="form-control"></select>
+                    @*<input id="post-type" value="@PostType.Text" asp-for="PostType" type="radio" hidden />                
+                    <div class="row">
+                        <div class="col-4 col-lg-3 col-xl-2">
+                            <a href="#" onclick="$('#post-type').val('Text');">       
+                            <span id="text">@PostType.Text</span>
+                            </a>
+                        </div>
+                        <div class="col-4 col-lg-3 col-xl-2">
+                            <a href="#" onclick="$('#post-type').val('Image');">
+                            <span id="image">@PostType.Image</span>
+                            </a>
+                        </div>
+                        <div class="col-4 col-lg-3 col-xl-2">
+                            <a href="#" onclick="$('#post-type').val('Video');">
+                                <span id="video">@PostType.Video</span>
+                            </a>
+                        </div>
+                    </div>*@                
+                <span asp-validation-for="PostType" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Content" class="control-label"></label>
@@ -31,46 +50,54 @@
                 <label asp-for="ImageUrl" class="control-label"></label>
                 <input asp-for="ImageUrl" class="form-control" />
                 <span asp-validation-for="ImageUrl" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="AuthorId" class="control-label"></label>
-                <select asp-for="AuthorId" class ="form-control" asp-items="ViewBag.AuthorId"></select>
-            </div>
+            </div>            
             <div class="form-group">
                 <label asp-for="CategoryId" class="control-label"></label>
-                <select asp-for="CategoryId" class ="form-control" asp-items="ViewBag.CategoryId"></select>
-            </div>
-            <div class="form-group form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="IsDeleted" /> @Html.DisplayNameFor(model => model.IsDeleted)
-                </label>
-            </div>
-            <div class="form-group">
-                <label asp-for="DeletedOn" class="control-label"></label>
-                <input asp-for="DeletedOn" class="form-control" />
-                <span asp-validation-for="DeletedOn" class="text-danger"></span>
+                @*<select asp-for="CategoryId" class ="form-control" asp-items="ViewBag.CategoryId"></select>*@
+                <select asp-for="CategoryId" id="input-category">
+                    @foreach (CategoryInPostViewModel category in Model.Categories)
+                    {
+                        <option value="@category.Id">@category.Name</option>
+                    }
+                 </select>
+                 <span asp-validation-for="CategoryId"></span>
             </div>
             <div class="form-group">
-                <label asp-for="CreatedOn" class="control-label"></label>
-                <input asp-for="CreatedOn" class="form-control" />
-                <span asp-validation-for="CreatedOn" class="text-danger"></span>
+                <label asp-for="TagIds">Tags</label>
+                <select asp-for="TagIds" id="input-tags">
+                    @foreach (TagInPostViewModel tag in Model.Tags)
+                    {
+                        <option value="@tag.Id">@tag.Name</option>
+                    }
+                </select>
+                <span asp-validation-for="TagIds"></span>
             </div>
             <div class="form-group">
-                <label asp-for="ModifiedOn" class="control-label"></label>
-                <input asp-for="ModifiedOn" class="form-control" />
-                <span asp-validation-for="ModifiedOn" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="@InputSubmitValue" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
-
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-area="" asp-controller="Posts" asp-action="Index">@BackToIndex</a>
 </div>
 
 @section Scripts {
+    <script>
+        let $select = $('#input-category').selectize({
+            create: false,
+            sortField: 'text',
+            placeholder: @SelectPlaceholder
+        });
+        $select.each(function () {
+            $(this)[0].selectize.clear(true);
+        });
+        $('#input-tags').selectize({
+            plugins: ['remove_button'],
+            delimiter: ',',
+            persist: false,
+            create: false
+        });
+    </script>
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }

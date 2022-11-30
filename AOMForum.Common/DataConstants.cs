@@ -53,6 +53,8 @@
             public const int ContentMaxLength = 3000;
 
             public const int ShortContentMaxLength = 100;
+
+            public const int PostsPerPage = 6;
         }
 
         public static class PostReport
