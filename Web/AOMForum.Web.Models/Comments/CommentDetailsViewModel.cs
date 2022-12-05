@@ -24,18 +24,19 @@ namespace AOMForum.Web.Models.Comments
         [Display(Name = DisplayContent)]
         public string? SanitizedContent => this.sanitizer.Sanitize(this.Content ?? string.Empty);
 
+        [Display(Name = DisplayCreatedOn)]
+        public string? CreatedOn { get; init; }
+
         public string? AuthorId { get; init; }
 
         [Display(Name = DisplayUserName)]
         public string? AuthorUserName { get; init; }
 
+        [Display(Name = DisplayProfilePictureURL)]
         public string? AuthorProfilePictureURL { get; init; }
 
         [Display(Name = DisplayVotesCount)]
         public int VotesCount { get; init; }
-
-        [Display(Name = DisplayCreatedOn)]
-        public string? CreatedOn { get; init; }
 
         public int PostId { get; init; }
 

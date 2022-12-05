@@ -1,152 +1,124 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using AOMForum.Data;
-using AOMForum.Data.Models;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
+using AOMForum.Services.Data.Interfaces;
+using AOMForum.Web.Models.Comments;
+using AOMForum.Web.Infrastructure;
 
 namespace AOMForum.Web.Controllers
 {
+    [Authorize]
     public class CommentsController : BaseController
     {
-        private readonly ApplicationDbContext _context;
+        private readonly ICommentsService commentsService;
 
-        public CommentsController(ApplicationDbContext context)
+        public CommentsController(ICommentsService commentsService)
         {
-            _context = context;
-        }
-
-        // GET: Comments
-        public async Task<IActionResult> Index()
-        {
-            var applicationDbContext = _context.Comments.Include(c => c.Author).Include(c => c.Parent).Include(c => c.Post);
-            return View(await applicationDbContext.ToListAsync());
+            this.commentsService = commentsService;
         }
 
         // GET: Comments/Details/1
-        public async Task<IActionResult> Details(int? id)
+        public async Task<IActionResult> Details(int id)
         {
-            if (id == null || _context.Comments == null)
+            CommentDetailsViewModel? viewModel = await this.commentsService.GetCommentDetailsViewModelAsync(id);
+            if (viewModel == null)
             {
-                return NotFound();
+                return this.NotFound();
             }
 
-            var comment = await _context.Comments
-                .Include(c => c.Author)
-                .Include(c => c.Parent)
-                .Include(c => c.Post)
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (comment == null)
-            {
-                return NotFound();
-            }
-
-            return View(comment);
+            return this.View(viewModel);
         }
 
         // GET: Comments/Create
-        public IActionResult Create()
-        {
-            ViewData["AuthorId"] = new SelectList(_context.Users, "Id", "Id");
-            ViewData["ParentId"] = new SelectList(_context.Comments, "Id", "AuthorId");
-            ViewData["PostId"] = new SelectList(_context.Posts, "Id", "AuthorId");
-            return View();
-        }
+        //public IActionResult Create()
+        //{
+        //    return View(new CommentInputModel());
+        //}
 
         // POST: Comments/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Content,ParentId,PostId,AuthorId,IsDeleted,DeletedOn,Id,CreatedOn,ModifiedOn")] Comment comment)
+        public async Task<IActionResult> Create(CommentInputModel inputModel)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                _context.Add(comment);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return this.RedirectToAction("Details", "Posts", new { id = inputModel.PostId });
             }
-            ViewData["AuthorId"] = new SelectList(_context.Users, "Id", "Id", comment.AuthorId);
-            ViewData["ParentId"] = new SelectList(_context.Comments, "Id", "AuthorId", comment.ParentId);
-            ViewData["PostId"] = new SelectList(_context.Posts, "Id", "AuthorId", comment.PostId);
-            return View(comment);
+
+            int commentId = await this.commentsService.CreateAsync(inputModel.Content, inputModel.ParentId, inputModel.PostId, this.User.Id());
+            
+            return this.RedirectToAction(nameof(Details), new { id = commentId });
         }
 
         // GET: Comments/Edit/1
-        public async Task<IActionResult> Edit(int? id)
+        public async Task<IActionResult> Edit(int id)
         {
-            if (id == null || _context.Comments == null)
+            CommentEditModel? editModel = await this.commentsService.GetCommentEditModelAsync(id);
+            if (editModel == null)
             {
-                return NotFound();
+                return this.NotFound();
             }
 
-            var comment = await _context.Comments.FindAsync(id);
-            if (comment == null)
+            string? authorId = await this.commentsService.GetAuthorIdAsync(editModel.Id);
+            if (authorId != null && authorId != this.User.Id() && !this.User.IsAdministrator())
             {
-                return NotFound();
+                return this.Unauthorized();
             }
-            ViewData["AuthorId"] = new SelectList(_context.Users, "Id", "Id", comment.AuthorId);
-            ViewData["ParentId"] = new SelectList(_context.Comments, "Id", "AuthorId", comment.ParentId);
-            ViewData["PostId"] = new SelectList(_context.Posts, "Id", "AuthorId", comment.PostId);
-            return View(comment);
+
+            return this.View(editModel);
         }
 
         // POST: Comments/Edit/1
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Content,ParentId,PostId,AuthorId,IsDeleted,DeletedOn,Id,CreatedOn,ModifiedOn")] Comment comment)
+        public async Task<IActionResult> Edit(CommentEditModel? editModel)
         {
-            if (id != comment.Id)
+            if (editModel == null)
             {
-                return NotFound();
+                return this.NotFound();
             }
 
-            if (ModelState.IsValid)
+            if (!this.ModelState.IsValid)
             {
-                try
+                editModel = await this.commentsService.GetCommentEditModelAsync(editModel.Id);
+                if (editModel == null)
                 {
-                    _context.Update(comment);
-                    await _context.SaveChangesAsync();
+                    return this.NotFound();
                 }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!CommentExists(comment.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
+
+                return this.View(editModel);
             }
-            ViewData["AuthorId"] = new SelectList(_context.Users, "Id", "Id", comment.AuthorId);
-            ViewData["ParentId"] = new SelectList(_context.Comments, "Id", "AuthorId", comment.ParentId);
-            ViewData["PostId"] = new SelectList(_context.Posts, "Id", "AuthorId", comment.PostId);
-            return View(comment);
+
+            string? authorId = await this.commentsService.GetAuthorIdAsync(editModel.Id);
+            if (authorId != null && authorId != this.User.Id() && !this.User.IsAdministrator())
+            {
+                return this.Unauthorized();
+            }
+
+            bool isEdited = await this.commentsService.EditAsync(editModel.Id, editModel.Content);
+            if (!isEdited)
+            {
+                return this.BadRequest();
+            }
+
+            return this.RedirectToAction(nameof(Details), new { id = editModel.Id });
         }
 
         // GET: Comments/Delete/1
-        public async Task<IActionResult> Delete(int? id)
+        public async Task<IActionResult> Delete(int id)
         {
-            if (id == null || _context.Comments == null)
+            CommentDeleteModel? deleteModel = await this.commentsService.GetCommentDeleteModelAsync(id);
+            if (deleteModel == null)
             {
-                return NotFound();
+                return this.NotFound();
             }
 
-            var comment = await _context.Comments
-                .Include(c => c.Author)
-                .Include(c => c.Parent)
-                .Include(c => c.Post)
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (comment == null)
+            string? authorId = await this.commentsService.GetAuthorIdAsync(deleteModel.Id);
+            if (authorId != null && authorId != this.User.Id() && !this.User.IsAdministrator())
             {
-                return NotFound();
+                return this.Unauthorized();
             }
 
-            return View(comment);
+            return this.View(deleteModel);
         }
 
         // POST: Comments/Delete/1
@@ -154,23 +126,26 @@ namespace AOMForum.Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.Comments == null)
+            CommentDeleteModel? deleteModel = await this.commentsService.GetCommentDeleteModelAsync(id);
+            if (deleteModel == null)
             {
-                return Problem("Entity set 'ApplicationDbContext.Comments'  is null.");
+                return this.NotFound();
             }
-            var comment = await _context.Comments.FindAsync(id);
-            if (comment != null)
-            {
-                _context.Comments.Remove(comment);
-            }
-            
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
-        }
 
-        private bool CommentExists(int id)
-        {
-          return _context.Comments.Any(e => e.Id == id);
+            string? authorId = await this.commentsService.GetAuthorIdAsync(deleteModel.Id);
+            if (authorId != null && authorId != this.User.Id() && !this.User.IsAdministrator())
+            {
+                return this.Unauthorized();
+            }
+
+            bool isDeleted = await this.commentsService.DeleteAsync(id);
+            if (!isDeleted)
+            {
+                return this.BadRequest();
+            }
+
+            int postId = await this.commentsService.GetPostIdAsync(id);
+            return this.RedirectToAction("Details", "Posts", new { id = postId });
         }
     }
 }

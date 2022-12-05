@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using AOMForum.Services.Data.Interfaces;
 using AOMForum.Web.Models.Categories;
+using Microsoft.AspNetCore.Authorization;
 
 namespace AOMForum.Web.Controllers
 {
@@ -22,6 +23,7 @@ namespace AOMForum.Web.Controllers
         }
 
         // GET: Categories/Details/1
+        [Authorize]
         public async Task<IActionResult> Details(int id)
         {
             CategoryDetailsViewModel? viewModel = await this.categoriesService.GetDetailsViewModelAsync(id);

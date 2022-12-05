@@ -74,8 +74,10 @@
         {
             public const string DisplayContent = "Съдържание";
             public const string DisplayShortContent = "Кратко съдържание";
-            public const string DisplayVotesCount = "Гласове";            
+            public const string DisplayImageUrl = "Образ";
             public const string DisplayCreatedOn = "Създаден на";
+            public const string DisplayVotesCount = "Гласове";
+            public const string DisplayChildrenCount = "Брой на подкоментарите";
             public const string DisplayPostTitle = "Заглавие на поста";
             public const string DisplayPostCategoryName = "Категория на поста";
         }

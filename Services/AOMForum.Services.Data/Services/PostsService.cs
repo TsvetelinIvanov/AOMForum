@@ -104,7 +104,7 @@ namespace AOMForum.Services.Data.Services
                 .Include(p => p.Votes)
                 .Include(p => p.Tags)
                     .ThenInclude(pt => pt.Tag)
-                .AsNoTracking().Where(c => c.Id == id).FirstOrDefaultAsync();
+                .AsNoTracking().Where(p => p.Id == id).FirstOrDefaultAsync();
             if (post == null)
             {
                 return null;

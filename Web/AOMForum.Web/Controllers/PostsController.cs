@@ -1,22 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using AOMForum.Data;
-using AOMForum.Data.Models;
+﻿using Microsoft.AspNetCore.Mvc;
 using AOMForum.Services.Data.Interfaces;
-using static AOMForum.Common.DataConstants.Post;
 using Microsoft.AspNetCore.Authorization;
 using AOMForum.Web.Models.Posts;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using static Humanizer.On;
 using AOMForum.Web.Infrastructure;
+using static AOMForum.Common.DataConstants.Post;
 
 namespace AOMForum.Web.Controllers
 {
+    [Authorize]
     public class PostsController : BaseController
     {
         private readonly IPostsService postsService;

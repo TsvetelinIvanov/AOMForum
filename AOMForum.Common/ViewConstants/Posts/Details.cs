@@ -8,11 +8,12 @@
 
         public const string CreateNewPost = "Създай нов пост";
         public const string CreateComment = "Коментирай";
+        public const string SendComment = "Изпрати коментара";
         public const string CreateReport = "Докладвай на администратор";
-        public const string EditAction = "Редактирай";
-        public const string DeleteAction = "Изтрий";        
         public const string GoToCategory = "Отидиди на категорията";
         public const string BackToIndex = "Обратно към постовете";
+        public const string EditAction = "Редактирай";
+        public const string DeleteAction = "Изтрий";
 
         public const string TagsHeading = "Тагове";
         public const string TagNameTitle = "Име";

@@ -9,8 +9,6 @@ namespace AOMForum.Web.Models.Comments
     {
         public int Id { get; init; }
 
-        public int AuthorId { get; init; }
-
         [Display(Name = DisplayContent)]
         [Required(ErrorMessage = RequiredErrorMessage)]
         [StringLength(ContentMaxLength, MinimumLength = ContentMinLength, ErrorMessage = StringLengthErrorMessage)]
