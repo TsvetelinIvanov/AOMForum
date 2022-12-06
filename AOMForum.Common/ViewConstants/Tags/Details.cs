@@ -1,13 +1,15 @@
-﻿namespace AOMForum.Common.ViewConstants.Posts
+﻿namespace AOMForum.Common.ViewConstants.Tags
 {
-    public static class Index
+    public static class Details
     {
-        public const string ViewTitle = "Постове";
+        public const string ViewTitle = "Детайли на тага ";
 
-        public const string LogIn = "Влез";
-        public const string RegisterText = " във форума или се ";
-        public const string Register = "регистрирай";
-        
+        public const string AltImage = "Образ на ";
+
+        public const string EditAction = "Редактирай";
+        public const string DeleteAction = "Изтрий";
+        public const string BackToIndex = "Обратно към таговете";
+
         public const string PostsHeading = "Постове";
 
         public const string CreateNewPost = "Създай нов пост";
@@ -21,12 +23,8 @@
         public const string TagsTitle = "Тагове";
         public const string ActionsTitle = "Действия";
 
-        public const string AltImage = "Образ на ";
-
         public const string GoToCategoryAction = "Отиди на категорията";
-        public const string EditAction = "Редактирай";
-        public const string DeleteAction = "Изтрий";
-        public const string DetailsAction = "Покажи в детайли";        
+        public const string DetailsAction = "Покажи в детайли";
 
         public const string NoPostsFound = "Не са намерени постове";
     }

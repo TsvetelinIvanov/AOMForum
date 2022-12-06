@@ -7,7 +7,7 @@ namespace AOMForum.Services.Data.Interfaces
     {
         Task<int> GetPostsCountAsync(string? search = null);
 
-        Task<IEnumerable<PostListViewModel>> GetAllPostsListViewModelsAsync(string? search = null, int skip = 0, int? take = null);
+        Task<IEnumerable<PostListViewModel>> GetAllPostListViewModelsAsync(string? search = null, int skip = 0, int? take = null);
 
         PostsAllViewModel GetPostsAllViewModel(int postsCount, int postsPerPage, IEnumerable<PostListViewModel> postModels, int page = 1, string? search = null);
 

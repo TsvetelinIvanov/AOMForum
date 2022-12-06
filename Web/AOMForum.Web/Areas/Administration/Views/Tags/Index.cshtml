@@ -1,57 +1,43 @@
-﻿@model IEnumerable<AOMForum.Data.Models.Tag>
+﻿@using AOMForum.Web.Models.Tags
+@using static AOMForum.Common.ViewConstants.Administration.Tags.Index
+@model TagsAllViewModel
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = ViewTitle;
 }
 
-<h1>Index</h1>
-
-<p>
-    <a asp-action="Create">Create New</a>
+<h1 class="text-center">@this.ViewData["Title"]</h1>
+<hr />
+<form class="text-center" asp-area="Administration" asp-controller="Tags" asp-action="Index" method="get">
+    <div class="row">
+        <div class="form-group">
+            <label asp-for="Search"></label>
+            <input type="text" asp-for="Search" class="form-control" placeholder="@SearchPlaceholder" />
+            <button type="submit">@SubmitButtonInscription</button>
+        </div>
+    </div>
+</form>
+<p>     
+    <a asp-area="Administration" asp-controller="Tags" asp-action="Create">@CreateNewCategory</a>
 </p>
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.IsDeleted)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DeletedOn)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CreatedOn)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ModifiedOn)
-            </th>
-            <th></th>
+                @NameTitle
+            </th>            
+            <th>@ActionsTitle</th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
+@foreach (TagListViewModel tag in Model.Tags) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Name)
+                @Html.DisplayFor(modelItem => tag.Name)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.IsDeleted)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DeletedOn)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CreatedOn)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ModifiedOn)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                <a asp-area="Administration" asp-controller="Tags" asp-action="Delete" asp-route-id="@tag.Id">@DeleteAction</a><br />
+                <a asp-area="" asp-controller="Tags" asp-action="Details" asp-route-id="@tag.Id">@DetailsAction</a>
             </td>
         </tr>
 }

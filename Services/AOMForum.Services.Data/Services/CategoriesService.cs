@@ -140,6 +140,7 @@ namespace AOMForum.Services.Data.Services
 
             return model;
         }
+
         public async Task<bool> DeleteAsync(int id)
         {
             Category? category = await this.categoriesRepository.All().Where(c => c.Id == id).FirstOrDefaultAsync();

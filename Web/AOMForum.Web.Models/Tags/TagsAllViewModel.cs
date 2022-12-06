@@ -8,13 +8,13 @@
 
         public int PageIndex { get; set; }
 
-        public int TotalPages { get; set; }
+        public int TotalPagesCount { get; set; }
 
         public int NextPage
         {
             get
             {
-                if (this.PageIndex >= this.TotalPages)
+                if (this.PageIndex >= this.TotalPagesCount)
                 {
                     return 1;
                 }
@@ -29,7 +29,7 @@
             {
                 if (this.PageIndex <= 1)
                 {
-                    return this.TotalPages;
+                    return this.TotalPagesCount;
                 }
 
                 return this.PageIndex - 1;

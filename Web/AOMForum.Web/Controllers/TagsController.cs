@@ -7,151 +7,45 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using AOMForum.Data;
 using AOMForum.Data.Models;
+using AOMForum.Services.Data.Interfaces;
+using AOMForum.Web.Models.Tags;
+using static AOMForum.Common.DataConstants.Tag;
+using Microsoft.AspNetCore.Authorization;
 
 namespace AOMForum.Web.Controllers
 {
     public class TagsController : BaseController
     {
-        private readonly ApplicationDbContext _context;
+        private readonly ITagsService tagsService;
 
-        public TagsController(ApplicationDbContext context)
+        public TagsController(ITagsService tagsService)
         {
-            _context = context;
+            this.tagsService = tagsService;
         }
 
         // GET: Tags
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int page = 1, string? search = null)
         {
-              return View(await _context.Tags.ToListAsync());
+            int skip = (page - 1) * TagsPerPage;
+            int tagsCount = await this.tagsService.GetTagsCountAsync(search);
+            IEnumerable<TagListViewModel> tagModels = await this.tagsService.GetAllTagListViewModelsAsync(search, skip, TagsPerPage);
+
+            TagsAllViewModel viewModel = this.tagsService.GetTagsAllViewModel(tagsCount, TagsPerPage, tagModels, page, search);
+
+            return this.View(viewModel);
         }
 
         // GET: Tags/Details/1
-        public async Task<IActionResult> Details(int? id)
+        [Authorize]
+        public async Task<IActionResult> Details(int id)
         {
-            if (id == null || _context.Tags == null)
+            TagDetailsViewModel? viewModel = await this.tagsService.GetTagDetailsViewModelAsync(id);
+            if (viewModel == null)
             {
-                return NotFound();
+                return this.NotFound();
             }
 
-            var tag = await _context.Tags
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (tag == null)
-            {
-                return NotFound();
-            }
-
-            return View(tag);
-        }
-
-        // GET: Tags/Create
-        public IActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: Tags/Create
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Name,IsDeleted,DeletedOn,Id,CreatedOn,ModifiedOn")] Tag tag)
-        {
-            if (ModelState.IsValid)
-            {
-                _context.Add(tag);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            return View(tag);
-        }
-
-        // GET: Tags/Edit/1
-        public async Task<IActionResult> Edit(int? id)
-        {
-            if (id == null || _context.Tags == null)
-            {
-                return NotFound();
-            }
-
-            var tag = await _context.Tags.FindAsync(id);
-            if (tag == null)
-            {
-                return NotFound();
-            }
-            return View(tag);
-        }
-
-        // POST: Tags/Edit/1
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Name,IsDeleted,DeletedOn,Id,CreatedOn,ModifiedOn")] Tag tag)
-        {
-            if (id != tag.Id)
-            {
-                return NotFound();
-            }
-
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(tag);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!TagExists(tag.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
-            }
-            return View(tag);
-        }
-
-        // GET: Tags/Delete/1
-        public async Task<IActionResult> Delete(int? id)
-        {
-            if (id == null || _context.Tags == null)
-            {
-                return NotFound();
-            }
-
-            var tag = await _context.Tags
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (tag == null)
-            {
-                return NotFound();
-            }
-
-            return View(tag);
-        }
-
-        // POST: Tags/Delete/1
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            if (_context.Tags == null)
-            {
-                return Problem("Entity set 'ApplicationDbContext.Tags'  is null.");
-            }
-            var tag = await _context.Tags.FindAsync(id);
-            if (tag != null)
-            {
-                _context.Tags.Remove(tag);
-            }
-            
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
-        }
-
-        private bool TagExists(int id)
-        {
-          return _context.Tags.Any(e => e.Id == id);
+            return this.View(viewModel);
         }
     }
 }

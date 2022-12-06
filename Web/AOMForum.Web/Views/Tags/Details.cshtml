@@ -1,14 +1,16 @@
-﻿@model AOMForum.Data.Models.Tag
+﻿@using AOMForum.Web.Models.Tags
+@using AOMForum.Web.Models.Posts
+@using static AOMForum.Common.ViewConstants.Tags.Details
+@using static AOMForum.Common.GlobalConstants
+@model TagDetailsViewModel
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = ViewTitle + Model.Name;
 }
 
-<h1>Details</h1>
-
+<h1 class="text-center">@this.ViewData["Title"]</h1>
+<hr />
 <div>
-    <h4>Tag</h4>
-    <hr />
     <dl class="row">
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Name)
@@ -16,33 +18,89 @@
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.Name)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.IsDeleted)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.IsDeleted)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.DeletedOn)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.DeletedOn)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.CreatedOn)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.CreatedOn)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ModifiedOn)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ModifiedOn)
-        </dd>
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    @if (this.User.IsInRole(AdministratorRoleName))
+    {
+        <a asp-area="Administration" asp-controller="Tags" asp-action="Delete" asp-route-id="@Model.Id">@DeleteAction</a>
+        <br />
+    }
+    <a asp-area="" asp-controller="Tags" asp-action="Index">@BackToIndex</a>
 </div>
+
+<h3 class="text-center">@PostsHeading</h3>
+<p>
+    <a asp-area="" asp-controller="Posts" asp-action="Create">@CreateNewPost</a>
+</p>
+@if (Model.Posts.Any())
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @TitleTitle
+                </th>
+                <th>
+                    @VotesCountTitle
+                </th>
+                <th>
+                    @CommentsCountTitle
+                </th>
+                <th>
+                    @AuthorTitle
+                </th>
+                <th>
+                    @AuthorImageTitle
+                </th>
+                <th>
+                    @CategoryTitle
+                </th>
+                <th>
+                    @TagsTitle
+                </th>            
+                <th>
+                    @ActionsTitle
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (PostListViewModel post in Model.Posts)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => post.Title)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => post.VotesCount)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => post.CommentsCount)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => post.AuthorUserName)
+                    </td>
+                    <td>
+                        <img src="@post.AuthorProfilePictureURL" alt="@(AltImage + post.AuthorUserName)" width="100" />
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => post.Category.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => string.Join(", ", post.Tags.Select(t => t.Name)))
+                    </td>            
+                    <td>
+                        <a asp-area="" asp-controller="Categories" asp-action="Details" asp-route-id="@post.Category.Id">@GoToCategoryAction</a> |
+                        <a asp-area="" asp-controller="Posts" asp-action="Details" asp-route-id="@post.Id">@DetailsAction</a> | 
+                        <a asp-area="" asp-controller="Posts" asp-action="Edit" asp-route-id="@post.Id">@EditAction</a> | 
+                        <a asp-area="" asp-controller="Posts" asp-action="Delete" asp-route-id="@post.Id">@DeleteAction</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+        <p>@NoPostsFound</p>
+}

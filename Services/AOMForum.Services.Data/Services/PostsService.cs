@@ -35,7 +35,7 @@ namespace AOMForum.Services.Data.Services
             return count;
         }
 
-        public async Task<IEnumerable<PostListViewModel>> GetAllPostsListViewModelsAsync(string? search = null, int skip = 0, int? take = null)
+        public async Task<IEnumerable<PostListViewModel>> GetAllPostListViewModelsAsync(string? search = null, int skip = 0, int? take = null)
         {
             IQueryable<Post> posts = this.postsRepository.All()
                 .Include(p => p.Author)

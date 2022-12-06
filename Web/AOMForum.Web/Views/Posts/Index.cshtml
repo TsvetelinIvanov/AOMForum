@@ -66,6 +66,7 @@ else if (Model.TotalPagesCount > 0 && Model.Search != null)
     </div>
 }
 
+<h3 class="text-center">@PostsHeading</h3>
 <p>
     <a asp-area="" asp-controller="Posts" asp-action="Create">@CreateNewPost</a>
 </p>
@@ -126,7 +127,7 @@ else if (Model.TotalPagesCount > 0 && Model.Search != null)
                 @Html.DisplayFor(modelItem => string.Join(", ", post.Tags.Select(t => t.Name)))
             </td>            
             <td>
-                <a asp-area="" asp-controller="Categories" asp-action="Details" asp-route-id="@post.Category.Id">@EditAction</a> | 
+                <a asp-area="" asp-controller="Categories" asp-action="Details" asp-route-id="@post.Category.Id">@GoToCategoryAction</a> | 
                 <a asp-area="" asp-controller="Posts" asp-action="Edit" asp-route-id="@post.Id">@EditAction</a> | 
                 <a asp-area="" asp-controller="Posts" asp-action="Details" asp-route-id="@post.Id">@DetailsAction</a> | 
                 <a asp-area="" asp-controller="Posts" asp-action="Delete" asp-route-id="@post.Id">@DeleteAction</a>

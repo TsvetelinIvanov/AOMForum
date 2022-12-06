@@ -23,7 +23,7 @@ namespace AOMForum.Web.Controllers
         {
             int skip = (page - 1) * PostsPerPage;
             int postsCount = await this.postsService.GetPostsCountAsync(search);
-            IEnumerable<PostListViewModel> postModels = await this.postsService.GetAllPostsListViewModelsAsync(search, skip, PostsPerPage);
+            IEnumerable<PostListViewModel> postModels = await this.postsService.GetAllPostListViewModelsAsync(search, skip, PostsPerPage);
 
             PostsAllViewModel viewModel = this.postsService.GetPostsAllViewModel(postsCount, PostsPerPage, postModels, page, search);
             
