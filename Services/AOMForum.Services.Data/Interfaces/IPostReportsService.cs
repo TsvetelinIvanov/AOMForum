@@ -10,7 +10,7 @@ namespace AOMForum.Services.Data.Interfaces
 
         Task<PostReportInputModel?> GetPostReportInputModelAsync(int postId);
 
-        Task<bool> CreateAsync(string? description, int postId, string? authorId);
+        Task<bool> CreateAsync(string? content, int postId, string? authorId);
 
         Task<PostReportDeleteModel?> GetPostReportDeleteModelAsync(int id);
 

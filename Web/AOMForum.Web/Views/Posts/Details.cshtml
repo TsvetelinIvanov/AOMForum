@@ -118,7 +118,7 @@
                     <div>
                         <a asp-area="" asp-controller="Posts" asp-action="Create">@CreateNewPost</a> |                        
                         <a asp-area="" asp-controller="PostReports" asp-action="Create" asp-route-id="@Model.Id">@CreateReport</a> |
-                        <a asp-area="" asp-controller="Categories" asp-action="Details" asp-route-id="@Model?.Category.Id">@GoToCategory</a> |
+                        <a asp-area="" asp-controller="Categories" asp-action="Details" asp-route-id="@Model.Category.Id">@GoToCategory</a> |
                         <a asp-area="" asp-controller="Posts" asp-action="Index">@BackToIndex</a>
                         @if (this.Model.AuthorId == this.User.Id() || this.User.IsInRole(AdministratorRoleName))
                         {

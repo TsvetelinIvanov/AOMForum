@@ -3,15 +3,13 @@
 @model PostReportDeleteModel
 
 @{
-    ViewData["Title"] = ViewTitle + Model.PostTitle;
+    ViewData["Title"] = ViewTitle;
 }
 
 <h1 class="text-center">@this.ViewData["Title"]</h1>
 <hr />
 <h3>@SureToDelete</h3>
-<div>
-    <h4>PostReport</h4>
-    <hr />
+<div>    
     <dl class="row">
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.ShortContent)
@@ -46,8 +44,8 @@
     </dl>    
     <form asp-area="Administration" asp-controller="PostReports" asp-action="Delete" method="post">
         <input type="hidden" asp-for="Id" />
-        <input type="submit" value="@InputSubmitValue" class="btn btn-danger" /> |
+        <input type="submit" value="@InputSubmitValue" class="btn btn-danger" />
     </form>
-    <a asp-area="" asp-controller="Post" asp-action="Details" asp-route-id="@Model.PostId">@GoToPost</a> |
+    <a asp-area="" asp-controller="Posts" asp-action="Details" asp-route-id="@Model.PostId">@GoToPost</a> |
     <a asp-area="Administration" asp-controller="PostReports" asp-action="Index">@BackToIndex</a>
 </div>

@@ -89,7 +89,7 @@
             public const string DisplayContent = "Съдържание";
             public const string DisplayShortContent = "Съкратено съдържание";
             public const string DisplayCommentContent = "Съдържание на коментара";
-            public const string DisplayCommentShortContent = "Кратко съдържание на коментара";
+            public const string DisplayCommentShortContent = "Съкратено съдържание на коментара";
             public const string DisplayCreatedOn = "Създаден на";
         }
 

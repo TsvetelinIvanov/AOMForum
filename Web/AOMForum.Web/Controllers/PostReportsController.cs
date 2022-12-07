@@ -36,7 +36,11 @@ namespace AOMForum.Web.Controllers
                 return this.View(inputModel);
             }
 
-            await this.postReportsService.CreateAsync(inputModel.Content, inputModel.PostId, this.User.Id());
+            bool isCreated = await this.postReportsService.CreateAsync(inputModel.Content, inputModel.PostId, this.User.Id());
+            if (!isCreated)
+            {
+                return this.BadRequest();
+            }
 
             return this.RedirectToAction("Details", "Posts", new { id = inputModel.PostId });
         }

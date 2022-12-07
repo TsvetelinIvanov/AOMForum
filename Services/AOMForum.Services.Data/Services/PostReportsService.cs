@@ -41,7 +41,7 @@ namespace AOMForum.Services.Data.Services
             PostReport? postReport = await this.postReportsRepository.All()
                 .Include(pr => pr.Post)
                 .Include(pr => pr.Author)
-                .AsNoTracking().Where(c => c.Id == id).FirstOrDefaultAsync();
+                .AsNoTracking().Where(p => p.Id == id).FirstOrDefaultAsync();
             if (postReport == null)
             {
                 return null;
@@ -107,7 +107,7 @@ namespace AOMForum.Services.Data.Services
                 return null;
             }
 
-            PostReportDeleteModel postReportDeleteModel= new PostReportDeleteModel()
+            PostReportDeleteModel deleteModel = new PostReportDeleteModel()
             {
                 Id = postReport.Id,
                 Content = postReport.Content,
@@ -118,7 +118,7 @@ namespace AOMForum.Services.Data.Services
                 AuthorProfilePictureURL = postReport.Author.ProfilePictureURL
             };
 
-            return postReportDeleteModel;
+            return deleteModel;
         }
 
         public async Task<bool> DeleteAsync(int id)
@@ -133,6 +133,6 @@ namespace AOMForum.Services.Data.Services
             await this.postReportsRepository.SaveChangesAsync();
 
             return postReport.IsDeleted;
-        }        
+        }
     }
 }

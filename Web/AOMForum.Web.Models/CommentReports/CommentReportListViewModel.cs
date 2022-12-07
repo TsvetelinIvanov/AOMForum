@@ -53,6 +53,7 @@ namespace AOMForum.Web.Models.CommentReports
         [Display(Name = DisplayUserName)]
         public string? AuthorUserName { get; set; }
 
+        [Display(Name = DisplayProfilePictureURL)]
         public string? AuthorProfilePictureURL { get; set; }
     }
 }

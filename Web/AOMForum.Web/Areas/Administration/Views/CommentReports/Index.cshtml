@@ -1,69 +1,55 @@
-﻿@model IEnumerable<AOMForum.Data.Models.CommentReport>
+﻿@using AOMForum.Web.Models.CommentReports
+@using static AOMForum.Common.ViewConstants.Administration.CommentReports.Index
+@model IEnumerable<CommentReportListViewModel>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = ViewTitle;
 }
 
-<h1>Index</h1>
-
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
+<h1 class="text-center">@this.ViewData["Title"]</h1>
+<hr />
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Content)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Comment)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Author)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.IsDeleted)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DeletedOn)
+                @Html.DisplayNameFor(model => model.ShortContent)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.CreatedOn)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ModifiedOn)
+                @Html.DisplayNameFor(model => model.ShortCommentContent)
             </th>
-            <th></th>
+            <th>
+                @Html.DisplayNameFor(model => model.AuthorUserName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AuthorProfilePictureURL)
+            </th>            
+            <th>@Actions</th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
+@foreach (CommentReportListViewModel report in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Content)
+                @Html.DisplayFor(modelItem => report.ShortContent)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Comment.AuthorId)
+                @Html.DisplayFor(modelItem => report.CreatedOn)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Author.Id)
+                @Html.DisplayFor(modelItem => report.ShortCommentContent)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.IsDeleted)
+                @Html.DisplayFor(modelItem => report.AuthorUserName)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.DeletedOn)
-            </td>
+                 <img src="@report.AuthorProfilePictureURL" alt="@(AltImage + report.AuthorUserName)" width="100" />
+            </td>            
             <td>
-                @Html.DisplayFor(modelItem => item.CreatedOn)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ModifiedOn)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                <a asp-area="Administration" asp-controller="CommentReports" asp-action="Details" asp-route-id="@report.Id">@DetailsAction</a> |
+                <a asp-area="Administration" asp-controller="CommentReports" asp-action="Delete" asp-route-id="@report.Id">@DeleteAction</a>
             </td>
         </tr>
 }
