@@ -1,12 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using AOMForum.Data;
-using AOMForum.Data.Models;
+﻿using Microsoft.AspNetCore.Mvc;
 using AOMForum.Services.Data.Interfaces;
 using AOMForum.Web.Models.Tags;
 using static AOMForum.Common.DataConstants.Tag;

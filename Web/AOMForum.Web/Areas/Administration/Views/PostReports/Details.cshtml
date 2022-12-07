@@ -1,44 +1,20 @@
-﻿@model AOMForum.Data.Models.PostReport
+﻿@using AOMForum.Web.Models.PostReports
+@using static AOMForum.Common.ViewConstants.Administration.PostReports.Details
+@model PostReportDetailsViewModel
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = ViewTitle + Model.PostTitle;
 }
 
-<h1>Details</h1>
-
-<div>
-    <h4>PostReport</h4>
-    <hr />
+<h1 class="text-center">@this.ViewData["Title"]</h1>
+<hr />
+<div>    
     <dl class="row">
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Content)
+            @Html.DisplayNameFor(model => model.SanitizedContent)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Content)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Post)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Post.AuthorId)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Author)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Author.Id)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.IsDeleted)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.IsDeleted)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.DeletedOn)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.DeletedOn)
+            @Html.DisplayFor(model => model.SanitizedContent)
         </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.CreatedOn)
@@ -47,14 +23,28 @@
             @Html.DisplayFor(model => model.CreatedOn)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ModifiedOn)
+            @Html.DisplayNameFor(model => model.PostTitle)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ModifiedOn)
+            @Html.DisplayFor(model => model.PostTitle)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.AuthorUserName)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.AuthorUserName)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.AuthorProfilePictureURL)
+        </dt>
+        <dd class = "col-sm-10">
+            <img src="@Model.AuthorProfilePictureURL" alt="@(AltImage + Model.AuthorUserName)" width="100" />
         </dd>
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <a asp-area="Administration" asp-controller="PostReports" asp-action="Delete" asp-route-id="@Model.Id">@DeleteAction</a> |    
+    <a asp-area="Administration" asp-controller="PostReports" asp-action="Index">@GoToIndex</a> |
+    <a asp-area="" asp-controller="Post" asp-action="Details" asp-route-id="@Model.PostId">@GoToPost</a> |
+    <a asp-area="" asp-controller="Post" asp-action="Index">@GoToPostIndex</a>
 </div>

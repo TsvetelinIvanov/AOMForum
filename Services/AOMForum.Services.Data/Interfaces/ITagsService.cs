@@ -17,17 +17,5 @@ namespace AOMForum.Services.Data.Interfaces
         Task<TagDeleteModel?> GetDeleteModelAsync(int id);
 
         Task<bool> DeleteAsync(int id);
-
-        Task<bool> IsExistingAsync(int id);
-
-        Task<bool> IsExistingAsync(string name);
-
-        Task<bool> AreExistingAsync(IEnumerable<int> ids);
-
-        Task<TModel> GetByIdAsync<TModel>(int id);
-
-        Task<IEnumerable<TModel>> GetAllAsync<TModel>(string search = null, int skip = 0, int? take = null);
-
-        Task<IEnumerable<TModel>> GetAllByPostIdAsync<TModel>(int postId);
     }
 }

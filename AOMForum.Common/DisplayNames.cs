@@ -53,7 +53,7 @@
             public const string DisplayTitle = "Заглавие";
             public const string DisplayContent = "Съдържание";
             public const string DisplayImageUrl = "Образ";
-            public const string DisplayShortContent = "Кратко съдържание";
+            public const string DisplayShortContent = "Съкратено съдържание";
             public const string DisplayCreatedOn = "Създаден на";
             public const string DisplayCommentsCount = "Брой на коментарите";
             public const string DisplayVotesCount = "Гласове";
@@ -65,15 +65,17 @@
         public static class PostReport
         {
             public const string DisplayContent = "Съдържание";
-            public const string DisplayShortContent = "Кратко съдържание";
-            public const string DisplayPostTitle = "Заглавие на поста";
+            public const string DisplayShortContent = "Съкратено съдържание";
             public const string DisplayCreatedOn = "Създаден на";
+            public const string DisplayPostTitle = "Заглавие на поста";
+            public const string DisplayUserName = "Потребителско име";
+            public const string DisplayProfilePictureURL = "Образ";
         }
 
         public static class Comment
         {
             public const string DisplayContent = "Съдържание";
-            public const string DisplayShortContent = "Кратко съдържание";
+            public const string DisplayShortContent = "Съкратено съдържание";
             public const string DisplayImageUrl = "Образ";
             public const string DisplayCreatedOn = "Създаден на";
             public const string DisplayVotesCount = "Гласове";
@@ -85,7 +87,7 @@
         public static class CommentReport
         {
             public const string DisplayContent = "Съдържание";
-            public const string DisplayShortContent = "Кратко съдържание";
+            public const string DisplayShortContent = "Съкратено съдържание";
             public const string DisplayCommentContent = "Съдържание на коментара";
             public const string DisplayCommentShortContent = "Кратко съдържание на коментара";
             public const string DisplayCreatedOn = "Създаден на";

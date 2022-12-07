@@ -36,6 +36,8 @@ namespace AOMForum.Web.Models.CommentReports
         [Display(Name = DisplayCreatedOn)]
         public string? CreatedOn { get; set; }
 
+        public int CommentId { get; set; }
+
         [Display(Name = DisplayCommentContent)]
         public string? CommentContent { get; set; }
 

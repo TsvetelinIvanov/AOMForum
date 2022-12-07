@@ -3,7 +3,6 @@ using System.ComponentModel.DataAnnotations;
 using static AOMForum.Common.GlobalConstants;
 using static AOMForum.Common.DataConstants.PostReport;
 using static AOMForum.Common.DisplayNames.PostReport;
-using static AOMForum.Common.DisplayNames.ApplicationUser;
 
 namespace AOMForum.Web.Models.PostReports
 {
@@ -42,6 +41,7 @@ namespace AOMForum.Web.Models.PostReports
         [Display(Name = DisplayUserName)]
         public string? AuthorUserName { get; init; }
 
+        [Display(Name = DisplayProfilePictureURL)]
         public string? AuthorProfilePictureURL { get; init; }
     }
 }

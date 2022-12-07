@@ -27,7 +27,7 @@
             @Html.DisplayNameFor(model => model.ImageUrl)
         </dt>
         <dd class = "col-sm-10">
-            <img src="@Model.ImageUrl" alt="@(AltImage +@Model.Name)" width="100" />
+            <img src="@Model.ImageUrl" alt="@(AltImage + @Model.Name)" width="100" />
         </dd>        
     </dl>
     <form asp-area="Administration" asp-controller="Categories" asp-action="Delete" method="post">

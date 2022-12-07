@@ -1,7 +1,6 @@
 ﻿using AOMForum.Data.Common.Repositories;
 using AOMForum.Data.Models;
 using AOMForum.Services.Data.Interfaces;
-using AOMForum.Web.Models.Categories;
 using AOMForum.Web.Models.Posts;
 using AOMForum.Web.Models.Tags;
 using Microsoft.EntityFrameworkCore;
@@ -29,7 +28,7 @@ namespace AOMForum.Services.Data.Services
 
             int count = await tags.CountAsync();
 
-            return count;            
+            return count;
         }
 
         public async Task<IEnumerable<TagListViewModel>> GetAllTagListViewModelsAsync(string? search = null, int skip = 0, int? take = null)
@@ -97,7 +96,7 @@ namespace AOMForum.Services.Data.Services
                 .AsNoTracking().Where(p => p.Id == postId).FirstOrDefaultAsync();
                 if (post != null)
                 {
-                    PostListViewModel postViewModel = new PostListViewModel() 
+                    PostListViewModel postViewModel = new PostListViewModel()
                     {
                         Id = post.Id,
                         Title = post.Title,
@@ -125,7 +124,7 @@ namespace AOMForum.Services.Data.Services
             viewModel.Posts = postViewModels;
 
             return viewModel;
-        }        
+        }
 
         public async Task<int> CreateAsync(string? name)
         {
@@ -170,69 +169,5 @@ namespace AOMForum.Services.Data.Services
 
             return tag.IsDeleted;
         }
-
-        public async Task<bool> IsExistingAsync(int id)
-            => await this.db.Tags.AnyAsync(t => t.Id == id && !t.IsDeleted);
-
-        public async Task<bool> IsExistingAsync(string name)
-            => await this.db.Tags.AnyAsync(t => t.Name == name && !t.IsDeleted);
-
-        public async Task<bool> AreExistingAsync(IEnumerable<int> ids)
-        {
-            foreach (var id in ids)
-            {
-                var isExisting = await this.db.Tags.AnyAsync(t => t.Id == id && !t.IsDeleted);
-                if (!isExisting)
-                {
-                    return false;
-                }
-            }
-
-            return true;
-        }
-
-        
-
-        public async Task<TModel> GetByIdAsync<TModel>(int id)
-            => await this.db.Tags
-                .AsNoTracking()
-                .Where(t => t.Id == id && !t.IsDeleted)
-                .ProjectTo<TModel>(this.mapper.ConfigurationProvider)
-                .FirstOrDefaultAsync();
-
-        public async Task<IEnumerable<TModel>> GetAllAsync<TModel>(string search = null, int skip = 0, int? take = null)
-        {
-            var queryable = this.db.Tags
-                .AsNoTracking()
-                .OrderByDescending(t => t.Posts
-                    .Count(p => !p.Post.IsDeleted))
-                .Where(t => !t.IsDeleted);
-
-            if (!string.IsNullOrWhiteSpace(search))
-            {
-                queryable = queryable.Where(t => t.Name.Contains(search));
-            }
-
-            if (take.HasValue)
-            {
-                queryable = queryable.Skip(skip).Take(take.Value);
-            }
-
-            var tags = await queryable
-                 .ProjectTo<TModel>(this.mapper.ConfigurationProvider)
-                 .ToListAsync();
-
-            return tags;
-        }
-
-        public async Task<IEnumerable<TModel>> GetAllByPostIdAsync<TModel>(int postId)
-            => await this.db.PostsTags
-                .AsNoTracking()
-                .Where(pt => pt.PostId == postId && !pt.Post.IsDeleted)
-                .Select(pt => pt.Tag)
-                .Where(t => !t.IsDeleted)
-                .ProjectTo<TModel>(this.mapper.ConfigurationProvider)
-                .ToListAsync();
     }
-}
 }
