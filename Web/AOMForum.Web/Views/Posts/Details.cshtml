@@ -204,7 +204,7 @@
             var token = $("#votesForm input[name=__RequestVerificationToken]").val();
             var json = { postId: postId, isUpVote: isUpVote };
             $.ajax({
-                url: "/api/votes",
+                url: "/api/postvotes",
                 type: "POST",
                 data: JSON.stringify(json),
                 contentType: "application/json; charset=utf-8",

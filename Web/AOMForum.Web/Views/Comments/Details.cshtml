@@ -66,6 +66,32 @@
     }
 </div>
 
+<div class="card-header">
+    <div class="media flex-wrap w-100 align-items-center">
+        <img src="https://res.cloudinary.com/dxfq3iotg/image/upload/v1574583246/AAA/2.jpg" class="d-block ui-w-40 rounded-circle" alt="">
+        <div class="media-body ml-3">
+            @Model.AuthorUserName
+            <div class="text-muted small">
+                <time datetime="@Model.CreatedOn"></time>
+            </div>
+        </div>
+        <div class="text-muted small ml-3">
+            <form id="votesForm" method="post"></form>
+            <div>
+                <a href="#" onclick="sendVote(@Model.Id, true)">
+                    <i class="fa fa-thumbs-up"></i>
+                </a>
+            </div>
+            <div id="votesCount">@Model.VotesCount</div>
+            <div>
+                <a href="#" onclick="sendVote(@Model.Id, false)">
+                    <i class="fa fa-thumbs-down"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
 <h3 class="text-center">@PostCommentsHeading</h3>
 <table class="table">
     <thead>
@@ -123,3 +149,23 @@
         }
     </tbody>
 </table>
+
+@section Scripts {
+    <script>
+        function sendVote(commentId, isUpVote) {
+            var token = $("#votesForm input[name=__RequestVerificationToken]").val();
+            var json = { commentId: commentId, isUpVote: isUpVote };
+            $.ajax({
+                url: "/api/commentvotes",
+                type: "POST",
+                data: JSON.stringify(json),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                headers: { 'X-CSRF-TOKEN': token },
+                success: function (data) {
+                    $("#votesCount").html(data.votesCount);
+                }
+            });
+        }
+    </script>
+}
