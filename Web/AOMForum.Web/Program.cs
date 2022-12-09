@@ -13,6 +13,7 @@ using AOMForum.Services.Mapping;
 using AOMForum.Web.Models;
 using System.Reflection;
 using AOMForum.Data.Seeding;
+using AOMForum.Web.Hubs;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
@@ -64,6 +65,8 @@ builder.Services.AddTransient<IRelationshipsService, RelationshipsService>();
 builder.Services.AddTransient<IMessagesService, MessagesService>();
 builder.Services.AddTransient<ISettingsService, SettingsService>();
 
+builder.Services.AddSignalR();
+
 WebApplication app = builder.Build();
 
 AutoMapperConfig.RegisterMappings(typeof(ErrorViewModel).GetTypeInfo().Assembly);//
@@ -110,5 +113,7 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 app.MapRazorPages();
+
+app.MapHub<MessagesHub>("/messageshub");
 
 app.Run();

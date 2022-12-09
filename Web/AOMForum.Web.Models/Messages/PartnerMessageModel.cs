@@ -5,11 +5,11 @@ using static AOMForum.Common.DisplayNames.ApplicationUser;
 
 namespace AOMForum.Web.Models.Messages
 {
-    public class MessageWithUserModel
+    public class PartnerMessageModel
     {
         private readonly IHtmlSanitizer sanitizer;
 
-        public MessageWithUserModel()
+        public PartnerMessageModel()
         {
             this.sanitizer = new HtmlSanitizer();
         }
@@ -20,14 +20,15 @@ namespace AOMForum.Web.Models.Messages
         [Display(Name = DisplayContent)]
         public string? SanitizedContent => this.sanitizer.Sanitize(this.Content ?? string.Empty);
 
-        public string? AuthorId { get; init; }
-
-        [Display(Name = DisplayUserName)]
-        public string? AuthorUserName { get; init; }
-
-        public string? AuthorProfilePicture { get; init; }
-
         [Display(Name = DisplayCreatedOn)]
         public string? CreatedOn { get; init; }
+
+        public string? SenderId { get; init; }
+
+        [Display(Name = DisplayUserName)]
+        public string? SenderUserName { get; init; }
+
+        [Display(Name = DisplayProfilePictureURL)]
+        public string? SenderProfilePictureURL { get; init; }
     }
 }

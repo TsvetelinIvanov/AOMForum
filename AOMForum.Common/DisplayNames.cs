@@ -97,6 +97,8 @@
         {
             public const string DisplayContent = "Съдържание";
             public const string DisplayCreatedOn = "Създаден на";
+            public const string DisplayLastMessage = "Последно съобщение";
+            public const string DisplayLastMessageActivity = "Последна активност";
         }
 
         public static class Setting

@@ -1,0 +1,61 @@
+﻿@using AOMForum.Web.Models.Messages
+@using static AOMForum.Common.ViewConstants.Messages.LastMessage
+@model IEnumerable<LastMessageModel>
+
+<div class="text-center">
+    @if (this.Model.Any())
+    {
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        @LastMessageTitle
+                    </th>
+                    <th>
+                        @LastMessageActivityTitle
+                    </th>
+                    <th>
+                        @UserNameTitle
+                    </th>
+                    <th>
+                        @ProfilePictureURLTitle
+                    </th>
+                    <th>
+                        @ToUserMessagesTitle
+                    </th>                    
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (LastMessageModel item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.LastMessage)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.LastMessageActivity)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.UserName)
+                        </td>
+                        <td>
+                            <img src="@item.ProfilePictureURL" alt="@(AltImage + item.UserName)" width="100" />
+                        </td>
+                        <td>
+                            <a onclick="location.href = '/Chat/WithUser/@item.Id';" href="#" class="tt-item">@GoToUserMessages</a>
+                        </td>                        
+                    </tr>
+                }
+            </tbody>
+        </table>        
+    }
+    else
+    {
+        <div>
+            <p>
+                @NoMessagesAvailable<br />
+                @ButYouCan <a asp-area="" asp-controller="Messages" asp-action="Create">@Send</a> @OneNow.
+            </p>
+        </div>
+    }
+</div>

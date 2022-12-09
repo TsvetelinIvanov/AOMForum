@@ -1,0 +1,170 @@
+﻿@using AOMForum.Web.Models.Messages
+@using static AOMForum.Common.ViewConstants.Messages.PartnerMessages
+@model PartnerAllMessagesModel
+
+@{
+    ViewData["Title"] = ViewTitle + Model.MessagePartner.UserName;
+}
+
+<h1 class="text-center">@this.ViewData["Title"]</h1>
+<hr />
+
+<vc:last-message></vc:last-message>
+
+<div>
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @UserNameTitle
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.MessagePartner.UserName)
+        </dd>
+        <dt class = "col-sm-2">
+            @ProfilePictureURLTitle
+        </dt>
+        <dd class = "col-sm-10">
+            <img src="@Model.MessagePartner.ProfilePictureURL" alt="@(AltImage + Model.MessagePartner.UserName)" width="100" />
+        </dd>
+    </dl>
+</div>
+
+<h3 class="text-center">@MessagesHeading</h3>
+<table id="messagesList" class="table">
+    <thead>
+        <tr>
+            <th>
+                @MessageContentTitle
+            </th>            
+            <th>
+                @CreatedOnTitle
+            </th>
+            <th>
+                @UserNameTitle
+            </th>
+            <th>
+                @ProfilePictureURLTitle
+            </th>
+            <th>
+                @GoToUserTitle
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (PartnerMessageModel message in Model.Messages)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => message.SanitizedContent)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => message.CreatedOn)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => message.SenderUserName)
+                </td>
+                <td>
+                    <img src="@message.SenderProfilePictureURL" alt="@(AltImage + message.SenderUserName)" width="100" />
+                </td>
+                <td>
+                    <a asp-area="" asp-controller="Relationships" asp-action="------------------" asp-route-id="@message.SenderId">@GoToUserAction</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<div id="whoIsTyping"></div>
+<div id="addMessageForm">
+    <div class="form-group">
+        <textarea id="messageInput" class="form-control" placeholder="@WriteMessagePlaceholder"></textarea>
+    </div>
+    <div class="pt-row">
+        <div class="col-auto ml-auto">
+            <button id="sendButton" class="btn btn-secondary btn-custom">Send</button>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $('#messagesList')[0].scrollTop = $('#messagesList')[0].scrollHeight;
+        $('#messageInput').on('keypress',
+            function (e) {
+                if (e.which === 13 && !e.shiftKey) {
+                    e.preventDefault();
+                    $('#sendButton').click();
+                }
+            });
+        $("#messageInput").on('change keyup copy paste cut',
+            function () {
+                if (!this.value) {
+                    connection.invoke("WhoIsTyping", '');
+                } else {
+                    connection.invoke("WhoIsTyping", '@this.User.Identity.Name');
+                }
+            });
+        var connection = new signalR.HubConnectionBuilder()
+            .withUrl("/messageshub")
+            .build();
+        connection.on("SayWhoIsTyping",
+            function (name) {
+                if (name === null || name === "") {
+                    $("#whoIsTyping").html('');
+                } else {
+                    var whoIsTypingInfo = `<em>&nbsp;&nbsp;${name} @TypingInfo </em>`;
+                    $("#whoIsTyping").html(whoIsTypingInfo);
+                }
+            });
+        connection.on("ReceiveMessage",
+            function (message) {
+                var messageInfo = `
+        <table class="table">
+            <tbody>
+                <tr>
+                    <td>
+                        ${message.sanitizedContent}
+                    </td>
+                    <td>
+                        ${message.createdOn}
+                    </td>
+                    <td>
+                        ${message.senderUserName}
+                    </td>
+                    <td>
+                        <img src="${message.senderProfilePictureURL}" width="100" />
+                    </td>
+                    <td>
+                        <a href="/Relationships/-------------/${message.senderId}"></a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>`;                
+                $("#messagesList").append(messageInfo);
+                $('#messagesList')[0].scrollTop = $('#messagesList')[0].scrollHeight;
+            });
+        $("#sendButton").click(function () {
+            var message = $.trim($('#messageInput').val());
+            $('#messageInput').val('');
+            connection.invoke("SendMessage", escapeHtml(message), '@Model.MessagePartner.Id');
+        });
+        connection.start().catch(function (err) {
+            return console.error(err.toString());
+        });
+        function escapeHtml(unsafe) {
+            return unsafe
+                .replace(':)', "🙂")
+                .replace(':(', "🙁")
+                .replace(';)', "😉")
+                .replace(':*', "😘")
+                .replace(/<3/g, "❤")
+                .replace(/:D/g, "😀")
+                .replace(/:P/g, "😜")
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#039;");
+        }
+    </script>
+    <partial name="_ValidationScriptsPartial" />
+}

@@ -1,71 +1,14 @@
-﻿@model IEnumerable<AOMForum.Data.Models.Message>
+﻿@using static AOMForum.Common.ViewConstants.Messages.Index
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = ViewTitle;
 }
 
-<h1>Index</h1>
+<h1 class="text-center">@this.ViewData["Title"]</h1>
+<hr />
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-area="" asp-controller="Messages" asp-action="Create">@CreateAction</a>
 </p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Content)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Sender)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Receiver)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.IsDeleted)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DeletedOn)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CreatedOn)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ModifiedOn)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Content)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Sender.Id)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Receiver.Id)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IsDeleted)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DeletedOn)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CreatedOn)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ModifiedOn)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+
+<vc:last-message></vc:last-message>

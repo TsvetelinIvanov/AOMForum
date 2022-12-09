@@ -1,61 +1,62 @@
-﻿@model AOMForum.Data.Models.Message
+﻿@using AOMForum.Web.Models.Messages
+@using static AOMForum.Common.ViewConstants.Messages.Create
+@model MessageInputModel
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = ViewTitle;
 }
 
-<h1>Create</h1>
-
-<h4>Message</h4>
+<h1 class="text-center">@this.ViewData["Title"]</h1>
 <hr />
+
+<vc:last-message></vc:last-message>
+
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="form-group">
+            <label>@SendTo</label>
+            <select asp-for="ReceiverId" id="select-partner">
+            @foreach (MessagePartnerModel possiblePartner in Model.MessagePartners)
+            {
+                <option value="@possiblePartner.Id">@possiblePartner.UserName</option>
+            }
+            </select>
+            <span asp-validation-for="ReceiverId"></span>
+        </div>
+        <form id="addMessageForm" asp-area="" asp-controller="Messages" asp-action="Create" method="post">
+            <div asp-validation-summary="All"></div>
+            <input value="@Model.ReceiverId" name="ReceiverId" hidden />
             <div class="form-group">
-                <label asp-for="Content" class="control-label"></label>
-                <input asp-for="Content" class="form-control" />
-                <span asp-validation-for="Content" class="text-danger"></span>
+                <textarea id="messageBox" asp-for="Content" class="form-control" placeholder="@WriteMessagePlaceholder"></textarea>
+                <span asp-validation-for="Content"></span>
             </div>
             <div class="form-group">
-                <label asp-for="SenderId" class="control-label"></label>
-                <select asp-for="SenderId" class ="form-control" asp-items="ViewBag.SenderId"></select>
-            </div>
-            <div class="form-group">
-                <label asp-for="ReceiverId" class="control-label"></label>
-                <select asp-for="ReceiverId" class ="form-control" asp-items="ViewBag.ReceiverId"></select>
-            </div>
-            <div class="form-group form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="IsDeleted" /> @Html.DisplayNameFor(model => model.IsDeleted)
-                </label>
-            </div>
-            <div class="form-group">
-                <label asp-for="DeletedOn" class="control-label"></label>
-                <input asp-for="DeletedOn" class="form-control" />
-                <span asp-validation-for="DeletedOn" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="CreatedOn" class="control-label"></label>
-                <input asp-for="CreatedOn" class="form-control" />
-                <span asp-validation-for="CreatedOn" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ModifiedOn" class="control-label"></label>
-                <input asp-for="ModifiedOn" class="form-control" />
-                <span asp-validation-for="ModifiedOn" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <button id="sendButton" type="submit" class="btn btn-primary">@CreateAction</button>
             </div>
         </form>
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
-
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script>
+        $('#messageBox').on('keypress', function (e) {
+            if (e.which === 13 && !e.shiftKey) {
+                e.preventDefault();
+                $('#sendButton').click();
+            }
+        });
+        $('#select-partner').on('change', function () {
+            var valueSelected = this.value;
+            $("#addMessageForm input[name='ReceiverId']").val(valueSelected);
+        });
+        var $select = $('#select-partner').selectize({
+            create: false,
+            sortField: 'text',
+            placeholder: '@SelectPartnerPlaceholder'
+        });
+        $select.each(function () {
+            $(this)[0].selectize.clear(true);
+        });
+    </script>
+    <partial name="_ValidationScriptsPartial" />
 }

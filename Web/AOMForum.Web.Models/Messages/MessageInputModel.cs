@@ -5,16 +5,16 @@ using static AOMForum.Common.DataErrorMessages;
 
 namespace AOMForum.Web.Models.Messages
 {
-    public class MessageSentModel
+    public class MessageInputModel
     {
         [Display(Name = DisplayContent)]
         [Required(ErrorMessage = RequiredErrorMessage)]
         [StringLength(ContentMaxLength, MinimumLength = ContentMinLength, ErrorMessage = StringLengthErrorMessage)]
-        public string? Content { get; init; }
+        public string? Content { get; set; }
 
         [Required]
-        public string? ReceiverId { get; init; }
+        public string? ReceiverId { get; set; }
 
-        public IEnumerable<MessageUserModel> Users { get; set; } = new HashSet<MessageUserModel>();
+        public IEnumerable<MessagePartnerModel> MessagePartners { get; set; } = new HashSet<MessagePartnerModel>();
     }
 }

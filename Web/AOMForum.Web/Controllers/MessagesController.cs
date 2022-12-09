@@ -7,166 +7,76 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using AOMForum.Data;
 using AOMForum.Data.Models;
+using Microsoft.AspNetCore.Authorization;
+using AOMForum.Services.Data.Interfaces;
+using AOMForum.Web.Models.Messages;
+using AOMForum.Web.Infrastructure;
 
 namespace AOMForum.Web.Controllers
 {
+    [Authorize]
     public class MessagesController : BaseController
     {
-        private readonly ApplicationDbContext _context;
+        private readonly IMessagesService messagesService;
 
-        public MessagesController(ApplicationDbContext context)
+        public MessagesController(IMessagesService messagesService)
         {
-            _context = context;
+            messagesService = messagesService;
         }
 
         // GET: Messages
-        public async Task<IActionResult> Index()
-        {
-            var applicationDbContext = _context.Messages.Include(m => m.Receiver).Include(m => m.Sender);
-            return View(await applicationDbContext.ToListAsync());
+        public IActionResult Index()        {
+            
+            return this.View();
         }
 
-        // GET: Messages/Details/1
-        public async Task<IActionResult> Details(int? id)
+        // GET: Messages/PartnerMessages/id
+        public async Task<IActionResult> PartnerMessages(string? id)
         {
-            if (id == null || _context.Messages == null)
+            PartnerAllMessagesModel? viewModel = await this.messagesService.GetPartnerAllMessagesModelAsync(this.User.Id(), id);
+            if (viewModel == null)
             {
-                return NotFound();
+                return this.NotFound();
             }
 
-            var message = await _context.Messages
-                .Include(m => m.Receiver)
-                .Include(m => m.Sender)
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (message == null)
-            {
-                return NotFound();
-            }
-
-            return View(message);
+            return View(viewModel);
         }
 
         // GET: Messages/Create
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
-            ViewData["ReceiverId"] = new SelectList(_context.Users, "Id", "Id");
-            ViewData["SenderId"] = new SelectList(_context.Users, "Id", "Id");
-            return View();
+            MessageInputModel? inputModel = await this.messagesService.GetMessageInputModelAsync(this.User.Id());
+
+            return View(inputModel);
         }
 
-        // POST: Messages/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        // POST: Messages/Create        
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Content,SenderId,ReceiverId,IsDeleted,DeletedOn,Id,CreatedOn,ModifiedOn")] Message message)
+        public async Task<IActionResult> Create(MessageInputModel? inputModel)
         {
-            if (ModelState.IsValid)
+            if (!this.ModelState.IsValid)
             {
-                _context.Add(message);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            ViewData["ReceiverId"] = new SelectList(_context.Users, "Id", "Id", message.ReceiverId);
-            ViewData["SenderId"] = new SelectList(_context.Users, "Id", "Id", message.SenderId);
-            return View(message);
-        }
-
-        // GET: Messages/Edit/1
-        public async Task<IActionResult> Edit(int? id)
-        {
-            if (id == null || _context.Messages == null)
-            {
-                return NotFound();
-            }
-
-            var message = await _context.Messages.FindAsync(id);
-            if (message == null)
-            {
-                return NotFound();
-            }
-            ViewData["ReceiverId"] = new SelectList(_context.Users, "Id", "Id", message.ReceiverId);
-            ViewData["SenderId"] = new SelectList(_context.Users, "Id", "Id", message.SenderId);
-            return View(message);
-        }
-
-        // POST: Messages/Edit/1
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Content,SenderId,ReceiverId,IsDeleted,DeletedOn,Id,CreatedOn,ModifiedOn")] Message message)
-        {
-            if (id != message.Id)
-            {
-                return NotFound();
-            }
-
-            if (ModelState.IsValid)
-            {
-                try
+                if (inputModel == null)
                 {
-                    _context.Update(message);
-                    await _context.SaveChangesAsync();
+                    inputModel = await this.messagesService.GetMessageInputModelAsync(this.User.Id());
                 }
-                catch (DbUpdateConcurrencyException)
+                else
                 {
-                    if (!MessageExists(message.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
+                    MessageInputModel? newInputModel = await this.messagesService.GetMessageInputModelAsync(this.User.Id());
+                    inputModel.MessagePartners = newInputModel != null ? newInputModel.MessagePartners : new List<MessagePartnerModel>();
                 }
-                return RedirectToAction(nameof(Index));
-            }
-            ViewData["ReceiverId"] = new SelectList(_context.Users, "Id", "Id", message.ReceiverId);
-            ViewData["SenderId"] = new SelectList(_context.Users, "Id", "Id", message.SenderId);
-            return View(message);
-        }
 
-        // GET: Messages/Delete/1
-        public async Task<IActionResult> Delete(int? id)
-        {
-            if (id == null || _context.Messages == null)
+                return this.View(inputModel);
+            }
+
+            bool isCreated = await this.messagesService.CreateAsync(inputModel.Content, this.User.Id(), inputModel.ReceiverId);
+            if (!isCreated)
             {
-                return NotFound();
+                return this.BadRequest();
             }
 
-            var message = await _context.Messages
-                .Include(m => m.Receiver)
-                .Include(m => m.Sender)
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (message == null)
-            {
-                return NotFound();
-            }
-
-            return View(message);
-        }
-
-        // POST: Messages/Delete/1
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            if (_context.Messages == null)
-            {
-                return Problem("Entity set 'ApplicationDbContext.Messages'  is null.");
-            }
-            var message = await _context.Messages.FindAsync(id);
-            if (message != null)
-            {
-                _context.Messages.Remove(message);
-            }
-            
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
-        }
-
-        private bool MessageExists(int id)
-        {
-          return _context.Messages.Any(e => e.Id == id);
+            return this.RedirectToAction(nameof(PartnerMessages), new { id = inputModel.ReceiverId });
         }
     }
 }
