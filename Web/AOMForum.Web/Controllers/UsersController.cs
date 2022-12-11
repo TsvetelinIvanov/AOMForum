@@ -14,6 +14,22 @@ namespace AOMForum.Web.Controllers
             this.usersService = usersService;
         }
 
+        // GET: Users/Index
+        public async Task<IActionResult> Index()
+        {
+            IEnumerable<UserListViewModel> viewModels = await this.usersService.GetUserListViewModelsAsync();
+            
+            return View(viewModels);
+        }
+
+        // GET: Users/AdminIndex
+        public async Task<IActionResult> AdminIndex()
+        {
+            IEnumerable<AdminListViewModel> viewModels = await this.usersService.GetAdminListViewModelsAsync();
+
+            return View(viewModels);
+        }
+
         // GET: Users/PostsIndex/id
         public async Task<IActionResult> PostsIndex(string? id)
         {

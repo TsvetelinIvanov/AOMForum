@@ -2,7 +2,8 @@
 {
     public static class GlobalConstants
     {
-        public const string SystemName = "AOM Forum";
+        //public const string SystemName = "AOM Forum";
+        public const string SystemName = "АОМ форум";
 
         public const string AdministratorRoleName = "Administrator";
         public const string AdministratorUserName = "Admin";

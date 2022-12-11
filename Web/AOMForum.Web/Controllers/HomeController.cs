@@ -1,4 +1,6 @@
-﻿using AOMForum.Web.Models;
+﻿using AOMForum.Services.Data.Interfaces;
+using AOMForum.Web.Models;
+using AOMForum.Web.Models.Home;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
@@ -6,16 +8,20 @@ namespace AOMForum.Web.Controllers
 {
     public class HomeController : BaseController
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly ILogger<HomeController> logger;
+        private readonly IUsersService usersService;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, IUsersService usersService)
         {
-            _logger = logger;
+            this.logger = logger;
+            this.usersService = usersService;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return this.View();
+            HomeViewModel viewModel = await this.usersService.GetHomeViewModelAsync();
+
+            return this.View(viewModel);
         }
 
         public IActionResult Privacy()

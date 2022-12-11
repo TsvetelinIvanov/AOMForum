@@ -1,7 +1,7 @@
 ﻿@using AOMForum.Web.Models.UserRelationships
-@using static AOMForum.Common.ViewConstants.Users.Index
+@using static AOMForum.Common.ViewConstants.Users.AdminIndex
 @using static AOMForum.Common.GlobalConstants
-@model IEnumerable<UserListViewModel>
+@model IEnumerable<AdminListViewModel>
 
 @{
     ViewData["Title"] = ViewTitle;
@@ -17,6 +17,9 @@
                 @Html.DisplayNameFor(model => model.UserName)
             </th>
             <th>
+                @Html.DisplayNameFor(model => model.Email)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.FullName)
             </th>
             <th>
@@ -29,6 +32,9 @@
                 @Html.DisplayNameFor(model => model.Gender)
             </th>
             <th>
+                @Html.DisplayNameFor(model => model.Biography)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.ProfilePictureURL)
             </th>
             <th>
@@ -37,11 +43,14 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (UserListViewModel user in Model)
+        @foreach (AdminListViewModel user in Model)
         {
             <tr>
                 <td>
                     @Html.DisplayFor(modelItem => user.UserName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => user.Email)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => user.FullName)
@@ -56,6 +65,9 @@
                     @Html.DisplayFor(modelItem => user.Gender)
                 </td>
                 <td>
+                    @Html.DisplayFor(modelItem => user.Biography)
+                </td>
+                <td>
                     <img src="@user.ProfilePictureURL" alt="@(AltImage + user.FullName)" width="100" />
                 </td>
                 <td>
@@ -64,8 +76,8 @@
                     <a asp-area="" asp-controller="Users" asp-action="CommentsIndex" asp-route-id="@user.Id">@GoToCommentsIndex</a> |
                     <a asp-area="" asp-controller="Users" asp-action="FollowersIndex" asp-route-id="@user.Id">@GoToFollowersIndex</a> |
                     <a asp-area="" asp-controller="Users" asp-action="FollowingsIndex" asp-route-id="@user.Id">@GoToFollowingsIndex</a> |
-                    <a asp-area="" asp-controller="Users" asp-action="AdminIndex">@GoToAdminIndex</a> |
-                    <a asp-area="" asp-controller="Home" asp-action="Index" asp-route-id="@user.Id">@GoToHomePage</a>
+                    <a asp-area="" asp-controller="Users" asp-action="Index">@GoToIndex</a> |
+                    <a asp-area="" asp-controller="Home" asp-action="Index">@GoToHomePage</a>
                 </td>
             </tr>
         }

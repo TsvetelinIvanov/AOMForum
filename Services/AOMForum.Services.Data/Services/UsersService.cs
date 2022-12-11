@@ -2,6 +2,7 @@
 using AOMForum.Data.Common.Repositories;
 using AOMForum.Data.Models;
 using AOMForum.Services.Data.Interfaces;
+using AOMForum.Web.Models.Home;
 using AOMForum.Web.Models.UserRelationships;
 using Microsoft.EntityFrameworkCore;
 
@@ -386,6 +387,66 @@ namespace AOMForum.Services.Data.Services
             return true;
         }
 
+        public async Task<IEnumerable<UserListViewModel>> GetUserListViewModelsAsync()
+        {
+            IEnumerable<UserListViewModel> userModels = await this.usersRepository.AllAsNoTracking().Select(u => new UserListViewModel
+            {
+                Id = u.Id,
+                UserName = u.UserName,
+                FirstName = u.FirstName,
+                SecondName = u.SecondName,
+                LastName = u.LastName,
+                Gender = u.Gender.ToString(),
+                Age = u.Age,
+                BirthDate = u.BirthDate.ToString(GlobalConstants.UsedDateFormat),
+                Biography = u.Biography,
+                ProfilePictureURL = u.ProfilePictureURL
+            }).ToListAsync();
+
+            return userModels;
+        }
+
+        public async Task<IEnumerable<AdminListViewModel>> GetAdminListViewModelsAsync()
+        {
+            string? adminRoleId = await this.rolesRepository.AllAsNoTracking().Where(r => r.Name == GlobalConstants.AdministratorRoleName).Select(r => r.Id).FirstOrDefaultAsync();
+
+            List<AdminListViewModel> admins = await this.usersRepository.AllAsNoTracking()
+                .Where(u => u.Roles.Select(r => r.RoleId).FirstOrDefault() == adminRoleId).Select(u => new AdminListViewModel()
+                {
+                    Id = u.Id,
+                    UserName= u.UserName,
+                    Email = u.Email,
+                    FirstName = u.FirstName,
+                    SecondName = u.SecondName,
+                    LastName = u.LastName,
+                    Gender = u.Gender.ToString(),
+                    Age = u.Age,
+                    BirthDate = u.BirthDate.ToString(GlobalConstants.UsedDateFormat),
+                    Biography = u.Biography,
+                    ProfilePictureURL = u.ProfilePictureURL
+                }).ToListAsync();
+
+            return admins;
+        }
+
+        public async Task<HomeViewModel> GetHomeViewModelAsync()
+        {
+            int postsCount = await this.postsRepository.AllAsNoTracking().CountAsync();
+            int usersCount = await this.usersRepository.AllAsNoTracking().CountAsync();
+
+            string? adminRoleId = await this.rolesRepository.AllAsNoTracking().Where(r => r.Name == GlobalConstants.AdministratorRoleName).Select(r => r.Id).FirstOrDefaultAsync();
+            int adminsCount = await this.usersRepository.AllAsNoTracking().Where(u => u.Roles.Select(r => r.RoleId).FirstOrDefault() == adminRoleId).CountAsync();
+
+            HomeViewModel homeViewModel = new HomeViewModel()
+            {
+                PostsCount = postsCount,
+                UsersCount = usersCount,
+                AdminsCount = adminsCount
+            };
+
+            return homeViewModel;
+        }
+
         public async Task<bool> DeleteAsync(string id)
         {
             ApplicationUser? user = await this.usersRepository.All().Where(u => u.Id == id).FirstOrDefaultAsync();
@@ -400,6 +461,20 @@ namespace AOMForum.Services.Data.Services
             return user.IsDeleted;
         }
 
+        public async Task<bool> UndeleteAsync(string id)
+        {
+            ApplicationUser? user = await this.usersRepository.AllWithDeleted().Where(u => u.Id == id && u.IsDeleted).FirstOrDefaultAsync();
+            if (user == null)
+            {
+                return false;
+            }
+
+            this.usersRepository.Undelete(user);
+            await this.usersRepository.SaveChangesAsync();
+
+            return user.IsDeleted == false;
+        }
+
         public async Task<bool> IsUsernameUsedAsync(string username) => await this.usersRepository.AllAsNoTracking().AnyAsync(u => u.UserName == username);
 
         public async Task<bool> IsDeletedAsync(string username) => await this.usersRepository.AllAsNoTrackingWithDeleted().AnyAsync(u => u.UserName == username && u.IsDeleted);
@@ -412,28 +487,5 @@ namespace AOMForum.Services.Data.Services
 
         public async Task<int> GetFollowingsCountAsync(string id) => await this.relationshipsRepository.AllAsNoTracking().Where(r => r.FollowerId == id)
                 .CountAsync();
-
-        
-
-        public async Task<IEnumerable<AdminViewModel>> GetAdminsAsync()
-        {
-            string? adminRoleId = await this.rolesRepository.AllAsNoTracking().Where(r => r.Name == GlobalConstants.AdministratorRoleName).Select(r => r.Id).FirstOrDefaultAsync();
-
-            List<AdminViewModel> admins = await this.usersRepository.AllAsNoTracking()
-                .Where(u => u.Roles.Select(r => r.RoleId).FirstOrDefault() == adminRoleId).Select(u => new AdminViewModel()
-            {
-                Id = u.Id,
-                FirstName = u.FirstName,
-                SecondName = u.SecondName,
-                LastName = u.LastName,
-                Gender = u.Gender.ToString(),
-                Age = u.Age,
-                BirthDate = u.BirthDate.ToString(GlobalConstants.UsedDateFormat),
-                Biography = u.Biography,
-                ProfilePictureURL = u.ProfilePictureURL
-            }).ToListAsync();
-
-            return admins;
-        }
     }
 }

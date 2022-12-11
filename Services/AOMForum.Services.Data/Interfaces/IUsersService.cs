@@ -1,4 +1,5 @@
-﻿using AOMForum.Web.Models.UserRelationships;
+﻿using AOMForum.Web.Models.Home;
+using AOMForum.Web.Models.UserRelationships;
 
 namespace AOMForum.Services.Data.Interfaces
 {
@@ -18,7 +19,15 @@ namespace AOMForum.Services.Data.Interfaces
 
         Task<bool> UnfollowAsync(string userId, string followerId);
 
+        Task<IEnumerable<UserListViewModel>> GetUserListViewModelsAsync();
+
+        Task<IEnumerable<AdminListViewModel>> GetAdminListViewModelsAsync();
+
+        Task<HomeViewModel> GetHomeViewModelAsync();
+
         Task<bool> DeleteAsync(string id);
+
+        Task<bool> UndeleteAsync(string id);
 
         Task<bool> IsUsernameUsedAsync(string username);
 
@@ -31,7 +40,5 @@ namespace AOMForum.Services.Data.Interfaces
         Task<int> GetFollowersCountAsync(string id);
 
         Task<int> GetFollowingsCountAsync(string id);
-
-        Task<IEnumerable<AdminViewModel>> GetAdminsAsync();
     }
 }

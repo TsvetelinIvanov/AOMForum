@@ -6,7 +6,7 @@
         {
             public const string DisplayPostsCount = "Постове";
             public const string DisplayUsersCount = "Потребители";
-            public const string DisplayVotesCount = "Гласове";
+            public const string DisplayAdminsCount = "Администратори";
         }
 
         public static class ApplicationUser
@@ -19,6 +19,7 @@
             public const string DisplayFirstName = "Лично име";
             public const string DisplaySecondName = "Презиме";
             public const string DisplayLastName = "Фамилно име";
+            public const string DisplayFullName = "Трите имена";
             public const string DisplayGender = "Пол";
             public const string DisplayBirthDate = "Дата на раждане";
             public const string DisplayBiography = "Биография";

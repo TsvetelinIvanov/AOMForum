@@ -11,9 +11,7 @@ namespace AOMForum.Web.Models.Home
         [Display(Name = DisplayUsersCount)]
         public int UsersCount { get; init; }
 
-        [Display(Name = DisplayVotesCount)]
-        public int VotesCount { get; init; }
-
-        public IEnumerable<HomeAdminViewModel> Admins { get; set; } = new HashSet<HomeAdminViewModel>();
+        [Display(Name = DisplayAdminsCount)]
+        public int AdminsCount { get; init; }
     }
 }

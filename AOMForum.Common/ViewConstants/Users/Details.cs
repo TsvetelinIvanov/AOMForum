@@ -10,6 +10,8 @@
         public const string GoToCommentsIndex = "Отиди на коментарите на този потребител";
         public const string GoToFollowersIndex = "Отиди на списък с последователите на този потребител";
         public const string GoToFollowingsIndex = "Отиди на списък със следваните от този потребител";
+        public const string GoToIndex = "Отиди на списъка с потребителите";
+        public const string GoToAdminIndex = "Отиди на списъка с администраторите";
         public const string GoToHomePage = "Отиди на началната страница";
 
         public const string FollowAction = "Последвай потребителя";
