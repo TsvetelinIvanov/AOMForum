@@ -1,9 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using static AOMForum.Common.DisplayNames.Post;
 
-namespace AOMForum.Web.Models.Users
+namespace AOMForum.Web.Models.UserRelationships
 {
-    public class UserRelationshipViewModel
+    public class UserPostViewModel
     {
         public int Id { get; init; }
 
@@ -16,12 +16,8 @@ namespace AOMForum.Web.Models.Users
         [Display(Name = DisplayCommentsCount)]
         public int CommentsCount { get; init; }
 
-        public int Views { get; init; }
+        public CategoryInUserPostViewModel? Category { get; set; }
 
-        public string? Activity { get; init; }        
-
-        public CategoryInUseRelationshipViewModel? Category { get; set; }
-
-        public IEnumerable<TagInUserRelationshipViewModel> Tags { get; set; } = new HashSet<TagInUserRelationshipViewModel>();
+        public IEnumerable<TagInUserPostViewModel> Tags { get; set; } = new HashSet<TagInUserPostViewModel>();
     }
 }

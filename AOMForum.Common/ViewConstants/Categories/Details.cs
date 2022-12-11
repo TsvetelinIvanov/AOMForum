@@ -14,7 +14,7 @@
 
         public const string PostTitleTitle = "Заглавие";
         public const string PostCreatedOnTitle = "Създаден на";
-        public const string PostShortContentTitle = "Кратко Описание";
+        public const string PostShortContentTitle = "Съкратено съдържание";
         public const string PostCommentsCountTitle = "Брой на коментарите";
         public const string PostUserNameTitle = "Потребителско име";
         public const string ActionsTitle = "Действия";

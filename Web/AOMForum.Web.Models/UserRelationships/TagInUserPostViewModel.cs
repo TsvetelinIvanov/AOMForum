@@ -1,9 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using static AOMForum.Common.DisplayNames.Tag;
 
-namespace AOMForum.Web.Models.Users
+namespace AOMForum.Web.Models.UserRelationships
 {
-    public class TagInUserRelationshipViewModel
+    public class TagInUserPostViewModel
     {
         public int Id { get; init; }
 

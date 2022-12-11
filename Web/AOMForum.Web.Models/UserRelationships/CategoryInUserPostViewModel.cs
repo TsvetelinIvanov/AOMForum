@@ -1,9 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using static AOMForum.Common.DisplayNames.Category;
 
-namespace AOMForum.Web.Models.Users
+namespace AOMForum.Web.Models.UserRelationships
 {
-    public class CategoryInUseRelationshipViewModel
+    public class CategoryInUserPostViewModel
     {
         public int Id { get; init; }
 

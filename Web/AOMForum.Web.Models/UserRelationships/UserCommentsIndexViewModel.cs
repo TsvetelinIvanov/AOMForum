@@ -1,19 +1,26 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using static AOMForum.Common.DisplayNames.ApplicationUser;
 
-namespace AOMForum.Web.Models.Users
+namespace AOMForum.Web.Models.UserRelationships
 {
-    public class UserRelationshipDetailsViewModel
+    public class UserCommentsIndexViewModel
     {
         public string? Id { get; init; }
 
         [Display(Name = DisplayUserName)]
         public string? UserName { get; init; }
 
+        [Display(Name = DisplayProfilePictureURL)]
         public string? ProfilePictureURL { get; init; }
 
+        [Display(Name = DisplayPostsCount)]
+        public int PostsCount { get; init; }
+
+        [Display(Name = DisplayUserCommentsCount)]
+        public int CommentsCount { get; init; }
+
         [Display(Name = DisplayUserVotesCount)]
-        public int UserVotesCount { get; init; }
+        public int VotesCount { get; init; }
 
         public bool IsFollowed { get; init; }
 
@@ -23,12 +30,6 @@ namespace AOMForum.Web.Models.Users
         [Display(Name = DisplayFollowingsCount)]
         public int FollowingsCount { get; init; }
 
-        public IEnumerable<UserRelationshipViewModel> Threads { get; set; } = new HashSet<UserRelationshipViewModel>();
-
-        public IEnumerable<UserCommentViewModel> Replies { get; set; } = new HashSet<UserCommentViewModel>();
-
-        public IEnumerable<UserFollowersViewModel> Followers { get; set; } = new HashSet<UserFollowersViewModel>();
-
-        public IEnumerable<UserFollowingsViewModel> Following { get; set; } = new HashSet<UserFollowingsViewModel>();
+        public IEnumerable<UserCommentViewModel> Comments { get; set; } = new HashSet<UserCommentViewModel>();
     }
 }

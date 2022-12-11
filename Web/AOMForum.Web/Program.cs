@@ -61,7 +61,7 @@ builder.Services.AddTransient<IPostVotesService, PostVotesService>();
 builder.Services.AddTransient<ICommentsService, CommentsService>();
 builder.Services.AddTransient<ICommentReportsService, CommentReportsService>();
 builder.Services.AddTransient<ICommentVotesService, CommentVotesService>();
-builder.Services.AddTransient<IRelationshipsService, RelationshipsService>();
+builder.Services.AddTransient<IUsersService, UsersService>();
 builder.Services.AddTransient<IMessagesService, MessagesService>();
 builder.Services.AddTransient<ISettingsService, SettingsService>();
 

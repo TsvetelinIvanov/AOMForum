@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using static AOMForum.Common.DisplayNames.Comment;
 
-namespace AOMForum.Web.Models.Users
+namespace AOMForum.Web.Models.UserRelationships
 {
     public class UserCommentViewModel
     {
@@ -12,6 +12,8 @@ namespace AOMForum.Web.Models.Users
         {
             this.sanitizer = new HtmlSanitizer();
         }
+
+        public int Id { get; init; }
 
         public int PostId { get; init; }
 
@@ -24,11 +26,12 @@ namespace AOMForum.Web.Models.Users
         [Display(Name = DisplayContent)]
         public string? SanitizedContent => this.sanitizer.Sanitize(this.Content ?? string.Empty);
 
-        public string? Activity { get; init; }
-
         public int PostCategoryId { get; init; }
 
         [Display(Name = DisplayPostCategoryName)]
         public string? PostCategoryName { get; init; }
+
+        [Display(Name = DisplayVotesCount)]
+        public int VotesCount { get; init; }
     }
 }

@@ -26,10 +26,10 @@
             public const string DisplayProfilePictureURL = "Образ";
 
             public const string DisplayFollowersCount = "Последователи";
-            public const string DisplayFollowingsCount = "Следвани";
-            public const string DisplayUserVotesCount = "Гласове";
+            public const string DisplayFollowingsCount = "Следвани";            
+            public const string DisplayPostsCount = "Постове";
             public const string DisplayUserCommentsCount = "Кометари";
-            public const string DisplayCoilsCount = "Активности";
+            public const string DisplayUserVotesCount = "Гласове";
         }
 
         public static class Category

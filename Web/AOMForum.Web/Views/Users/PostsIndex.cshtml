@@ -1,0 +1,130 @@
+﻿@using AOMForum.Web.Models.UserRelationships
+@using static AOMForum.Common.ViewConstants.Users.PostsIndex
+@model UserPostsIndexViewModel
+
+@{
+    ViewData["Title"] = ViewTitle + Model.UserName;
+}
+
+<h1 class="text-center">@this.ViewData["Title"]</h1>
+<hr />
+
+<div>
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.UserName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.UserName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ProfilePictureURL)
+        </dt>
+        <dd class="col-sm-10">
+            <img src="@Model.ProfilePictureURL" alt="@(AltImage + Model.UserName)" width="100" />
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.PostsCount)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.PostsCount)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.CommentsCount)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.CommentsCount)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.VotesCount)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.VotesCount)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.FollowersCount)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.FollowersCount)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.FollowingsCount)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.FollowingsCount)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-area="" asp-controller="Users" asp-action="Details" asp-route-id="@Model.Id">@GoToDetails</a> | 
+    <a asp-area="" asp-controller="Users" asp-action="CommentsIndex" asp-route-id="@Model.Id">@GoToCommentsIndex</a> |
+    <a asp-area="" asp-controller="Users" asp-action="FollowersIndex" asp-route-id="@Model.Id">@GoToFollowersIndex</a> |
+    <a asp-area="" asp-controller="Users" asp-action="FollowingsIndex" asp-route-id="@Model.Id">@GoToFollowingsIndex</a> |
+    <a asp-area="" asp-controller="Home" asp-action="Index" asp-route-id="@Model.Id">@GoToHomePage</a>
+</div>
+
+@if (Model.IsFollowed)
+{
+    <form asp-area="" asp-controller="Users" asp-action="Unfollow" method="post">
+        <input type="hidden" asp-for="Id" />
+        <input type="submit" value="@UnfollowAction" class="btn btn-danger" />
+    </form>
+}
+else
+{
+    <form asp-area="" asp-controller="Users" asp-action="Follow" method="post">
+        <input type="hidden" asp-for="Id" />
+        <input type="submit" value="@FollowAction" class="btn btn-danger" />
+    </form>
+}
+
+<h3 class="text-center">@PostsHeading</h3>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @PostTitleTitle
+            </th>
+            <th>
+                @PostVotesCountTitle
+            </th>
+            <th>
+                @PostCommentsCountTitle
+            </th>
+            <th>
+                @PostCategoryNameTitle
+            </th>
+            <th>
+                @PostTagsTitle
+            </th>
+            <th>
+                @ActionsTitle
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (UserPostViewModel post in Model.Posts)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => post.Title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => post.VotesCount)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => post.CommentsCount)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => post.Category.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => string.Join(", ", post.Tags.Select(t => t.Name)))
+                </td>
+                <td>
+                    <a asp-area="" asp-controller="Posts" asp-action="Details" asp-route-id="@post.Id">@DetailsAction</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
