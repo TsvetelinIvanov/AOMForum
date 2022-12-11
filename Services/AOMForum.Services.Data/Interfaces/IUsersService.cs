@@ -21,13 +21,17 @@ namespace AOMForum.Services.Data.Interfaces
 
         Task<IEnumerable<UserListViewModel>> GetUserListViewModelsAsync();
 
-        Task<IEnumerable<AdminListViewModel>> GetAdminListViewModelsAsync();
+        Task<IEnumerable<AdminListViewModel>> GetAdminListViewModelsAsync();        
 
-        Task<HomeViewModel> GetHomeViewModelAsync();
+        Task<UserDeleteModel?> GetUserDeleteModelAsync(string id);
 
         Task<bool> DeleteAsync(string id);
 
+        Task<IEnumerable<UserListViewModel>> GetUserListViewModelsForDeletedAsync();
+
         Task<bool> UndeleteAsync(string id);
+
+        Task<HomeViewModel> GetHomeViewModelAsync();
 
         Task<bool> IsUsernameUsedAsync(string username);
 

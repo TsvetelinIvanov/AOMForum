@@ -19,7 +19,7 @@ namespace AOMForum.Web.Controllers
         {
             IEnumerable<UserListViewModel> viewModels = await this.usersService.GetUserListViewModelsAsync();
             
-            return View(viewModels);
+            return this.View(viewModels);
         }
 
         // GET: Users/AdminIndex
@@ -27,7 +27,7 @@ namespace AOMForum.Web.Controllers
         {
             IEnumerable<AdminListViewModel> viewModels = await this.usersService.GetAdminListViewModelsAsync();
 
-            return View(viewModels);
+            return this.View(viewModels);
         }
 
         // GET: Users/PostsIndex/id
@@ -39,7 +39,7 @@ namespace AOMForum.Web.Controllers
                 return this.NotFound();
             }
 
-            return View(viewModel);
+            return this.View(viewModel);
         }
 
         // GET: Users/CommentsIndex/id
@@ -51,7 +51,7 @@ namespace AOMForum.Web.Controllers
                 return this.NotFound();
             }
 
-            return View(viewModel);
+            return this.View(viewModel);
         }
 
         // GET: Users/FollowersIndex/id
@@ -63,7 +63,7 @@ namespace AOMForum.Web.Controllers
                 return this.NotFound();
             }
 
-            return View(viewModel);
+            return this.View(viewModel);
         }
 
         // GET: Users/FollowingsIndex/id
@@ -75,7 +75,7 @@ namespace AOMForum.Web.Controllers
                 return this.NotFound();
             }
 
-            return View(viewModel);
+            return this.View(viewModel);
         }
 
         // GET: Users/Details/id
@@ -87,7 +87,7 @@ namespace AOMForum.Web.Controllers
                 return this.NotFound();
             }
 
-            return View(viewModel);
+            return this.View(viewModel);
         }
 
         // POST: Users/Follow/id

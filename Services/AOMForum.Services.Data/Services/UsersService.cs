@@ -429,22 +429,27 @@ namespace AOMForum.Services.Data.Services
             return admins;
         }
 
-        public async Task<HomeViewModel> GetHomeViewModelAsync()
+        public async Task<UserDeleteModel?> GetUserDeleteModelAsync(string id)
         {
-            int postsCount = await this.postsRepository.AllAsNoTracking().CountAsync();
-            int usersCount = await this.usersRepository.AllAsNoTracking().CountAsync();
-
-            string? adminRoleId = await this.rolesRepository.AllAsNoTracking().Where(r => r.Name == GlobalConstants.AdministratorRoleName).Select(r => r.Id).FirstOrDefaultAsync();
-            int adminsCount = await this.usersRepository.AllAsNoTracking().Where(u => u.Roles.Select(r => r.RoleId).FirstOrDefault() == adminRoleId).CountAsync();
-
-            HomeViewModel homeViewModel = new HomeViewModel()
+            ApplicationUser? user = await this.usersRepository.AllAsNoTracking().Where(u => u.Id == id).FirstOrDefaultAsync();
+            if (user == null)
             {
-                PostsCount = postsCount,
-                UsersCount = usersCount,
-                AdminsCount = adminsCount
+                return null;
+            }
+
+            UserDeleteModel deleteModel = new UserDeleteModel()
+            {
+                Id = user.Id,
+                UserName = user.UserName,
+                Email = user.Email,
+                FirstName = user.FirstName,
+                SecondName = user.SecondName,
+                LastName = user.LastName,
+                BirthDate = user.BirthDate.ToString(GlobalConstants.UsedDateFormat),
+                ProfilePictureURL = user.ProfilePictureURL
             };
 
-            return homeViewModel;
+            return deleteModel;
         }
 
         public async Task<bool> DeleteAsync(string id)
@@ -461,6 +466,25 @@ namespace AOMForum.Services.Data.Services
             return user.IsDeleted;
         }
 
+        public async Task<IEnumerable<UserListViewModel>> GetUserListViewModelsForDeletedAsync()
+        {
+            IEnumerable<UserListViewModel> userModels = await this.usersRepository.AllAsNoTrackingWithDeleted().Where(u => u.IsDeleted).Select(u => new UserListViewModel
+            {
+                Id = u.Id,
+                UserName = u.UserName,
+                FirstName = u.FirstName,
+                SecondName = u.SecondName,
+                LastName = u.LastName,
+                Gender = u.Gender.ToString(),
+                Age = u.Age,
+                BirthDate = u.BirthDate.ToString(GlobalConstants.UsedDateFormat),
+                Biography = u.Biography,
+                ProfilePictureURL = u.ProfilePictureURL
+            }).ToListAsync();
+
+            return userModels;
+        }
+
         public async Task<bool> UndeleteAsync(string id)
         {
             ApplicationUser? user = await this.usersRepository.AllWithDeleted().Where(u => u.Id == id && u.IsDeleted).FirstOrDefaultAsync();
@@ -473,6 +497,24 @@ namespace AOMForum.Services.Data.Services
             await this.usersRepository.SaveChangesAsync();
 
             return user.IsDeleted == false;
+        }
+
+        public async Task<HomeViewModel> GetHomeViewModelAsync()
+        {
+            int postsCount = await this.postsRepository.AllAsNoTracking().CountAsync();
+            int usersCount = await this.usersRepository.AllAsNoTracking().CountAsync();
+
+            string? adminRoleId = await this.rolesRepository.AllAsNoTracking().Where(r => r.Name == GlobalConstants.AdministratorRoleName).Select(r => r.Id).FirstOrDefaultAsync();
+            int adminsCount = await this.usersRepository.AllAsNoTracking().Where(u => u.Roles.Select(r => r.RoleId).FirstOrDefault() == adminRoleId).CountAsync();
+
+            HomeViewModel homeViewModel = new HomeViewModel()
+            {
+                PostsCount = postsCount,
+                UsersCount = usersCount,
+                AdminsCount = adminsCount
+            };
+
+            return homeViewModel;
         }
 
         public async Task<bool> IsUsernameUsedAsync(string username) => await this.usersRepository.AllAsNoTracking().AnyAsync(u => u.UserName == username);

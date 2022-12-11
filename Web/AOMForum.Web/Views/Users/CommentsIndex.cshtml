@@ -1,5 +1,6 @@
 ﻿@using AOMForum.Web.Models.UserRelationships
 @using static AOMForum.Common.ViewConstants.Users.CommentsIndex
+@using static AOMForum.Common.GlobalConstants
 @model UserCommentsIndexViewModel
 
 @{
@@ -56,6 +57,11 @@
     </dl>
 </div>
 <div>
+    @if (this.User.IsInRole(AdministratorRoleName))
+    {
+        <a asp-area="Administration" asp-controller="Users" asp-action="Index">@GoToIndexForAdmins</a> @:|
+        <a asp-area="Administration" asp-controller="Users" asp-action="Delete" asp-route-id="@Model.Id">@DeleteAction</a><br />
+    }
     <a asp-area="" asp-controller="Users" asp-action="Details" asp-route-id="@Model.Id">@GoToDetails</a> |
     <a asp-area="" asp-controller="Users" asp-action="PostsIndex" asp-route-id="@Model.Id">@GoToPostsIndex</a> | 
     <a asp-area="" asp-controller="Users" asp-action="FollowersIndex" asp-route-id="@Model.Id">@GoToFollowersIndex</a> |

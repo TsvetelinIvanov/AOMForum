@@ -96,7 +96,7 @@ namespace AOMForum.Web.Areas.Administration.Controllers
                 return this.BadRequest();
             }
 
-            return RedirectToAction(nameof(Index));
+            return this.RedirectToAction(nameof(Index));
         }
     }
 }

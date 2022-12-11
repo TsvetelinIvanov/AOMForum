@@ -6,6 +6,8 @@
 
         public const string AltImage = "Образ на ";
 
+        public const string DeleteAction = "Изтрий потребителя";
+        public const string GoToIndexForAdmins = "Отиди на страницата с потребители за администратори";
         public const string GoToDetails = "Отиди на детайлите за този потребител";
         public const string GoToPostsIndex = "Отиди на постовете на този потребител";
         public const string GoToFollowersIndex = "Отиди на списък с последователите на този потребител";
@@ -15,7 +17,7 @@
         public const string GoToHomePage = "Отиди на началната страница";
 
         public const string FollowAction = "Последвай потребителя";
-        public const string UnfollowAction = "Прекрати следването на потребителя";        
+        public const string UnfollowAction = "Прекрати следването на потребителя";
 
         public const string CommentsHeading = "Коментари";
         public const string CommentPostTitleTitle = "Заглавие на поста";

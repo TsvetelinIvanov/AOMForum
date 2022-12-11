@@ -43,39 +43,39 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (AdminListViewModel user in Model)
+        @foreach (AdminListViewModel admin in Model)
         {
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => user.UserName)
+                    @Html.DisplayFor(modelItem => admin.UserName)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => user.Email)
+                    @Html.DisplayFor(modelItem => admin.Email)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => user.FullName)
+                    @Html.DisplayFor(modelItem => admin.FullName)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => user.Age)
+                    @Html.DisplayFor(modelItem => admin.Age)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => user.BirthDate)
+                    @Html.DisplayFor(modelItem => admin.BirthDate)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => user.Gender)
+                    @Html.DisplayFor(modelItem => admin.Gender)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => user.Biography)
+                    @Html.DisplayFor(modelItem => admin.Biography)
                 </td>
                 <td>
-                    <img src="@user.ProfilePictureURL" alt="@(AltImage + user.FullName)" width="100" />
+                    <img src="@admin.ProfilePictureURL" alt="@(AltImage + admin.FullName)" width="100" />
                 </td>
                 <td>
-                    <a asp-area="" asp-controller="Users" asp-action="Details" asp-route-id="@user.Id">@GoToDetails</a> |
-                    <a asp-area="" asp-controller="Users" asp-action="PostsIndex" asp-route-id="@user.Id">@GoToPostsIndex</a> |
-                    <a asp-area="" asp-controller="Users" asp-action="CommentsIndex" asp-route-id="@user.Id">@GoToCommentsIndex</a> |
-                    <a asp-area="" asp-controller="Users" asp-action="FollowersIndex" asp-route-id="@user.Id">@GoToFollowersIndex</a> |
-                    <a asp-area="" asp-controller="Users" asp-action="FollowingsIndex" asp-route-id="@user.Id">@GoToFollowingsIndex</a> |
+                    <a asp-area="" asp-controller="Users" asp-action="Details" asp-route-id="@admin.Id">@GoToDetails</a> |
+                    <a asp-area="" asp-controller="Users" asp-action="PostsIndex" asp-route-id="@admin.Id">@GoToPostsIndex</a> |
+                    <a asp-area="" asp-controller="Users" asp-action="CommentsIndex" asp-route-id="@admin.Id">@GoToCommentsIndex</a> |
+                    <a asp-area="" asp-controller="Users" asp-action="FollowersIndex" asp-route-id="@admin.Id">@GoToFollowersIndex</a> |
+                    <a asp-area="" asp-controller="Users" asp-action="FollowingsIndex" asp-route-id="@admin.Id">@GoToFollowingsIndex</a> |
                     <a asp-area="" asp-controller="Users" asp-action="Index">@GoToIndex</a> |
                     <a asp-area="" asp-controller="Home" asp-action="Index">@GoToHomePage</a>
                 </td>

@@ -6,6 +6,8 @@
 
         public const string AltImage = "Образ на ";
 
+        public const string DeleteAction = "Изтрий потребителя";
+        public const string GoToIndexForAdmins = "Отиди на страницата с потребители за администратори";
         public const string GoToPostsIndex = "Отиди на постовете на този потребител";
         public const string GoToCommentsIndex = "Отиди на коментарите на този потребител";
         public const string GoToFollowersIndex = "Отиди на списък с последователите на този потребител";
