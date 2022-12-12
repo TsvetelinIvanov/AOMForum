@@ -1,8 +1,8 @@
 ﻿@page
 @model ConfirmEmailChangeModel
 @{
-    ViewData["Title"] = "Confirm email change";
+    this.ViewData["Title"] = "Confirm email change";
 }
 
-<h1>@ViewData["Title"]</h1>
-<partial name="_StatusMessage" model="Model.StatusMessage" />
+<h1>@this.ViewData["Title"]</h1>
+<partial name="_StatusMessage" model="this.Model.StatusMessage" />

@@ -1,11 +1,11 @@
 ﻿@page
 @model DeletePersonalDataModel
 @{
-    ViewData["Title"] = "Delete Personal Data";
-    ViewData["ActivePage"] = ManageNavPages.PersonalData;
+    this.ViewData["Title"] = "Delete Personal Data";
+    this.ViewData["ActivePage"] = ManageNavPages.PersonalData;
 }
 
-<h3>@ViewData["Title"]</h3>
+<h3>@this.ViewData["Title"]</h3>
 
 <div class="alert alert-warning" role="alert">
     <p>

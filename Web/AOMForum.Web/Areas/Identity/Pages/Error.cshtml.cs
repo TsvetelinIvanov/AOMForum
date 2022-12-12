@@ -15,7 +15,7 @@ namespace AOMForum.Web.Areas.Identity.Pages
 
         public void OnGet()
         {
-            RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier;
+            this.RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier;
         }
     }
 }
