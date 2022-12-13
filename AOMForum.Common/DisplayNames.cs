@@ -14,7 +14,9 @@
             public const string DisplayUserName = "Потребителско име";
             public const string DisplayEmail = "Електронна поща";
             public const string DisplayPassword = "Парола";
+            public const string DisplayConfirmPassword = "Потвърди паролата";
             public const string DisplayPhoneNumber = "Телефоннен номер";
+            public const string DisplayRememberMe = "Запомни ме!";
 
             public const string DisplayFirstName = "Лично име";
             public const string DisplaySecondName = "Презиме";
@@ -22,8 +24,7 @@
             public const string DisplayFullName = "Трите имена";
             public const string DisplayGender = "Пол";
             public const string DisplayBirthDate = "Дата на раждане";
-            public const string DisplayBiography = "Биография";
-            public const string DisplayAge = "Възраст";
+            public const string DisplayBiography = "Биография";            
             public const string DisplayProfilePictureURL = "Образ";
 
             public const string DisplayFollowersCount = "Последователи";

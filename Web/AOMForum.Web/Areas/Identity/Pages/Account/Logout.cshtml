@@ -1,7 +1,8 @@
 ﻿@page
+@using static AOMForum.Common.ViewConstants.Identity.Logout
 @model LogoutModel
 @{
-    this.ViewData["Title"] = "Log out";
+    this.ViewData["Title"] = ViewTitle;
 }
 
 <header>
@@ -10,12 +11,12 @@
         if (this.User.Identity.IsAuthenticated)
         {
             <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/", new { area = "" })" method="post">
-                <button type="submit" class="nav-link btn btn-link text-dark">Click here to Logout</button>
+                <button type="submit" class="nav-link btn btn-link text-dark">@LogoutAction</button>
             </form>
         }
         else
         {
-            <p>You have successfully logged out of the application.</p>
+            <p>@SuccessfullyLoggedOut</p>
         }
     }
 </header>

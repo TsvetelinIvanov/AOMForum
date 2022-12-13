@@ -397,7 +397,6 @@ namespace AOMForum.Services.Data.Services
                 SecondName = u.SecondName,
                 LastName = u.LastName,
                 Gender = u.Gender.ToString(),
-                Age = u.Age,
                 BirthDate = u.BirthDate.ToString(GlobalConstants.UsedDateFormat),
                 Biography = u.Biography,
                 ProfilePictureURL = u.ProfilePictureURL
@@ -420,7 +419,6 @@ namespace AOMForum.Services.Data.Services
                     SecondName = u.SecondName,
                     LastName = u.LastName,
                     Gender = u.Gender.ToString(),
-                    Age = u.Age,
                     BirthDate = u.BirthDate.ToString(GlobalConstants.UsedDateFormat),
                     Biography = u.Biography,
                     ProfilePictureURL = u.ProfilePictureURL
@@ -476,7 +474,6 @@ namespace AOMForum.Services.Data.Services
                 SecondName = u.SecondName,
                 LastName = u.LastName,
                 Gender = u.Gender.ToString(),
-                Age = u.Age,
                 BirthDate = u.BirthDate.ToString(GlobalConstants.UsedDateFormat),
                 Biography = u.Biography,
                 ProfilePictureURL = u.ProfilePictureURL

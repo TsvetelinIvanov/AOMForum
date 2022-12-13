@@ -24,10 +24,7 @@ namespace AOMForum.Web.Models.UserRelationships
 
         [Display(Name = DisplayFullName)]
         public string? FullName => this.FirstName + " " + this.SecondName + " " + this.LastName;
-
-        [Display(Name = DisplayAge)]
-        public int Age { get; init; }
-
+        
         [Display(Name = DisplayBirthDate)]
         public string? BirthDate { get; init; }
 
