@@ -78,7 +78,7 @@ namespace AOMForum.Web.Areas.Identity.Pages.Account
             [DataType(DataType.Date)]            
             [MinAgeRestriction(AgeMinValue, ErrorMessage = AgeRestrictionErrorMessage)]
             [Display(Name = DisplayBirthDate)]
-            public DateTime BirthDate { get; set; }
+            public DateTime BirthDate { get; set; }            
 
             [Required(ErrorMessage = RequiredErrorMessage)]            
             [Display(Name = DisplayGender)]
@@ -141,6 +141,14 @@ namespace AOMForum.Web.Areas.Identity.Pages.Account
                     return this.Page();
                 }
 
+                int age = DateTime.Now.Year - this.Input.BirthDate.Year;
+                if (age < AgeMinValue || age > AgeMaxValue)
+                {
+                    this.ModelState.AddModelError(nameof(Input.BirthDate), string.Format(AgeErrorMessage, AgeMinValue, AgeMaxValue, DateTime.Now.Year - AgeMaxValue));
+
+                    return this.Page();
+                }
+
                 bool isUsernameUsed = await this.usersService.IsUsernameUsedAsync(this.Input.Username);
                 if (isUsernameUsed)
                 {
@@ -157,6 +165,7 @@ namespace AOMForum.Web.Areas.Identity.Pages.Account
                     SecondName = this.Input.SecondName,
                     LastName = this.Input.LastName,
                     BirthDate = this.Input.BirthDate,
+                    Age = age,
                     Gender = genderType,
                     Biography = this.Input.Biography,
                     ProfilePictureURL = this.Input.ProfilePictureURL

@@ -3,7 +3,6 @@ using AOMForum.Data.Models.Enums;
 using Microsoft.AspNetCore.Identity;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Reflection;
 using static AOMForum.Common.DataConstants.ApplicationUser;
 
 namespace AOMForum.Data.Models
@@ -39,9 +38,8 @@ namespace AOMForum.Data.Models
 
         [Required]
         [StringLength(LastNameMaxLength, MinimumLength = LastNameMinLength)]
-        public string LastName { get; set; }        
+        public string LastName { get; set; }
 
-        [Required]        
         public int Age { get; set; }
 
         [DataType(DataType.Date)]

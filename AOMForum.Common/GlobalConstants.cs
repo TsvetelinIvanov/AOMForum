@@ -3,28 +3,11 @@
     public static class GlobalConstants
     {
         //public const string SystemName = "AOM Forum";
-        public const string SystemName = "АОМ форум";
+        public const string SystemName = "АОМ форум";        
 
-        public const string AdministratorRoleName = "Administrator";
-        public const string AdministratorUserName = "Admin";
-        public const string AdministratorEmail = "admin@abv.bg";
-        public const string AdministratorPassword = "Admin123456";
-        public const string AdministratorFirstName = "Admin";
-        public const string AdministratorSecondName = "Administratorov";
-        public const string AdministratorLastName = "Adminov";
-        public const string AdministratorFullName = "Admin Administratorov Adminov";
-        public const string AdministratorProfilePicture = "#icon-ava-a";
         public const string AdministratorAreaName = "Administration";
 
-        public const string TestUserUserName = "TestUser";
-        public const string TestUserEmail = "testuser@@abv.bg";
-        public const string TestUserPassword = "user123456";
-        public const string TestUserFirstName = "Test";
-        public const string TestUserSecondName = "Userov";
-        public const string TestUserLastName = "Testov";
-        public const string TestUserFullName = "Test Userov Testov";
-        public const string TestUserProfilePicture = "#icon-ava-t";
-
+        public const string AdministratorRoleName = "Administrator";
 
         public const string SiteGBKeywords = "forum, question, discussion, automation, automatization, optimization, miritocracy, political party, democracy, liberalism, classical liberalism";
 

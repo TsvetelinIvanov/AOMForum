@@ -23,6 +23,11 @@ namespace AOMForum.Data.Seeding
                           {
                               new RolesSeeder(),
                               new SettingsSeeder(),
+                              new AdminsSeeder(),
+                              new UsersSeeder(),
+                              new TagsSeeder(),
+                              new CategoriesSeeder(),
+                              new PostsSeeder()
                           };
 
             foreach (ISeeder seeder in seeders)
