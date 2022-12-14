@@ -19,7 +19,7 @@ namespace AOMForum.Web.Areas.Identity.Pages.Account.Manage
             ILogger<TwoFactorAuthenticationModel> logger)
         {
             this.userManager = userManager;
-            this.ignInManager = signInManager;
+            this.signInManager = signInManager;
             this.logger = logger;
         }
 
