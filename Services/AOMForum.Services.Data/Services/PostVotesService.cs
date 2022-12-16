@@ -14,13 +14,6 @@ namespace AOMForum.Services.Data.Services
             this.postVotesRepository = postVotesRepository;
         }
 
-        public int GetVotes(int postId)
-        {
-            int votesCount = this.postVotesRepository.All().Where(pv => pv.PostId == postId).Sum(pv => (int)pv.Type);
-
-            return votesCount;
-        }
-
         public async Task VoteAsync(int postId, string? authorId, bool isUpVote)
         {
             PostVote? vote = this.postVotesRepository.All().FirstOrDefault(pv => pv.PostId == postId && pv.AuthorId == authorId);
@@ -41,6 +34,13 @@ namespace AOMForum.Services.Data.Services
             }
 
             await this.postVotesRepository.SaveChangesAsync();
+        }
+
+        public int GetVotes(int postId)
+        {
+            int votesCount = this.postVotesRepository.All().Where(pv => pv.PostId == postId).Sum(pv => (int)pv.Type);
+
+            return votesCount;
         }
     }
 }

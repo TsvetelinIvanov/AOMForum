@@ -110,7 +110,7 @@ namespace AOMForum.Data.Seeding
                 },
                 new Post
                 {
-                    Title = "Отражение на икономика върху демографското развитие",
+                    Title = "Отражение на икономиката върху демографското развитие",
                     Type = PostType.Text,
                     ImageUrl = "..\\..\\wwwroot\\images\\harvest-.jpg",
                     Content = @"Демографският срив е по-скоро проблем за пазара на труда. 

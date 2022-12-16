@@ -79,6 +79,14 @@ AutoMapperConfig.RegisterMappings(typeof(ErrorViewModel).GetTypeInfo().Assembly)
 //    if (app.Environment.IsDevelopment())
 //    {
 //        dbContext.Database.Migrate();
+          ////if (dbContext.Database.IsRelational())
+          ////{
+          ////    dbContext.Database.Migrate();
+          ////}
+          ////else
+          ////{
+          ////    dbContext.Database.EnsureCreated();
+          ////}
 //    }
 
 //    new ApplicationDbContextSeeder().SeedAsync(dbContext, serviceScope.ServiceProvider).GetAwaiter().GetResult();
