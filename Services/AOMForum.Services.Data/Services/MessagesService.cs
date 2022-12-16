@@ -19,7 +19,7 @@ namespace AOMForum.Services.Data.Services
             this.usersRepository = usersRepository;
         }
 
-        public async Task<MessageInputModel?> GetMessageInputModelAsync(string? userId)
+        public async Task<MessageInputModel> GetMessageInputModelAsync(string? userId)
         {
             List<MessagePartnerModel> possiblePartners = await this.usersRepository.AllAsNoTracking().Where(u => u.Id != userId).Select(u => new MessagePartnerModel
             {
@@ -28,7 +28,7 @@ namespace AOMForum.Services.Data.Services
                 ProfilePictureURL = u.ProfilePictureURL
             }).ToListAsync();
 
-            MessageInputModel? inputModel = new MessageInputModel() { MessagePartners = possiblePartners };
+            MessageInputModel inputModel = new MessageInputModel() { MessagePartners = possiblePartners };
 
             return inputModel;
         }

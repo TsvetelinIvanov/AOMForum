@@ -73,7 +73,7 @@ namespace AOMForum.Services.Data.Tests
         }
 
         [Fact]
-        public async Task GetAllViewModelAsync_ShouldReturnExpectedCategoriesAllViewModelWith_EmtyCategories()
+        public async Task GetAllViewModelAsync_ShouldReturnExpectedCategoriesAllViewModel_WithEmtyCategories()
         {
             DbContextOptions<ApplicationDbContext> options = new DbContextOptionsBuilder<ApplicationDbContext>().UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString()).Options;
             using ApplicationDbContext dbContext = new ApplicationDbContext(options);
@@ -109,7 +109,7 @@ namespace AOMForum.Services.Data.Tests
         }
 
         [Fact]
-        public async Task GetAllViewModelAsync_ShouldReturnExpectedCategoriesAllViewModel_WithEmtyCategoriesForInexistantSearch()
+        public async Task GetAllViewModelAsync_ShouldReturnExpectedCategoriesAllViewModelWithEmtyCategories_ForInexistantSearch()
         {
             DbContextOptions<ApplicationDbContext> options = new DbContextOptionsBuilder<ApplicationDbContext>().UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString()).Options;
             using ApplicationDbContext dbContext = new ApplicationDbContext(options);
@@ -408,6 +408,7 @@ namespace AOMForum.Services.Data.Tests
             Category? category = await dbContext.Categories.FindAsync(TestCategoryForActionId);
 
             Assert.False(isDeleted);
+            Assert.Null(category);
             Assert.Equal(2, dbContext.Categories.Count());
         }
     }

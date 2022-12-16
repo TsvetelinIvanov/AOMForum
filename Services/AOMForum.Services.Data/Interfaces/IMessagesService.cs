@@ -4,7 +4,7 @@ namespace AOMForum.Services.Data.Interfaces
 {
     public interface IMessagesService
     {
-        Task<MessageInputModel?> GetMessageInputModelAsync(string? userId);
+        Task<MessageInputModel> GetMessageInputModelAsync(string? userId);
 
         Task<bool> CreateAsync(string? content, string? senderId, string? receiverId);
 

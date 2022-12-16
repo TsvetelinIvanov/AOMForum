@@ -17,7 +17,7 @@ namespace AOMForum.Services.Data.Tests
         private const int TestCommentId = 100;
         private const int TestInexistantCommentId = 1001;
         private const string TestCommentReportAuthorId = "TestCommentReportAuthorId";
-        private const string OtherTestCommentReportAuthorId = "OtherTestCommentReportAuthorId";
+        private const string TestOtherCommentReportAuthorId = "TestOtherCommentReportAuthorId";
         private const string TestCommentAuthorId = "TestCommentAuthorId";
         private const string TestCommentPostAuthorId = "TestCommentPostAuthorId";
         private const int TestPostCommentId = 1000;
@@ -87,10 +87,10 @@ namespace AOMForum.Services.Data.Tests
         {
             Id = TestOtherCommentReportId,
             Content = TestOtherCommentReportContent,
-            AuthorId = OtherTestCommentReportAuthorId,
+            AuthorId = TestOtherCommentReportAuthorId,
             Author = new ApplicationUser()
             {
-                Id = OtherTestCommentReportAuthorId,
+                Id = TestOtherCommentReportAuthorId,
                 UserName = "OtherTestCommentReportAuthor",
                 Email = "othertestcommentreportauthor@mail.com",
                 FirstName = "Other",

@@ -12,17 +12,14 @@ namespace AOMForum.Services.Data.Tests
     {
         private const int TestVoteId = 10;
         private const int TestOtherVoteId = 11;
-        private const int TestCommentId = 100;        
-        private const int TestCommentForActionId = 101;
+        private const int TestCommentId = 100;
         private const int TestPostId = 1000;
         private const int TestCategoryPostId = 10000;
         private const string TestVotedUserId = "TestVotedUserId";
         private const string TestOtherVotedUserId = "TestOtherVotedUserId";
         private const string TestCommentAuthorId = "TestCommentAuthorId";
-        private const string TestOtherCommentAuthorId = "OtherTestCommentAuthorId";
         private const string TestPostAuthorId = "TestCommentPostAuthorId";
         private const string TestCommentContent = "Test Comment Content";
-        private const string TestOtherCommentContent = "Test Other Comment Content";
 
         private readonly CommentVote testCommentVote = new CommentVote()
         {
@@ -115,7 +112,7 @@ namespace AOMForum.Services.Data.Tests
             CommentVotesService service = new CommentVotesService(commentVotesRepository);
 
             await service.VoteAsync(TestCommentId, TestVotedUserId, true);
-            CommentVote? commentVote = await dbContext.CommentVotes.FirstOrDefaultAsync(v => v.AuthorId == TestVotedUserId && v.CommentId = TestCommentId);
+            CommentVote? commentVote = await dbContext.CommentVotes.FirstOrDefaultAsync(v => v.AuthorId == TestVotedUserId && v.CommentId == TestCommentId);
 
             Assert.NotNull(commentVote);
             Assert.Equal(TestVoteId, commentVote.Id);
@@ -134,7 +131,7 @@ namespace AOMForum.Services.Data.Tests
             CommentVotesService service = new CommentVotesService(commentVotesRepository);
 
             await service.VoteAsync(TestCommentId, TestVotedUserId, false);
-            CommentVote? commentVote = await dbContext.CommentVotes.FirstOrDefaultAsync(v => v.AuthorId == TestVotedUserId && v.CommentId = TestCommentId);
+            CommentVote? commentVote = await dbContext.CommentVotes.FirstOrDefaultAsync(v => v.AuthorId == TestVotedUserId && v.CommentId == TestCommentId);
 
             Assert.NotNull(commentVote);
             Assert.Equal(TestVoteId, commentVote.Id);
@@ -155,7 +152,7 @@ namespace AOMForum.Services.Data.Tests
             CommentVotesService service = new CommentVotesService(commentVotesRepository);
 
             await service.VoteAsync(TestCommentId, TestVotedUserId, false);
-            CommentVote? commentVote = await dbContext.CommentVotes.FirstOrDefaultAsync(v => v.AuthorId == TestVotedUserId && v.CommentId = TestCommentId);
+            CommentVote? commentVote = await dbContext.CommentVotes.FirstOrDefaultAsync(v => v.AuthorId == TestVotedUserId && v.CommentId == TestCommentId);
 
             Assert.NotNull(commentVote);
             Assert.Equal(TestVoteId, commentVote.Id);
@@ -195,7 +192,7 @@ namespace AOMForum.Services.Data.Tests
             CommentVotesService service = new CommentVotesService(commentVotesRepository);
 
             await service.VoteAsync(TestCommentId, TestVotedUserId, true);
-            CommentVote? commentVote = await dbContext.CommentVotes.FirstOrDefaultAsync(v => v.AuthorId == TestVotedUserId && v.CommentId = TestCommentId);
+            CommentVote? commentVote = await dbContext.CommentVotes.FirstOrDefaultAsync(v => v.AuthorId == TestVotedUserId && v.CommentId == TestCommentId);
             int votesSum = service.GetVotes(TestCommentId);
 
             Assert.NotNull(commentVote);
@@ -220,7 +217,7 @@ namespace AOMForum.Services.Data.Tests
             CommentVotesService service = new CommentVotesService(commentVotesRepository);
 
             await service.VoteAsync(TestCommentId, TestVotedUserId, false);
-            CommentVote? commentVote = await dbContext.CommentVotes.FirstOrDefaultAsync(v => v.AuthorId == TestVotedUserId && v.CommentId = TestCommentId);
+            CommentVote? commentVote = await dbContext.CommentVotes.FirstOrDefaultAsync(v => v.AuthorId == TestVotedUserId && v.CommentId == TestCommentId);
             int votesSum = service.GetVotes(TestCommentId);
 
             Assert.NotNull(commentVote);

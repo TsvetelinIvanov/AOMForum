@@ -32,6 +32,7 @@ namespace AOMForum.Services.Data.Services
             }
 
             int count = await posts.CountAsync();
+
             return count;
         }
 

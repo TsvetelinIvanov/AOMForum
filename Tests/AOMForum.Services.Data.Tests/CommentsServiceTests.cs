@@ -17,7 +17,7 @@ namespace AOMForum.Services.Data.Tests
         private const int TestPostId = 100;
         private const int TestCategoryPostId = 1000;
         private const string TestCommentAuthorId = "TestCommentAuthorId";
-        private const string TestOtherCommentAuthorId = "OtherTestCommentAuthorId";
+        private const string TestOtherCommentAuthorId = "TestOtherCommentAuthorId";
         private const string TestPostAuthorId = "TestCommentPostAuthorId";
         private const string TestCommentContent = "Test Comment Content";
         private const string TestOtherCommentContent = "Test Other Comment Content";
@@ -286,7 +286,7 @@ namespace AOMForum.Services.Data.Tests
 
             Assert.NotNull(comment);
             Assert.Equal(TestCommentForActionId, comment.Id);
-            Assert.Equal(TestOtherCategoryContent, comment.Content);
+            Assert.Equal(TestOtherCommentContent, comment.Content);
         }
 
         [Fact]
@@ -364,7 +364,7 @@ namespace AOMForum.Services.Data.Tests
             using IDeletableEntityRepository<Comment> repository = new EfDeletableEntityRepository<Comment>(dbContext);
             CommentsService service = new CommentsService(repository);
 
-            CommentDeleteModel? actualModel = await service.GetCommentDeleteModelAsync(TestCommentId);
+            CommentDeleteModel? actualModel = await service.GetCommentDeleteModelAsync(TestCommentForActionId);
 
             Assert.Null(actualModel);
         }
@@ -383,16 +383,16 @@ namespace AOMForum.Services.Data.Tests
             CommentsService service = new CommentsService(repository);
 
             bool isDeleted = await service.DeleteAsync(TestCommentForActionId);
-            Comment? comment = await dbContext.Categories.FindAsync(TestCommentForActionId);
+            Comment? comment = await dbContext.Comments.FindAsync(TestCommentForActionId);
 
             Assert.NotNull(comment);
             Assert.True(comment.IsDeleted);
             Assert.Equal(TestCommentForActionId, comment.Id);
             Assert.Equal(TestCommentContent, comment.Content);
-            Assert.Equal(this.testComment.Author.UserName, actualModel.AuthorUserName);
-            Assert.Equal(this.testComment.Author.ProfilePictureURL, actualModel.AuthorProfilePictureURL);
-            Assert.Equal(TestPostId, actualModel.PostId);
-            Assert.Equal(this.testComment.Post.Title, actualModel.PostTitle);
+            Assert.Equal(this.testComment.Author.UserName, comment.Author.UserName);
+            Assert.Equal(this.testComment.Author.ProfilePictureURL, comment.Author.ProfilePictureURL);
+            Assert.Equal(TestPostId, comment.PostId);
+            Assert.Equal(this.testComment.Post.Title, comment.Post.Title);
         }
 
         [Fact]
@@ -409,17 +409,17 @@ namespace AOMForum.Services.Data.Tests
             CommentsService service = new CommentsService(repository);
 
             bool isDeleted = await service.DeleteAsync(TestCommentForActionId);
-            Comment? comment = await dbContext.Categories.FindAsync(TestCommentForActionId);
+            Comment? comment = await dbContext.Comments.FindAsync(TestCommentForActionId);
 
             Assert.True(isDeleted);
             Assert.NotNull(comment);
             Assert.True(comment.IsDeleted);
             Assert.Equal(TestCommentForActionId, comment.Id);
             Assert.Equal(TestCommentContent, comment.Content);
-            Assert.Equal(this.testComment.Author.UserName, actualModel.AuthorUserName);
-            Assert.Equal(this.testComment.Author.ProfilePictureURL, actualModel.AuthorProfilePictureURL);
-            Assert.Equal(TestPostId, actualModel.PostId);
-            Assert.Equal(this.testComment.Post.Title, actualModel.PostTitle);
+            Assert.Equal(this.testComment.Author.UserName, comment.Author.UserName);
+            Assert.Equal(this.testComment.Author.ProfilePictureURL, comment.Author.ProfilePictureURL);
+            Assert.Equal(TestPostId, comment.PostId);
+            Assert.Equal(this.testComment.Post.Title, comment.Post.Title);
         }
 
         [Fact]
@@ -435,9 +435,10 @@ namespace AOMForum.Services.Data.Tests
             CommentsService service = new CommentsService(repository);
 
             bool isDeleted = await service.DeleteAsync(TestCommentForActionId);
-            Comment? comment = await dbContext.Categories.FindAsync(TestCommentForActionId);
+            Comment? comment = await dbContext.Comments.FindAsync(TestCommentForActionId);
 
             Assert.False(isDeleted);
+            Assert.Null(comment);
             Assert.Equal(2, dbContext.Comments.Count());
         }
     }
