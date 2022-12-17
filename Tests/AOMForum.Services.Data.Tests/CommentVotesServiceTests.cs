@@ -68,39 +68,7 @@ namespace AOMForum.Services.Data.Tests
                 AuthorId = TestPostAuthorId,
                 CategoryId = TestCategoryPostId
             }
-        };
-
-        private readonly ApplicationUser testVotedUser = new ApplicationUser()
-        {
-            Id = TestVotedUserId,
-            UserName = "TestVotedUser",
-            Email = "testvoteduser@mail.com",
-            FirstName = "Test",
-            SecondName = "Voted",
-            LastName = "User",
-            BirthDate = new DateTime(1999, 1, 1),
-            Age = 23,
-            Gender = GenderType.Male,
-            Biography = "Test Author Biography",
-            ProfilePictureURL = "ProfilePictureURL",
-            EmailConfirmed = true
-        };
-
-        private readonly ApplicationUser testOtherVotedUser = new ApplicationUser()
-        {
-            Id = TestOtherVotedUserId,
-            UserName = "TestOtherVotedUser",
-            Email = "testvoteduser@mail.com",
-            FirstName = "Test",
-            SecondName = "OtherVoted",
-            LastName = "User",
-            BirthDate = new DateTime(1999, 1, 1),
-            Age = 23,
-            Gender = GenderType.Female,
-            Biography = "Test Author Biography",
-            ProfilePictureURL = "ProfilePictureURL",
-            EmailConfirmed = true
-        };
+        };        
 
         [Fact]
         public async Task VoteAsync_ShouldAddUpVote()
@@ -166,6 +134,7 @@ namespace AOMForum.Services.Data.Tests
         {
             DbContextOptions<ApplicationDbContext> options = new DbContextOptionsBuilder<ApplicationDbContext>().UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString()).Options;
             using ApplicationDbContext dbContext = new ApplicationDbContext(options);
+            await dbContext.Comments.AddAsync(this.testComment);
             await dbContext.CommentVotes.AddAsync(this.testCommentVote);
             await dbContext.CommentVotes.AddAsync(this.testOtherCommentVote);
             await dbContext.SaveChangesAsync();
@@ -184,6 +153,7 @@ namespace AOMForum.Services.Data.Tests
         {
             DbContextOptions<ApplicationDbContext> options = new DbContextOptionsBuilder<ApplicationDbContext>().UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString()).Options;
             using ApplicationDbContext dbContext = new ApplicationDbContext(options);
+            await dbContext.Comments.AddAsync(this.testComment);
             await dbContext.CommentVotes.AddAsync(this.testCommentVote);
             await dbContext.CommentVotes.AddAsync(this.testOtherCommentVote);
             await dbContext.SaveChangesAsync();
@@ -209,6 +179,7 @@ namespace AOMForum.Services.Data.Tests
         {
             DbContextOptions<ApplicationDbContext> options = new DbContextOptionsBuilder<ApplicationDbContext>().UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString()).Options;
             using ApplicationDbContext dbContext = new ApplicationDbContext(options);
+            await dbContext.Comments.AddAsync(this.testComment);
             await dbContext.CommentVotes.AddAsync(this.testCommentVote);
             await dbContext.CommentVotes.AddAsync(this.testOtherCommentVote);
             await dbContext.SaveChangesAsync();
