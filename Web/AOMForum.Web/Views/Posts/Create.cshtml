@@ -18,10 +18,10 @@
                 <input asp-for="Title" class="form-control" />
                 <span asp-validation-for="Title" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            @*<div class="form-group">
                 <label asp-for="PostType" class="control-label"></label>
                 <select asp-for="PostType" class="form-control"></select>
-                    @*<input id="post-type" value="@PostType.Text" asp-for="PostType" type="radio" hidden />                
+                    <input id="post-type" value="@PostType.Text" asp-for="PostType" type="radio" hidden />                
                     <div class="row">
                         <div class="col-4 col-lg-3 col-xl-2">
                             <a href="#" onclick="$('#post-type').val('Text');">       
@@ -38,9 +38,9 @@
                                 <span id="video">@PostType.Video</span>
                             </a>
                         </div>
-                    </div>*@                
+                    </div>                
                 <span asp-validation-for="PostType" class="text-danger"></span>
-            </div>
+            </div>*@
             <div class="form-group">
                 <label asp-for="Content" class="control-label"></label>
                 <input asp-for="Content" class="form-control" />
@@ -87,7 +87,7 @@
         let $select = $('#input-category').selectize({
             create: false,
             sortField: 'text',
-            placeholder: @SelectPlaceholder
+            placeholder: '@SelectPlaceholder'
         });
         $select.each(function () {
             $(this)[0].selectize.clear(true);

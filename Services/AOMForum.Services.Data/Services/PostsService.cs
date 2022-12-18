@@ -171,12 +171,12 @@ namespace AOMForum.Services.Data.Services
             return inputModel;
         }
 
-        public async Task<int> CreateAsync(string? title, PostType type, string? content, string? imageUrl, string? authorId, int categoryId, IEnumerable<int> tagIds)
+        public async Task<int> CreateAsync(string? title, string? content, string? imageUrl, string? authorId, int categoryId, IEnumerable<int> tagIds)
         {
             Post post = new Post
             {
                 Title = title,
-                Type = type,
+                Type = PostType.Text,
                 Content = content,
                 ImageUrl = imageUrl,
                 AuthorId = authorId,

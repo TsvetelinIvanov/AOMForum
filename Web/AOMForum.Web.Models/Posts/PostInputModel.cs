@@ -15,10 +15,10 @@ namespace AOMForum.Web.Models.Posts
         [StringLength(TitleMaxLength, MinimumLength = TitleMinLength, ErrorMessage = StringLengthErrorMessage)]
         public string? Title { get; init; }
         
-        [Required]
-        [EnumDataType(typeof(PostType))]
-        [Display(Name = DisplayPostType)]
-        public PostType PostType { get; init; }
+        //[Required(ErrorMessage = RequiredErrorMessage)]
+        //[EnumDataType(typeof(PostType))]
+        //[Display(Name = DisplayPostType)]
+        //public PostType PostType { get; init; }
 
         [Display(Name = DisplayContent)]
         [Required(ErrorMessage = RequiredErrorMessage)]

@@ -23,12 +23,12 @@ namespace AOMForum.Data.Seeding
                 throw new NullReferenceException(nameof(roleManager));
             }
 
-            bool isExistingAdmin = await userManager.Users.AnyAsync(u => u.UserName == "Админ");
+            bool isExistingAdmin = await userManager.Users.AnyAsync(u => u.UserName == "Admin");
             if (!isExistingAdmin)
             {
                 ApplicationUser admin = new ApplicationUser
                 {
-                    UserName = "Админ",
+                    UserName = "Admin",
                     Email = "admin@mail.com",
                     FirstName = "Господин",
                     SecondName = "Администраторов",
@@ -54,12 +54,12 @@ namespace AOMForum.Data.Seeding
                 }
             }
 
-            bool isExistingYoan = await userManager.Users.AnyAsync(u => u.UserName == "Йоан");
+            bool isExistingYoan = await userManager.Users.AnyAsync(u => u.UserName == "Ivan");
             if (!isExistingAdmin)
             {
                 ApplicationUser admin = new ApplicationUser
                 {
-                    UserName = "Йоан",
+                    UserName = "Ivan",
                     Email = "ivanivanov@aom.bg",
                     FirstName = "Иван",
                     SecondName = "Иванов",

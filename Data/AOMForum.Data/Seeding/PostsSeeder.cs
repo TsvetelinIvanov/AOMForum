@@ -14,19 +14,19 @@ namespace AOMForum.Data.Seeding
                 return;
             }
 
-            string? adminYoanId = await dbContext.Users.Where(u => u.UserName == "Йоан").Select(a => a.Id).FirstOrDefaultAsync();
+            string? adminYoanId = await dbContext.Users.Where(u => u.UserName == "Ivan").Select(a => a.Id).FirstOrDefaultAsync();
             if (adminYoanId == null)
             {
                 return;
             }
 
-            string? userMariaId = await dbContext.Users.Where(u => u.UserName == "Мария1").Select(u => u.Id).FirstOrDefaultAsync();
+            string? userMariaId = await dbContext.Users.Where(u => u.UserName == "Maria").Select(u => u.Id).FirstOrDefaultAsync();
             if (userMariaId == null)
             {
                 return;
             }
 
-            string? userSnaksId = await dbContext.Users.Where(u => u.UserName == "Снакс1").Select(u => u.Id).FirstOrDefaultAsync();
+            string? userSnaksId = await dbContext.Users.Where(u => u.UserName == "Snaks").Select(u => u.Id).FirstOrDefaultAsync();
             if (userSnaksId == null)
             {
                 return;

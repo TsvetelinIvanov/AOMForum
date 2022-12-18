@@ -127,7 +127,8 @@ else
                     @Html.DisplayFor(modelItem => post.Category.Name)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => string.Join(", ", post.Tags.Select(t => t.Name)))
+                    @*@Html.DisplayFor(modelItem => string.Join(", ", post.Tags.Select(t => t.Name)))*@
+                    @string.Join(", ", post.Tags.Select(t => t.Name))
                 </td>
                 <td>
                     <a asp-area="" asp-controller="Posts" asp-action="Details" asp-route-id="@post.Id">@DetailsAction</a>

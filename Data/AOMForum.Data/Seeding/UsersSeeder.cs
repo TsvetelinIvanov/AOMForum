@@ -16,12 +16,12 @@ namespace AOMForum.Data.Seeding
                 throw new NullReferenceException(nameof(userManager));
             }
 
-            bool isExistingStoyan = await userManager.Users.AnyAsync(u => u.UserName == "Стоян1");
+            bool isExistingStoyan = await userManager.Users.AnyAsync(u => u.UserName == "Stoyan");
             if (!isExistingStoyan)
             {
                 ApplicationUser user = new ApplicationUser
                 {
-                    UserName = "Стоян1",
+                    UserName = "Stoyan",
                     Email = "stoyanduvarov@aom.bg",
                     FirstName = "Стоян",
                     SecondName = "Каменов",
@@ -41,12 +41,12 @@ namespace AOMForum.Data.Seeding
                 }
             }
 
-            bool isExistingBoyko = await userManager.Users.AnyAsync(u => u.UserName == "Бойко1");
+            bool isExistingBoyko = await userManager.Users.AnyAsync(u => u.UserName == "Boyko");
             if (!isExistingBoyko)
             {
                 ApplicationUser user = new ApplicationUser
                 {
-                    UserName = "Бойко1",
+                    UserName = "Boyko",
                     Email = "boykoarmeyski@aom.bg",
                     FirstName = "Бойко",
                     SecondName = "Войников",
@@ -66,12 +66,12 @@ namespace AOMForum.Data.Seeding
                 }
             }
 
-            bool isExistingYustinian = await userManager.Users.AnyAsync(u => u.UserName == "Юстиниан1");
+            bool isExistingYustinian = await userManager.Users.AnyAsync(u => u.UserName == "Yustinian");
             if (!isExistingYustinian)
             {
                 ApplicationUser user = new ApplicationUser
                 {
-                    UserName = "Юстиниан1",
+                    UserName = "Yustinian",
                     Email = "yustinianZakonov@aom.bg",
                     FirstName = "Юстиниан",
                     SecondName = "Управдов",
@@ -91,12 +91,12 @@ namespace AOMForum.Data.Seeding
                 }
             }
 
-            bool isExistingSokrat = await userManager.Users.AnyAsync(u => u.UserName == "Сократ1");
+            bool isExistingSokrat = await userManager.Users.AnyAsync(u => u.UserName == "Sokrat");
             if (!isExistingSokrat)
             {
                 ApplicationUser user = new ApplicationUser
                 {
-                    UserName = "Сократ1",
+                    UserName = "Sokrat",
                     Email = "sokratplatonov@aom.bg",
                     FirstName = "Сократ",
                     SecondName = "Аристотелов",
@@ -116,12 +116,12 @@ namespace AOMForum.Data.Seeding
                 }
             }
 
-            bool isExistingArpa = await userManager.Users.AnyAsync(u => u.UserName == "Арпа1");
+            bool isExistingArpa = await userManager.Users.AnyAsync(u => u.UserName == "Arpa");
             if (!isExistingArpa)
             {
                 ApplicationUser user = new ApplicationUser
                 {
-                    UserName = "Арпа1",
+                    UserName = "Arpa",
                     Email = "arpaefirova@aom.bg",
                     FirstName = "Арпа",
                     SecondName = "Меркуриева",
@@ -141,12 +141,12 @@ namespace AOMForum.Data.Seeding
                 }
             }
 
-            bool isExistingNikola = await userManager.Users.AnyAsync(u => u.UserName == "Никола1");
+            bool isExistingNikola = await userManager.Users.AnyAsync(u => u.UserName == "Nikola");
             if (!isExistingNikola)
             {
                 ApplicationUser user = new ApplicationUser
                 {
-                    UserName = "Никола1",
+                    UserName = "Nikola",
                     Email = "nikoladaskalov@aom.bg",
                     FirstName = "Никола",
                     SecondName = "Априлов",
@@ -166,12 +166,12 @@ namespace AOMForum.Data.Seeding
                 }
             }
 
-            bool isExistingMaria = await userManager.Users.AnyAsync(u => u.UserName == "Мария1");
+            bool isExistingMaria = await userManager.Users.AnyAsync(u => u.UserName == "Maria");
             if (!isExistingMaria)
             {
                 ApplicationUser user = new ApplicationUser
                 {
-                    UserName = "Мария1",
+                    UserName = "Maria",
                     Email = "mariagospojina@aom.bg",
                     FirstName = "Мария",
                     SecondName = "Яковова",
@@ -191,12 +191,12 @@ namespace AOMForum.Data.Seeding
                 }
             }
 
-            bool isExistingGabriela = await userManager.Users.AnyAsync(u => u.UserName == "Габриела1");
+            bool isExistingGabriela = await userManager.Users.AnyAsync(u => u.UserName == "Gabriela");
             if (!isExistingGabriela)
             {
                 ApplicationUser user = new ApplicationUser
                 {
-                    UserName = "Габриела1",
+                    UserName = "Gabriela",
                     Email = "gabrielafrankfurtska@aom.bg",
                     FirstName = "Габриела",
                     SecondName = "Шенгенова",
@@ -216,12 +216,12 @@ namespace AOMForum.Data.Seeding
                 }
             }
 
-            bool isExistingSnaks = await userManager.Users.AnyAsync(u => u.UserName == "Снакс1");
+            bool isExistingSnaks = await userManager.Users.AnyAsync(u => u.UserName == "Snaks");
             if (!isExistingSnaks)
             {
                 ApplicationUser user = new ApplicationUser
                 {
-                    UserName = "Снакс1",
+                    UserName = "Snaks",
                     Email = "snaksmacninsky@aom.bg",
                     FirstName = "Снакс",
                     SecondName = "Аргиров",
@@ -241,12 +241,12 @@ namespace AOMForum.Data.Seeding
                 }
             }
 
-            bool isExistingElena = await userManager.Users.AnyAsync(u => u.UserName == "Елена1");
+            bool isExistingElena = await userManager.Users.AnyAsync(u => u.UserName == "Elena");
             if (!isExistingElena)
             {
                 ApplicationUser user = new ApplicationUser
                 {
-                    UserName = "Елена1",
+                    UserName = "Elena",
                     Email = "elenarudolf@aom.bg",
                     FirstName = "Елена",
                     SecondName = "Тодорова",
@@ -266,12 +266,12 @@ namespace AOMForum.Data.Seeding
                 }
             }
 
-            bool isExistingIbrahim = await userManager.Users.AnyAsync(u => u.UserName == "Ибрахим1");
+            bool isExistingIbrahim = await userManager.Users.AnyAsync(u => u.UserName == "Ibrahim");
             if (!isExistingIbrahim)
             {
                 ApplicationUser user = new ApplicationUser
                 {
-                    UserName = "Ибрахим1",
+                    UserName = "Ibrahim",
                     Email = "ibrahimkoch@aom.bg",
                     FirstName = "Ибрахим",
                     SecondName = "Али",
@@ -291,12 +291,12 @@ namespace AOMForum.Data.Seeding
                 }
             }
 
-            bool isExistingGoritsa = await userManager.Users.AnyAsync(u => u.UserName == "Горица1");
+            bool isExistingGoritsa = await userManager.Users.AnyAsync(u => u.UserName == "Goritsa");
             if (!isExistingGoritsa)
             {
                 ApplicationUser user = new ApplicationUser
                 {
-                    UserName = "Горица1",
+                    UserName = "Goritsa",
                     Email = "goritsadubova@aom.bg",
                     FirstName = "Горица",
                     SecondName = "Букова",

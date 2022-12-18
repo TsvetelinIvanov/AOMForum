@@ -62,10 +62,14 @@ builder.Services.AddTransient<ICommentsService, CommentsService>();
 builder.Services.AddTransient<ICommentReportsService, CommentReportsService>();
 builder.Services.AddTransient<ICommentVotesService, CommentVotesService>();
 builder.Services.AddTransient<IUsersService, UsersService>();
-builder.Services.AddTransient<IMessagesService, MessagesService>();
 builder.Services.AddTransient<ISettingsService, SettingsService>();
+builder.Services.AddTransient<IMessagesService, MessagesService>();
+
+
 
 builder.Services.AddSignalR();
+
+//builder.Services.AddSingleton<IMessagesService, MessagesService>();
 
 WebApplication app = builder.Build();
 
@@ -79,14 +83,14 @@ AutoMapperConfig.RegisterMappings(typeof(ErrorViewModel).GetTypeInfo().Assembly)
 //    if (app.Environment.IsDevelopment())
 //    {
 //        dbContext.Database.Migrate();
-          ////if (dbContext.Database.IsRelational())
-          ////{
-          ////    dbContext.Database.Migrate();
-          ////}
-          ////else
-          ////{
-          ////    dbContext.Database.EnsureCreated();
-          ////}
+//        //if (dbContext.Database.IsRelational())
+//        //{
+//        //    dbContext.Database.Migrate();
+//        //}
+//        //else
+//        //{
+//        //    dbContext.Database.EnsureCreated();
+//        //}
 //    }
 
 //    new ApplicationDbContextSeeder().SeedAsync(dbContext, serviceScope.ServiceProvider).GetAwaiter().GetResult();

@@ -61,7 +61,7 @@ namespace AOMForum.Web.Controllers
                 return this.View(inputModel);
             }
 
-            int postId = await this.postsService.CreateAsync(inputModel.Title, inputModel.PostType, inputModel.Content, inputModel.ImageUrl, this.User.Id(), inputModel.CategoryId, inputModel.TagIds);
+            int postId = await this.postsService.CreateAsync(inputModel.Title, inputModel.Content, inputModel.ImageUrl, this.User.Id(), inputModel.CategoryId, inputModel.TagIds);
 
             return this.RedirectToAction(nameof(Details), new { id = postId });
         }

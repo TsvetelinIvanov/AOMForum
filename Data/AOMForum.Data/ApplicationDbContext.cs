@@ -14,14 +14,14 @@ namespace AOMForum.Data
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
-            //if (this.Database.IsRelational())
-            //{
-            //    this.Database.Migrate();
-            //}
-            //else
-            //{
-            //    this.Database.EnsureCreated();
-            //}
+            if (this.Database.IsRelational())
+            {
+                this.Database.Migrate();
+            }
+            else
+            {
+                this.Database.EnsureCreated();
+            }
 
             ////    new ApplicationDbContextSeeder().SeedAsync(dbContext, serviceScope.ServiceProvider).GetAwaiter().GetResult();
         }

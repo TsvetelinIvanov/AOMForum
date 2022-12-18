@@ -365,7 +365,7 @@ namespace AOMForum.Services.Data.Tests
             using IDeletableEntityRepository<PostTag> postsTagsRepository = new EfDeletableEntityRepository<PostTag>(dbContext);
             PostsService service = new PostsService(postsRepository, categoriesRepository, tagsRepository, postsTagsRepository);
 
-            int actualPostId = await service.CreateAsync(TestPostTitle, PostType.Text, TestPostContent, "ImageUrl", TestPostAuthorId, TestCategoryPostId, new List<int>());
+            int actualPostId = await service.CreateAsync(TestPostTitle, TestPostContent, "ImageUrl", TestPostAuthorId, TestCategoryPostId, new List<int>());
             Post? post = await dbContext.Posts.FirstOrDefaultAsync(p => p.Title == TestPostTitle);
 
             Assert.NotNull(post);
@@ -387,7 +387,7 @@ namespace AOMForum.Services.Data.Tests
             using IDeletableEntityRepository<PostTag> postsTagsRepository = new EfDeletableEntityRepository<PostTag>(dbContext);
             PostsService service = new PostsService(postsRepository, categoriesRepository, tagsRepository, postsTagsRepository);
 
-            int actualPostId = await service.CreateAsync(TestPostTitle, PostType.Text, TestPostContent, "ImageUrl", TestPostAuthorId, TestCategoryPostId, new List<int>());
+            int actualPostId = await service.CreateAsync(TestPostTitle, TestPostContent, "ImageUrl", TestPostAuthorId, TestCategoryPostId, new List<int>());
             Post? post = await dbContext.Posts.FindAsync(actualPostId);
 
             Assert.NotNull(post);

@@ -124,7 +124,9 @@ else if (Model.TotalPagesCount > 0 && Model.Search != null)
                 @Html.DisplayFor(modelItem => post.Category.Name)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => string.Join(", ", post.Tags.Select(t => t.Name)))
+                @*@Html.DisplayFor(modelItem => string.Join(", ", post.Tags.Select(t => t.Name)))*@
+                @*@Html.DisplayFor(modelItem => post.Tags)*@
+                @string.Join(", ", post.Tags.Select(t => t.Name))
             </td>            
             <td>
                 <a asp-area="" asp-controller="Categories" asp-action="Details" asp-route-id="@post.Category.Id">@GoToCategoryAction</a> | 

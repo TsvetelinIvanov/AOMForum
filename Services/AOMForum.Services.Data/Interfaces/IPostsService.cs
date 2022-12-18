@@ -15,7 +15,7 @@ namespace AOMForum.Services.Data.Interfaces
 
         Task<PostInputModel> GetPostInputModelAsync();
 
-        Task<int> CreateAsync(string? title, PostType type, string? content, string? imageUrl, string? authorId, int categoryId, IEnumerable<int> tagIds);
+        Task<int> CreateAsync(string? title, string? content, string? imageUrl, string? authorId, int categoryId, IEnumerable<int> tagIds);
 
         Task<string?> GetAuthorIdAsync(int id);
 
