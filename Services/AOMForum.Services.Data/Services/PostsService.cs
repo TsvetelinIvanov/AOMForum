@@ -111,6 +111,13 @@ namespace AOMForum.Services.Data.Services
                 return null;
             }
 
+            Post? postWithComents = await this.postsRepository.All().Include(p => p.Comments).ThenInclude(c => c.Author).AsNoTracking()
+                .Where(p => p.Id == id).FirstOrDefaultAsync();
+            if (postWithComents == null)
+            {
+                return null;
+            }            
+
             PostDetailsViewModel viewModel = new PostDetailsViewModel()
             {
                 Id = post.Id,
@@ -132,13 +139,13 @@ namespace AOMForum.Services.Data.Services
                     Id = pt.TagId,
                     Name = pt.Tag.Name
                 }),
-                Comments = post.Comments.Select(c => new CommentInPostViewModel()
+                Comments = postWithComents.Comments.Select(c => new CommentInPostViewModel()
                 {
                     Id = c.Id,
                     Content = c.Content,
-                    VotesCount = c.Votes.Count,
+                    //VotesCount = c.Votes.Count,
                     CreatedOn = c.CreatedOn.ToString(UsedDateTimeFormat),
-                    ParentId = c.ParentId,
+                    //ParentId = c.ParentId,
                     AuthorId = c.AuthorId,
                     AuthorUserName = c.Author.UserName,
                     AuthorProfilePictureURL = c.Author.ProfilePictureURL

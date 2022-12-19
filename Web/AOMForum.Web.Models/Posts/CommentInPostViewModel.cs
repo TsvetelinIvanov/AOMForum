@@ -24,13 +24,13 @@ namespace AOMForum.Web.Models.Posts
         [Display(Name = DisplayContent)]
         public string? SanitizedContent => this.sanitizer.Sanitize(this.Content ?? string.Empty);
 
-        [Display(Name = DisplayVotesCount)]
-        public int VotesCount { get; set; }
+        //[Display(Name = DisplayVotesCount)]
+        //public int VotesCount { get; set; }
 
         [Display(Name = DisplayCreatedOn)]
         public string? CreatedOn { get; init; }
 
-        public int? ParentId { get; init; }
+        //public int? ParentId { get; init; }
 
         public string? AuthorId { get; init; }
 

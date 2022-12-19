@@ -8,7 +8,7 @@
     ViewData["Title"] = ViewTitle + Model.Title;
     void DisplayComments(int? parentId)
     {
-        IEnumerable<CommentInPostViewModel> comments = this.Model.Comments.Where(c => c.ParentId == parentId);
+        IEnumerable<CommentInPostViewModel> comments = this.Model.Comments/*.Where(c => c.ParentId == parentId)*/;
         if (!comments.Any())
         {
             return;
@@ -26,7 +26,8 @@
                                     <div class="media-body ml-3">
                                         @comment.AuthorUserName
                                         <div class="text-muted small">
-                                            <time datetime="@comment.CreatedOn"></time>
+                                            @*<time datetime="@comment.CreatedOn"></time>*@
+                                            <p>@comment.CreatedOn</p>
                                         </div>
                                     </div>
                                     <div class="text-muted small ml-3">
@@ -39,11 +40,11 @@
                             </div>
                             <div class="card-body">
                                 <article>
-                                    @Html.Raw(Model.SanitizedContent)
+                                    @Html.Raw(comment.SanitizedContent)
                                 </article>
-                                @{
+                                @*@{
                                     DisplayComments(comment.Id);
-                                }
+                                }*@
                             </div>
                         </div>
                     </div>
@@ -179,7 +180,7 @@
 <div>
     <form asp-area="" asp-controller="Comments" asp-action="Create" method="post" id="AddCommentForm" style="display: none">
         <input type="hidden" name="PostId" value="@this.Model.Id" />
-        <input type="hidden" name="ParentId" value="0" />
+        @*//<input type="hidden" name="ParentId" value="0" />*@
         <div>
             <label for="Content">@CreateComment</label>
             <textarea name="Content" id="Content" class="form-control"></textarea>
@@ -193,7 +194,7 @@
 @section Scripts {
     <script>
         function showAddCommentForm(parentId) {
-            $("#AddCommentForm input[name='ParentId']").val(parentId);
+            //$("#AddCommentForm input[name='ParentId']").val(parentId);
             $("#AddCommentForm").show();
             $([document.documentElement, document.body]).animate({
                 scrollTop: $("#AddCommentForm").offset().top
@@ -325,9 +326,9 @@
             <th>
                 @CommentContentTitle
             </th>
-            <th>
+            @*<th>
                 @CommentVotesCountTitle
-            </th>
+            </th>*@
             <th>
                 @CommentCreatedOnTitle
             </th>
@@ -349,9 +350,9 @@
                 <td>
                     @Html.DisplayFor(modelItem => comment.SanitizedContent)
                 </td>
-                <td>
+                @*<td>
                     @Html.DisplayFor(modelItem => comment.VotesCount)
-                </td>
+                </td>*@
                 <td>
                     @Html.DisplayFor(modelItem => comment.CreatedOn)
                 </td>
