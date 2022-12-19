@@ -32,7 +32,8 @@ namespace AOMForum.Web.Models.Posts
         [Required]
         [Display(Name = DisplayCategory)]
         public int CategoryId { get; init; }
-                
+
+        [Required(ErrorMessage = RequiredErrorMessage)]
         [Display(Name = DisplayTagIds)]
         public IEnumerable<int> TagIds { get; set; } = new HashSet<int>();
 

@@ -22,7 +22,7 @@
                         <div class="card mb-4">
                             <div class="card-header">
                                 <div class="media flex-wrap w-100 align-items-center">
-                                    <img src="https://res.cloudinary.com/dxfq3iotg/image/upload/v1574583246/AAA/2.jpg" class="d-block ui-w-40 rounded-circle" alt="">
+                                    <img src="@comment.AuthorProfilePictureURL" class="d-block ui-w-40 rounded-circle" alt="@(AltImage + comment.AuthorUserName)">
                                     <div class="media-body ml-3">
                                         @comment.AuthorUserName
                                         <div class="text-muted small">
@@ -31,10 +31,10 @@
                                         </div>
                                     </div>
                                     <div class="text-muted small ml-3">
-                                        @if (this.User.Identity != null && this.User.Identity.IsAuthenticated)
+                                        @*@if (this.User.Identity != null && this.User.Identity.IsAuthenticated)
                                         {
                                             <div class="px-4 pt-3"> <button type="button" class="btn btn-secondary" onclick="showAddCommentForm(@comment.Id)"><i class="fa fa-plus"></i>&nbsp; @CreateComment</button> </div>
-                                        }
+                                        }*@
                                     </div>
                                 </div>
                             </div>
@@ -61,11 +61,11 @@
             <div class="card mb-4">
                 <div class="card-header">
                     <div class="media flex-wrap w-100 align-items-center">
-                        <img src="https://res.cloudinary.com/dxfq3iotg/image/upload/v1574583246/AAA/2.jpg" class="d-block ui-w-40 rounded-circle" alt="">
+                        <img src="@Model.ImageUrl" class="d-block ui-w-40 rounded-circle" alt="@(AltImage + Model.Title)">
                         <div class="media-body ml-3">
                             @Model.AuthorUserName
                             <div class="text-muted small">
-                                <time datetime="@Model.CreatedOn"></time>
+                                <p>@Model.CreatedOn</p>
                             </div>
                         </div>
                         <div class="text-muted small ml-3">

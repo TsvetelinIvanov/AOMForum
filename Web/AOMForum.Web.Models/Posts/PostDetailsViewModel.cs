@@ -30,6 +30,9 @@ namespace AOMForum.Web.Models.Posts
         [Display(Name = DisplayContent)]
         public string? SanitizedContent => this.sanitizer.Sanitize(this.Content ?? string.Empty);
 
+        [Display(Name = DisplayImageUrl)]
+        public string? ImageUrl { get; init; }
+
         [Display(Name = DisplayCommentsCount)]
         public int CommentsCount { get; init; }      
 

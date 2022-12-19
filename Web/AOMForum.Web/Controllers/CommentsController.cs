@@ -44,7 +44,7 @@ namespace AOMForum.Web.Controllers
                 return this.RedirectToAction("Details", "Posts", new { id = inputModel.PostId });
             }
 
-            int commentId = await this.commentsService.CreateAsync(inputModel.Content, inputModel.ParentId, inputModel.PostId, this.User.Id());
+            int commentId = await this.commentsService.CreateAsync(inputModel.Content, /*inputModel.ParentId, */inputModel.PostId, this.User.Id());
             
             return this.RedirectToAction(nameof(Details), new { id = commentId });
         }

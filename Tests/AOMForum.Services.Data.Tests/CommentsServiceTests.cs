@@ -171,7 +171,7 @@ namespace AOMForum.Services.Data.Tests
             using IDeletableEntityRepository<Comment> repository = new EfDeletableEntityRepository<Comment>(dbContext);
             CommentsService service = new CommentsService(repository);
 
-            int actualCommentId = await service.CreateAsync(TestCommentContent, null, TestPostId, TestCommentAuthorId);
+            int actualCommentId = await service.CreateAsync(TestCommentContent, /*null, */TestPostId, TestCommentAuthorId);
             Comment? comment = await dbContext.Comments.FirstOrDefaultAsync(c => c.Content == TestCommentContent);
 
             Assert.NotNull(comment);
@@ -189,7 +189,7 @@ namespace AOMForum.Services.Data.Tests
             using IDeletableEntityRepository<Comment> repository = new EfDeletableEntityRepository<Comment>(dbContext);
             CommentsService service = new CommentsService(repository);
 
-            int actualCommentId = await service.CreateAsync(TestCommentContent, null, TestPostId, TestCommentAuthorId);
+            int actualCommentId = await service.CreateAsync(TestCommentContent, /*null, */TestPostId, TestCommentAuthorId);
             Comment? comment = await dbContext.Comments.FindAsync(actualCommentId);
 
             Assert.NotNull(comment);

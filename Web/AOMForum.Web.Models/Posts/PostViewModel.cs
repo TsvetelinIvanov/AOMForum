@@ -8,7 +8,7 @@ using static AOMForum.Common.DisplayNames.ApplicationUser;
 
 namespace AOMForum.Web.Models.Posts
 {
-    public class PostViewModel : IMapFrom<Comment>, IMapTo<Post>, IHaveCustomMappings
+    public class PostViewModel : IMapFrom<Post>, IMapTo<Post>, IHaveCustomMappings
     {
         public int Id { get; init; }
 

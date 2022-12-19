@@ -62,6 +62,7 @@ namespace AOMForum.Services.Data.Services
             {
                 Id = p.Id,
                 Title = p.Title,
+                ImageUrl = p.ImageUrl,
                 VotesCount = p.Votes.Count,
                 CommentsCount = p.Comments.Count,
                 AuthorId = p.AuthorId,
@@ -124,6 +125,7 @@ namespace AOMForum.Services.Data.Services
                 Title = post.Title,
                 CreatedOn = post.CreatedOn.ToString(UsedDateTimeFormat),
                 Content = post.Content,
+                ImageUrl = post.ImageUrl,
                 CommentsCount = post.Comments.Count,
                 VotesCount = post.Votes.Count,
                 AuthorId = post.AuthorId,
@@ -256,7 +258,7 @@ namespace AOMForum.Services.Data.Services
 
         public async Task<bool> EditAsync(int id, string? title, string? content, string? imageUrl, int categoryId, IEnumerable<int> tagIds)
         {
-            Post? post = await this.postsRepository.All().Include(p => p.Tags).AsNoTracking().Where(p => p.Id == id).FirstOrDefaultAsync();
+            Post? post = await this.postsRepository.All().Include(p => p.Tags).Where(p => p.Id == id).FirstOrDefaultAsync();
             if (post == null)
             {
                 return false;
@@ -274,6 +276,14 @@ namespace AOMForum.Services.Data.Services
             post.Content = content;
             post.ImageUrl = imageUrl;
             post.CategoryId = categoryId;
+            //foreach (int tagId in tagIds)
+            //{
+            //    post.Tags.Add(new PostTag
+            //    {
+            //        PostId = post.Id,
+            //        TagId = tagId
+            //    });
+            //}
 
             await this.postsRepository.SaveChangesAsync();
 
@@ -285,7 +295,7 @@ namespace AOMForum.Services.Data.Services
                     TagId = tagId
                 });
             }
-            
+
             await this.postsTagsRepository.SaveChangesAsync();
 
             return post.ModifiedOn != null;
@@ -337,7 +347,7 @@ namespace AOMForum.Services.Data.Services
             Post? post = await this.postsRepository.All().Where(c => c.Id == id).FirstOrDefaultAsync();
             if (post == null)
             {
-                return false; ;
+                return false;
             }
 
             this.postsRepository.Delete(post);

@@ -11,6 +11,9 @@ namespace AOMForum.Web.Models.Posts
         [Display(Name = DisplayTitle)]
         public string? Title { get; init; }
 
+        [Display(Name = DisplayImageUrl)]
+        public string? ImageUrl { get; init; }
+
         [Display(Name = DisplayVotesCount)]
         public int VotesCount { get; init; }
 

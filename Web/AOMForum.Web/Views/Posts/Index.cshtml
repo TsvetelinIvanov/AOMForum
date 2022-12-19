@@ -79,6 +79,9 @@ else if (Model.TotalPagesCount > 0 && Model.Search != null)
                 @TitleTitle
             </th>
             <th>
+                @PostImageTitle
+            </th>
+            <th>
                 @VotesCountTitle
             </th>
             <th>
@@ -107,6 +110,9 @@ else if (Model.TotalPagesCount > 0 && Model.Search != null)
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => post.Title)
+            </td>
+            <td>
+                <img src="@post.ImageUrl" alt="@(AltImage + post.Title)" width="100" />
             </td>
             <td>
                 @Html.DisplayFor(modelItem => post.VotesCount)

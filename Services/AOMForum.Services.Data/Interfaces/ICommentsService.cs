@@ -7,7 +7,7 @@ namespace AOMForum.Services.Data.Interfaces
     {
         Task<CommentDetailsViewModel?> GetCommentDetailsViewModelAsync(int id);
 
-        Task<int> CreateAsync(string? content, int? parentId, int postId, string? authorId);
+        Task<int> CreateAsync(string? content, /*int? parentId, */int postId, string? authorId);
 
         Task<string?> GetAuthorIdAsync(int id);
 

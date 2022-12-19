@@ -16,6 +16,7 @@
         public const string VotesCountTitle = "Вотове";
         public const string CommentsCountTitle = "Брой на коментарите";
         public const string AuthorTitle = "Автор";
+        public const string PostImageTitle = "Образ на поста";
         public const string AuthorImageTitle = "Образ на автора";
         public const string CategoryTitle = "Категория";
         public const string TagsTitle = "Тагове";

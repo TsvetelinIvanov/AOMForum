@@ -63,12 +63,18 @@ namespace AOMForum.Services.Data.Services
             return viewModel;
         }
         
-        public async Task<int> CreateAsync(string? content, int? parentId, int postId, string? authorId)
+        public async Task<int> CreateAsync(string? content, /*int? parentId, */int postId, string? authorId)
         {
+            if (content != null) 
+            {
+                content = content.Replace("<p>", string.Empty);
+                content = content.Replace("</p>", Environment.NewLine);
+            }
+
             Comment comment = new Comment
             {
                 Content = content,
-                ParentId = parentId,
+                //ParentId = parentId,
                 PostId = postId,
                 AuthorId = authorId
             };
@@ -100,7 +106,7 @@ namespace AOMForum.Services.Data.Services
 
         public async Task<bool> EditAsync(int id, string? content)
         {
-            Comment? comment = await this.commentsRepository.AllAsNoTracking().Where(c => c.Id == id).FirstOrDefaultAsync();
+            Comment? comment = await this.commentsRepository.All().Where(c => c.Id == id).FirstOrDefaultAsync();
             if (comment == null)
             {
                 return false;
