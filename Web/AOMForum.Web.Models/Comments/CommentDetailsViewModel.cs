@@ -42,7 +42,7 @@ namespace AOMForum.Web.Models.Comments
 
         public string? PostAuthorId { get; init; }
 
-        public int? ParentId { get; init; }
+        //public int? ParentId { get; init; }
 
         public IEnumerable<CommentDetailsViewModel> Comments { get; set; } = new HashSet<CommentDetailsViewModel>();
     }

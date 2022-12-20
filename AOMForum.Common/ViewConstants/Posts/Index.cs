@@ -8,6 +8,7 @@
         public const string RegisterText = " във форума или се ";
         public const string Register = "регистрирай";
         
+        public const string PagesHeading = "Страници";
         public const string PostsHeading = "Постове";
 
         public const string CreateNewPost = "Създай нов пост";

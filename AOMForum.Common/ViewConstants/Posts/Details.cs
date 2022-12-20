@@ -19,6 +19,7 @@
         public const string TagNameTitle = "Име";
 
         public const string CommentsHeading = "Коментари";
+        public const string CommentsActionsHeading = "Действия с коментарите";
         public const string CommentContentTitle = "Съдържание";
         public const string CommentCreatedOnTitle = "Създаден на";
         public const string CommentVotesCountTitle = "Вотове";

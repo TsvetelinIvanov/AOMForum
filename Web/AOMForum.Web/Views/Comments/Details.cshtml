@@ -41,7 +41,7 @@
         </dd>
     </dl>
 </div>
-<div>
+@*<div>
     <form asp-area="" asp-controller="Comments" asp-action="Create" method="post" id="AddCommentForm" style="display: none">
         <input type="hidden" name="PostId" value="@this.Model.PostId" />
         <input type="hidden" name="ParentId" value="@this.Model.Id" />
@@ -53,7 +53,7 @@
             <input type="submit" class="btn btn-primary" value="@SendComment" />
         </div>
     </form>
-</div>
+</div>*@
 <div>
     <a asp-area="" asp-controller="CommentReports" asp-action="Create" asp-route-id="@Model.Id">@CreateReport</a> |
     <a asp-area="" asp-controller="Posts" asp-action="Details" asp-route-id="@Model.PostId">@GoToPost</a> |
@@ -66,9 +66,8 @@
     }
 </div>
 
-<div class="card-header">
-    <div class="media flex-wrap w-100 align-items-center">
-        <img src="https://res.cloudinary.com/dxfq3iotg/image/upload/v1574583246/AAA/2.jpg" class="d-block ui-w-40 rounded-circle" alt="">
+@*<div class="card-header">
+    <div class="media flex-wrap w-100 align-items-center">        
         <div class="media-body ml-3">
             @Model.AuthorUserName
             <div class="text-muted small">
@@ -90,7 +89,7 @@
             </div>
         </div>
     </div>
-</div>
+</div>*@
 
 <h3 class="text-center">@PostCommentsHeading</h3>
 <table class="table">
@@ -138,7 +137,7 @@
                 <td>
                     <a asp-area="" asp-controller="Comments" asp-action="Details" asp-route-id="@comment.Id">@DetailsAction</a> |
                     <a asp-area="" asp-controller="CommentReports" asp-action="Create" asp-route-id="@comment.Id">@CreateReport</a>
-                    @if (this.Model.AuthorId == this.User.Id() || this.User.IsInRole(AdministratorRoleName))
+                    @if (comment.AuthorId == this.User.Id() || this.User.IsInRole(AdministratorRoleName))
                     {
                         @:|
                         <a asp-area="" asp-controller="Comments" asp-action="Edit" asp-route-id="@comment.Id">@EditAction</a> @:|
@@ -150,7 +149,7 @@
     </tbody>
 </table>
 
-@section Scripts {
+@*@section Scripts {
     <script>
         function sendVote(commentId, isUpVote) {
             var token = $("#votesForm input[name=__RequestVerificationToken]").val();
@@ -168,4 +167,4 @@
             });
         }
     </script>
-}
+}*@

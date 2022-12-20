@@ -8,11 +8,11 @@ namespace AOMForum.Web.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class PostVotesController : ControllerBase
+    public class VotesController : ControllerBase
     {
         private readonly IPostVotesService postVotesService;
 
-        public PostVotesController(IPostVotesService postVotesService)
+        public VotesController(IPostVotesService postVotesService)
         {
             this.postVotesService = postVotesService;
         }

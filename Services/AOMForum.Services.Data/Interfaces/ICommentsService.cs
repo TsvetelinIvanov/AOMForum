@@ -19,6 +19,6 @@ namespace AOMForum.Services.Data.Interfaces
 
         Task<bool> DeleteAsync(int id);
 
-        Task<int> GetPostIdAsync(int id);
+        //Task<int> GetPostIdAsync(int id);
     }
 }

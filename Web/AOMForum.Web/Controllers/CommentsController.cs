@@ -144,8 +144,7 @@ namespace AOMForum.Web.Controllers
                 return this.BadRequest();
             }
 
-            int postId = await this.commentsService.GetPostIdAsync(id);
-            return this.RedirectToAction("Details", "Posts", new { id = postId });
+            return this.RedirectToAction("Details", "Posts", new { id = deleteModel.PostId });
         }
     }
 }

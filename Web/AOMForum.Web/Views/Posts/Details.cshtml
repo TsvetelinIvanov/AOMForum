@@ -13,7 +13,7 @@
         {
             return;
         }
-
+        <h3 class="text-center">@CommentsHeading</h3>
         @foreach (CommentInPostViewModel comment in comments)
         {
             <div class="container-fluid mt-100">
@@ -61,24 +61,26 @@
             <div class="card mb-4">
                 <div class="card-header">
                     <div class="media flex-wrap w-100 align-items-center">
-                        <img src="@Model.ImageUrl" class="d-block ui-w-40 rounded-circle" alt="@(AltImage + Model.Title)">
+                        <img src="@Model.ImageUrl" class="d-block ui-w-40" alt="@(AltImage + Model.Title)">
                         <div class="media-body ml-3">
                             @Model.AuthorUserName
                             <div class="text-muted small">
                                 <p>@Model.CreatedOn</p>
                             </div>
                         </div>
-                        <div class="text-muted small ml-3">
+                        <div class="text-muted ml-3">
                             <form id="votesForm" method="post"></form>
                             <div>
                                 <a href="#" onclick="sendVote(@Model.Id, true)">
                                     <i class="fa fa-thumbs-up"></i>
+                                    +
                                 </a>
                             </div>
                             <div id="votesCount">@Model.VotesCount</div>
                             <div>
                                 <a href="#" onclick="sendVote(@Model.Id, false)">
                                     <i class="fa fa-thumbs-down"></i>
+                                    -
                                 </a>
                             </div>
                         </div>
@@ -170,6 +172,64 @@
     </div>
 </div>
 
+<h3 class="text-center">@CommentsActionsHeading</h3>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @CommentContentTitle
+            </th>
+            @*<th>
+            @CommentVotesCountTitle
+            </th>*@
+            <th>
+                @CommentCreatedOnTitle
+            </th>
+            <th>
+                @CommentAuthorTitle
+            </th>
+            <th>
+                @CommentAuthorImageTitle
+            </th>
+            <th>
+                @ActionsTitle
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (CommentInPostViewModel comment in Model.Comments)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => comment.SanitizedContent)
+                </td>
+                @*<td>
+            @Html.DisplayFor(modelItem => comment.VotesCount)
+            </td>*@
+                <td>
+                    @Html.DisplayFor(modelItem => comment.CreatedOn)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => comment.AuthorUserName)
+                </td>
+                <td>
+                    <img src="@comment.AuthorProfilePictureURL" alt="@(AltImage + comment.AuthorUserName)" width="100" />
+                </td>
+                <td>
+                    <a asp-area="" asp-controller="Comments" asp-action="Details" asp-route-id="@comment.Id">@DetailsAction</a> |
+                    <a asp-area="" asp-controller="CommentReports" asp-action="Create">@CreateReport</a>
+                    @if (comment.AuthorId == this.User.Id() || this.User.IsInRole(AdministratorRoleName))
+                    {
+                        @:|
+                        <a asp-area="" asp-controller="Comments" asp-action="Edit" asp-route-id="@comment.Id">@EditAction</a> @:|
+                        <a asp-area="" asp-controller="Comments" asp-action="Delete" asp-route-id="@comment.Id">@DeleteAction</a>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
 <script src="/lib/tinymce/tinymce.min.js" type="text/javascript"></script>
 <script type="text/javascript">
     tinymce.init({
@@ -205,7 +265,7 @@
             var token = $("#votesForm input[name=__RequestVerificationToken]").val();
             var json = { postId: postId, isUpVote: isUpVote };
             $.ajax({
-                url: "/api/postvotes",
+                url: "/api/votes",
                 type: "POST",
                 data: JSON.stringify(json),
                 contentType: "application/json; charset=utf-8",
@@ -219,14 +279,12 @@
     </script>
 }
 
-
-
-<h1 class="text-center">@this.ViewData["Title"]</h1>
-<hr />
+@*<h1 class="text-center">@this.ViewData["Title"]</h1>
+<hr />*@
 
 @*<vc:create-comment post-id="@Model.Id" parent-id="null"></vc:create-comment>*@
 
-<div>    
+@*<div>
     <dl class="row">
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Title)
@@ -325,11 +383,11 @@
         <tr>
             <th>
                 @CommentContentTitle
-            </th>
+            </th>*@
             @*<th>
                 @CommentVotesCountTitle
             </th>*@
-            <th>
+            @*<th>
                 @CommentCreatedOnTitle
             </th>
             <th>
@@ -349,11 +407,11 @@
             <tr>
                 <td>
                     @Html.DisplayFor(modelItem => comment.SanitizedContent)
-                </td>
+                </td>*@
                 @*<td>
                     @Html.DisplayFor(modelItem => comment.VotesCount)
                 </td>*@
-                <td>
+                @*<td>
                     @Html.DisplayFor(modelItem => comment.CreatedOn)
                 </td>
                 <td>
@@ -376,4 +434,4 @@
             </tr>
         }
     </tbody>
-</table>
+</table>*@

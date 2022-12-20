@@ -45,7 +45,7 @@ namespace AOMForum.Services.Data.Services
                 .Include(c => c.Author)
                 .Include(c => c.Post)
                 .Include(c => c.Votes)
-                .AsNoTracking().Where(c => c.ParentId == viewModel.Id).Select(c => new CommentDetailsViewModel
+                .AsNoTracking().Where(c => c.PostId == viewModel.PostId).Select(c => new CommentDetailsViewModel
                 {
                     Id = c.Id,
                     Content = c.Content,
@@ -159,38 +159,38 @@ namespace AOMForum.Services.Data.Services
             this.commentsRepository.Delete(comment);
             await this.commentsRepository.SaveChangesAsync();
 
-            await this.DeleteNestedAsync(id);
+            //await this.DeleteNestedAsync(id);
 
             return comment.IsDeleted;
         }
 
-        public async Task<int> GetPostIdAsync(int id) => await this.commentsRepository.AllAsNoTracking().Where(c => c.Id == id).Select(c => c.PostId).FirstOrDefaultAsync();
+        //public async Task<int> GetPostIdAsync(int id) => await this.commentsRepository.AllAsNoTracking().Where(c => c.Id == id).Select(c => c.PostId).FirstOrDefaultAsync();
 
-        private async Task DeleteNestedAsync(int id)
-        {
-            //Comment? nestedComment = await this.commentsRepository.All().Where(c => c.Id == id).FirstOrDefaultAsync();
-            //if (nestedComment == null)
-            //{
-            //    return;
-            //}
+        //private async Task DeleteNestedAsync(int id)
+        //{
+        //    //Comment? nestedComment = await this.commentsRepository.All().Where(c => c.Id == id).FirstOrDefaultAsync();
+        //    //if (nestedComment == null)
+        //    //{
+        //    //    return;
+        //    //}
 
-            //this.commentsRepository.Delete(nestedComment);
-            //await this.commentsRepository.SaveChangesAsync();
+        //    //this.commentsRepository.Delete(nestedComment);
+        //    //await this.commentsRepository.SaveChangesAsync();
 
-            //await this.DeleteNestedAsync(nestedComment.Id);
-            IEnumerable<Comment> nestedComments = await this.commentsRepository.All().Where(c => c.ParentId == id).ToListAsync();
-            if (!nestedComments.Any())
-            {
-                return;
-            }
+        //    //await this.DeleteNestedAsync(nestedComment.Id);
+        //    IEnumerable<Comment> nestedComments = await this.commentsRepository.All().Where(c => c.ParentId == id).ToListAsync();
+        //    if (!nestedComments.Any())
+        //    {
+        //        return;
+        //    }
 
-            foreach (Comment nestedComment in nestedComments)
-            {
-                this.commentsRepository.Delete(nestedComment);
-                await this.commentsRepository.SaveChangesAsync();
+        //    foreach (Comment nestedComment in nestedComments)
+        //    {
+        //        this.commentsRepository.Delete(nestedComment);
+        //        await this.commentsRepository.SaveChangesAsync();
 
-                await this.DeleteNestedAsync(nestedComment.Id);
-            }
-        }
+        //        await this.DeleteNestedAsync(nestedComment.Id);
+        //    }
+        //}
     }
 }
