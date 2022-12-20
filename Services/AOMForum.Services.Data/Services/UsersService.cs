@@ -1,6 +1,7 @@
 ﻿using AOMForum.Common;
 using AOMForum.Data.Common.Repositories;
 using AOMForum.Data.Models;
+using AOMForum.Data.Models.Enums;
 using AOMForum.Services.Data.Interfaces;
 using AOMForum.Web.Models.Home;
 using AOMForum.Web.Models.UserRelationships;
@@ -396,7 +397,7 @@ namespace AOMForum.Services.Data.Services
                 FirstName = u.FirstName,
                 SecondName = u.SecondName,
                 LastName = u.LastName,
-                Gender = u.Gender.ToString(),
+                Gender = u.Gender == GenderType.Male ? "Мъж" : u.Gender == GenderType.Female ? "Жена" : u.Gender == GenderType.Other ? "Друг" : "Неизвестен",
                 BirthDate = u.BirthDate.ToString(GlobalConstants.UsedDateFormat),
                 Biography = u.Biography,
                 ProfilePictureURL = u.ProfilePictureURL
@@ -418,7 +419,7 @@ namespace AOMForum.Services.Data.Services
                     FirstName = u.FirstName,
                     SecondName = u.SecondName,
                     LastName = u.LastName,
-                    Gender = u.Gender.ToString(),
+                    Gender = u.Gender == GenderType.Male ? "Мъж" : u.Gender == GenderType.Female ? "Жена" : u.Gender == GenderType.Other ? "Друг" : "Неизвестен",
                     BirthDate = u.BirthDate.ToString(GlobalConstants.UsedDateFormat),
                     Biography = u.Biography,
                     ProfilePictureURL = u.ProfilePictureURL

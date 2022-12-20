@@ -15,55 +15,61 @@
             <hr />
             <div asp-validation-summary="All" class="text-danger"></div>
             <div class="form-floating">
-                <input asp-for="Input.Username" class="form-control" placeholder="@UsernamePlaceholder" />
                 <label asp-for="Input.Username"></label>
+                <input asp-for="Input.Username" class="form-control" placeholder="@UsernamePlaceholder" />
                 <span asp-validation-for="Input.Username" class="text-danger"></span>
             </div>
             <div class="form-floating">
-                <input asp-for="Input.Email" class="form-control" placeholder="@EmailPlaceholder" />
                 <label asp-for="Input.Email"></label>
+                <input asp-for="Input.Email" class="form-control" placeholder="@EmailPlaceholder" />
                 <span asp-validation-for="Input.Email" class="text-danger"></span>
             </div>
             <div class="form-floating">
-                <input asp-for="Input.FirstName" class="form-control" placeholder="@FirstNamePlaceholder" />
                 <label asp-for="Input.FirstName"></label>
+                <input asp-for="Input.FirstName" class="form-control" placeholder="@FirstNamePlaceholder" />
                 <span asp-validation-for="Input.FirstName" class="text-danger"></span>
             </div>
             <div class="form-floating">
-                <input asp-for="Input.SecondName" class="form-control" placeholder="@SecondNamePlaceholder" />
                 <label asp-for="Input.SecondName"></label>
+                <input asp-for="Input.SecondName" class="form-control" placeholder="@SecondNamePlaceholder" />
                 <span asp-validation-for="Input.SecondName" class="text-danger"></span>
             </div>
             <div class="form-floating">
-                <input asp-for="Input.LastName" class="form-control" placeholder="@LastNamePlaceholder" />
                 <label asp-for="Input.LastName"></label>
+                <input asp-for="Input.LastName" class="form-control" placeholder="@LastNamePlaceholder" />
                 <span asp-validation-for="Input.LastName" class="text-danger"></span>
             </div>
             <div class="form-floating">
-                <input asp-for="Input.BirthDate" class="form-control" placeholder="@BirthDatePlaceholder" />
                 <label asp-for="Input.BirthDate"></label>
+                <input asp-for="Input.BirthDate" class="form-control" placeholder="@BirthDatePlaceholder" />
                 <span asp-validation-for="Input.BirthDate" class="text-danger"></span>
             </div>
             <div class="form-floating">
-                <input asp-for="Input.Gender" class="form-control" placeholder="@GenderPlaceholder" />
                 <label asp-for="Input.Gender"></label>
+                <input asp-for="Input.Gender" class="form-control" placeholder="@GenderPlaceholder" />
                 <span asp-validation-for="Input.Gender" class="text-danger"></span>
             </div>
             <div class="form-floating">
-                <input asp-for="Input.Biography" class="form-control" placeholder="@BiographyPlaceholder" />
                 <label asp-for="Input.Biography"></label>
+                <input asp-for="Input.Biography" class="form-control" placeholder="@BiographyPlaceholder" />
                 <span asp-validation-for="Input.Biography" class="text-danger"></span>
             </div>
             <div class="form-floating">
-                <input asp-for="Input.Password" class="form-control" placeholder="@PasswordPlaceholder" />
+                <label asp-for="Input.ProfilePictureURL"></label>
+                <input asp-for="Input.ProfilePictureURL" class="form-control" placeholder="@ProfilePictureURLPlaceholder" />
+                <span asp-validation-for="Input.ProfilePictureURL" class="text-danger"></span>
+            </div>
+            <div class="form-floating">
                 <label asp-for="Input.Password"></label>
+                <input asp-for="Input.Password" class="form-control" placeholder="@PasswordPlaceholder" />
                 <span asp-validation-for="Input.Password" class="text-danger"></span>
             </div>
             <div class="form-floating">
-                <input asp-for="Input.ConfirmPassword" class="form-control" placeholder="@ConfirmPasswordPlaceholder" />
                 <label asp-for="Input.ConfirmPassword"></label>
+                <input asp-for="Input.ConfirmPassword" class="form-control" placeholder="@ConfirmPasswordPlaceholder" />
                 <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
             </div>
+            <br />
             <button id="registerSubmit" type="submit" class="w-100 btn btn-lg btn-primary">@RegisterAction</button>
         </form>
     </div>

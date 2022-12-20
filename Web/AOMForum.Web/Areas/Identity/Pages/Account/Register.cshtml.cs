@@ -43,7 +43,7 @@ namespace AOMForum.Web.Areas.Identity.Pages.Account
         [BindProperty]
         public InputModel Input { get; set; }
 
-        public string ReturnUrl { get; set; }
+        public string? ReturnUrl { get; set; }
 
         //public IList<AuthenticationScheme> ExternalLogins { get; set; }
 
@@ -72,9 +72,10 @@ namespace AOMForum.Web.Areas.Identity.Pages.Account
 
             [Required(ErrorMessage = RequiredErrorMessage)]
             [StringLength(LastNameMaxLength, MinimumLength = LastNameMinLength, ErrorMessage = StringLengthErrorMessage)]
-            [Display(Name = DisplayUserName)]
+            [Display(Name = DisplayLastName)]
             public string? LastName { get; set; }
-            
+
+            [Required(ErrorMessage = RequiredErrorMessage)]
             [DataType(DataType.Date)]            
             [MinAgeRestriction(AgeMinValue, ErrorMessage = AgeRestrictionErrorMessage)]
             [Display(Name = DisplayBirthDate)]

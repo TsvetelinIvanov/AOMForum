@@ -53,18 +53,21 @@
                     <img src="@user.ProfilePictureURL" alt="@(AltImage + user.FullName)" width="100" />
                 </td>
                 <td>
-                    @if (this.User.IsInRole(AdministratorRoleName))
+                    @if (this.User.Identity != null && this.User.Identity.IsAuthenticated)
                     {
+                        @if (this.User.IsInRole(AdministratorRoleName))
+                        {
                         <a asp-area="Administration" asp-controller="Users" asp-action="Index">@GoToIndexForAdmins</a> @:|
                         <a asp-area="Administration" asp-controller="Users" asp-action="Delete" asp-route-id="@user.Id">@DeleteAction</a><br />
-                    }
-                    <a asp-area="" asp-controller="Users" asp-action="Details" asp-route-id="@user.Id">@GoToDetails</a> |
-                    <a asp-area="" asp-controller="Users" asp-action="PostsIndex" asp-route-id="@user.Id">@GoToPostsIndex</a> |
-                    <a asp-area="" asp-controller="Users" asp-action="CommentsIndex" asp-route-id="@user.Id">@GoToCommentsIndex</a> |
-                    <a asp-area="" asp-controller="Users" asp-action="FollowersIndex" asp-route-id="@user.Id">@GoToFollowersIndex</a> |
-                    <a asp-area="" asp-controller="Users" asp-action="FollowingsIndex" asp-route-id="@user.Id">@GoToFollowingsIndex</a> |
-                    <a asp-area="" asp-controller="Users" asp-action="AdminIndex">@GoToAdminIndex</a> |
+                        }
+                    <a asp-area="" asp-controller="Users" asp-action="Details" asp-route-id="@user.Id">@GoToDetails</a> @:|
+                    <a asp-area="" asp-controller="Users" asp-action="PostsIndex" asp-route-id="@user.Id">@GoToPostsIndex</a> @:|
+                    <a asp-area="" asp-controller="Users" asp-action="CommentsIndex" asp-route-id="@user.Id">@GoToCommentsIndex</a> @:|
+                    <a asp-area="" asp-controller="Users" asp-action="FollowersIndex" asp-route-id="@user.Id">@GoToFollowersIndex</a> @:|
+                    <a asp-area="" asp-controller="Users" asp-action="FollowingsIndex" asp-route-id="@user.Id">@GoToFollowingsIndex</a> @:|
+                    <a asp-area="" asp-controller="Users" asp-action="AdminIndex">@GoToAdminIndex</a> @:|
                     <a asp-area="" asp-controller="Home" asp-action="Index" asp-route-id="@user.Id">@GoToHomePage</a>
+                    }                    
                 </td>
             </tr>
         }

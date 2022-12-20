@@ -10,7 +10,7 @@
         public const string EmailErrorMessage = "Адресът на електронната поща трябва да бъде във валиден формат!";
         public const string PhoneNumberErrorMessage = "Телефонният номер трябва да бъде във валиден формат!";        
         public const string AgeRestrictionErrorMessage = "Трябва да имате навършени поне 18 години!";
-        public const string AgeErrorMessage = "Невалидна рождена дата! Възръстта трябва да бъде между {0} и {1} години, т.е. рождента дата трябва да е преди {2} година.";
+        public const string AgeErrorMessage = "Невалидна рождена дата! Възръстта трябва да бъде между {0} и {1} години, т.е. рождента дата трябва да е след {2} година.";
         public const string ExistingUsernameErrorMessage = "Вече има регистриран потребител с това потребителско име. Моля изберете друго!";
         public const string InvalidGenderErrorMessage = "Невалиден пол. Моля изберете един от посочените: \"Мъж\", \"Жена\" или \"Друг\"!";
         public const string ProfilePictureUploadErrorMessage = "Невалиден формат на файла! Разрешените файлви формати са: \"jpg\", \"jpeg\", \"png\" и \"gif\".";

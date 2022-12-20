@@ -65,13 +65,16 @@
                     <img src="@admin.ProfilePictureURL" alt="@(AltImage + admin.FullName)" width="100" />
                 </td>
                 <td>
-                    <a asp-area="" asp-controller="Users" asp-action="Details" asp-route-id="@admin.Id">@GoToDetails</a> |
-                    <a asp-area="" asp-controller="Users" asp-action="PostsIndex" asp-route-id="@admin.Id">@GoToPostsIndex</a> |
-                    <a asp-area="" asp-controller="Users" asp-action="CommentsIndex" asp-route-id="@admin.Id">@GoToCommentsIndex</a> |
-                    <a asp-area="" asp-controller="Users" asp-action="FollowersIndex" asp-route-id="@admin.Id">@GoToFollowersIndex</a> |
-                    <a asp-area="" asp-controller="Users" asp-action="FollowingsIndex" asp-route-id="@admin.Id">@GoToFollowingsIndex</a> |
-                    <a asp-area="" asp-controller="Users" asp-action="Index">@GoToIndex</a> |
+                    @if (this.User.Identity != null && this.User.Identity.IsAuthenticated)
+                    {
+                    <a asp-area="" asp-controller="Users" asp-action="Details" asp-route-id="@admin.Id">@GoToDetails</a> @:|
+                    <a asp-area="" asp-controller="Users" asp-action="PostsIndex" asp-route-id="@admin.Id">@GoToPostsIndex</a> @:|
+                    <a asp-area="" asp-controller="Users" asp-action="CommentsIndex" asp-route-id="@admin.Id">@GoToCommentsIndex</a> @:|
+                    <a asp-area="" asp-controller="Users" asp-action="FollowersIndex" asp-route-id="@admin.Id">@GoToFollowersIndex</a> @:|
+                    <a asp-area="" asp-controller="Users" asp-action="FollowingsIndex" asp-route-id="@admin.Id">@GoToFollowingsIndex</a> @:|
+                    <a asp-area="" asp-controller="Users" asp-action="Index">@GoToIndex</a> @:|
                     <a asp-area="" asp-controller="Home" asp-action="Index">@GoToHomePage</a>
+                    }
                 </td>
             </tr>
         }

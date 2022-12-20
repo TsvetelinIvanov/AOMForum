@@ -38,11 +38,11 @@ namespace AOMForum.Web.Areas.Identity.Pages.Account
 
         public class InputModel
         {
-            [Required]
+            [Required(ErrorMessage = RequiredErrorMessage)]
             [Display(Name = DisplayUserName)]
             public string? Username { get; set; }
 
-            [Required]
+            [Required(ErrorMessage = RequiredErrorMessage)]
             [Display(Name = DisplayPassword)]
             [DataType(DataType.Password)]
             public string? Password { get; set; }
