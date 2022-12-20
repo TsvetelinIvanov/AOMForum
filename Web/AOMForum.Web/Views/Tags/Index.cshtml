@@ -46,9 +46,7 @@
                 <td>
                     @if (this.User.IsInRole(AdministratorRoleName))
                     {
-                        <a asp-area="Administration" asp-controller="Tags" asp-action="Edit" asp-route-id="@tag.Id">@EditAction</a> @:|
                         <a asp-area="Administration" asp-controller="Tags" asp-action="Delete" asp-route-id="@tag.Id">@DeleteAction</a>
-
                         <br />
                     }
                     <a asp-area="" asp-controller="Tags" asp-action="Details" asp-route-id="@tag.Id">@DetailsAction</a>

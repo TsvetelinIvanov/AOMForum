@@ -83,7 +83,7 @@ namespace AOMForum.Services.Data.Services
             };
 
             List<PostListViewModel> postViewModels = new List<PostListViewModel>();
-            foreach (int postId in tag.Posts.Select(pt => pt.Id))
+            foreach (int postId in tag.Posts.Select(pt => pt.PostId))
             {
                 Post? post = await this.postsRepository.All()
                 .Include(p => p.Author)

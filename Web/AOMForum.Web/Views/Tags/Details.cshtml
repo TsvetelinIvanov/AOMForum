@@ -92,9 +92,13 @@
                     </td>            
                     <td>
                         <a asp-area="" asp-controller="Categories" asp-action="Details" asp-route-id="@post.Category.Id">@GoToCategoryAction</a> |
-                        <a asp-area="" asp-controller="Posts" asp-action="Details" asp-route-id="@post.Id">@DetailsAction</a> | 
-                        <a asp-area="" asp-controller="Posts" asp-action="Edit" asp-route-id="@post.Id">@EditAction</a> | 
-                        <a asp-area="" asp-controller="Posts" asp-action="Delete" asp-route-id="@post.Id">@DeleteAction</a>
+                        <a asp-area="" asp-controller="Posts" asp-action="Details" asp-route-id="@post.Id">@DetailsAction</a>                        
+                        @if (this.User.Identity != null && this.User.Identity.IsAuthenticated && (post.AuthorId == this.User.Id() || this.User.IsInRole(AdministratorRoleName)))
+                        {
+                            @:|
+                            <a asp-area="" asp-controller="Posts" asp-action="Edit" asp-route-id="@post.Id">@EditAction</a> @:|
+                            <a asp-area="" asp-controller="Posts" asp-action="Delete" asp-route-id="@post.Id">@DeleteAction</a>
+                        }
                     </td>
                 </tr>
             }
