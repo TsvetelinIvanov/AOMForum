@@ -8,6 +8,7 @@
 
         public const string ActionsTitle = "Действия";
 
+        public const string GoToDeletedIndex = "Отиди при изтритите потребители";
         public const string DeleteAction = "Изтрий потребителя";
         public const string GoToDetails = "Отиди на детайлите за този потребител";
         public const string GoToPostsIndex = "Отиди на постовете на този потребител";

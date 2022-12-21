@@ -29,6 +29,8 @@ namespace AOMForum.Services.Data.Interfaces
 
         Task<IEnumerable<UserListViewModel>> GetUserListViewModelsForDeletedAsync();
 
+        Task<UserDeleteModel?> GetUserDeleteModelForDeletedAsync(string id);
+
         Task<bool> UndeleteAsync(string id);
 
         Task<HomeViewModel> GetHomeViewModelAsync();

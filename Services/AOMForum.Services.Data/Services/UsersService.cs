@@ -64,6 +64,12 @@ namespace AOMForum.Services.Data.Services
                     })
                 }).ToListAsync();
 
+            IEnumerable<string?> followingIds = await this.relationshipsRepository.AllAsNoTracking()
+                .Where(r => r.FollowerId == user.Id)
+                .Select(r => r.LeaderId)
+                .Where(i => i != null)
+                .ToListAsync();
+
             UserPostsIndexViewModel viewModel = new UserPostsIndexViewModel()
             {
                 Id = user.Id,
@@ -74,7 +80,7 @@ namespace AOMForum.Services.Data.Services
                 VotesCount = user.PostVotes.Sum(pv => (int)pv.Type) + user.CommentVotes.Sum(cv => (int)cv.Type),
                 IsFollowed = user.Relationships.Any(r => r.LeaderId == user.Id && r.FollowerId == currentUserId),
                 FollowersCount = user.Relationships.Count(r => r.LeaderId == user.Id),
-                FollowingsCount = user.Relationships.Count(r => r.FollowerId == user.Id),
+                FollowingsCount = followingIds.Count(),
                 Posts = postModels                
             };
 
@@ -110,6 +116,12 @@ namespace AOMForum.Services.Data.Services
                     VotesCount = c.Votes.Sum(cv => (int)cv.Type)
                 }).ToListAsync();
 
+            IEnumerable<string?> followingIds = await this.relationshipsRepository.AllAsNoTracking()
+                .Where(r => r.FollowerId == user.Id)
+                .Select(r => r.LeaderId)
+                .Where(i => i != null)
+                .ToListAsync();
+
             UserCommentsIndexViewModel viewModel = new UserCommentsIndexViewModel()
             {
                 Id = user.Id,
@@ -120,7 +132,7 @@ namespace AOMForum.Services.Data.Services
                 VotesCount = user.PostVotes.Sum(pv => (int)pv.Type) + user.CommentVotes.Sum(cv => (int)cv.Type),
                 IsFollowed = user.Relationships.Any(r => r.LeaderId == user.Id && r.FollowerId == currentUserId),
                 FollowersCount = user.Relationships.Count(r => r.LeaderId == user.Id),
-                FollowingsCount = user.Relationships.Count(r => r.FollowerId == user.Id),                
+                FollowingsCount = followingIds.Count(),
                 Comments = commentModels
             };
 
@@ -161,6 +173,12 @@ namespace AOMForum.Services.Data.Services
                     VotesCount = u.PostVotes.Sum(pv => (int)pv.Type) + u.CommentVotes.Sum(cv => (int)cv.Type)
                 }).ToListAsync();
 
+            IEnumerable<string?> followingIds = await this.relationshipsRepository.AllAsNoTracking()
+                .Where(r => r.FollowerId == user.Id)
+                .Select(r => r.LeaderId)
+                .Where(i => i != null)
+                .ToListAsync();
+
             UserFollowersIndexViewModel viewModel = new UserFollowersIndexViewModel()
             {
                 Id = user.Id,
@@ -171,7 +189,7 @@ namespace AOMForum.Services.Data.Services
                 VotesCount = user.PostVotes.Sum(pv => (int)pv.Type) + user.CommentVotes.Sum(cv => (int)cv.Type),
                 IsFollowed = user.Relationships.Any(r => r.LeaderId == user.Id && r.FollowerId == currentUserId),
                 FollowersCount = user.Relationships.Count(r => r.LeaderId == user.Id),
-                FollowingsCount = user.Relationships.Count(r => r.FollowerId == user.Id),
+                FollowingsCount = followingIds.Count(),
                 Followers = followers
             };
 
@@ -222,7 +240,7 @@ namespace AOMForum.Services.Data.Services
                 VotesCount = user.PostVotes.Sum(pv => (int)pv.Type) + user.CommentVotes.Sum(cv => (int)cv.Type),
                 IsFollowed = user.Relationships.Any(r => r.LeaderId == user.Id && r.FollowerId == currentUserId),
                 FollowersCount = user.Relationships.Count(r => r.LeaderId == user.Id),
-                FollowingsCount = user.Relationships.Count(r => r.FollowerId == user.Id),
+                FollowingsCount = followingIds.Count(),
                 Followings = followings
             };
 
@@ -332,7 +350,8 @@ namespace AOMForum.Services.Data.Services
                 VotesCount = user.PostVotes.Sum(pv => (int)pv.Type) + user.CommentVotes.Sum(cv => (int)cv.Type),
                 IsFollowed = user.Relationships.Any(r => r.LeaderId == user.Id && r.FollowerId == currentUserId),
                 FollowersCount = user.Relationships.Count(r => r.LeaderId == user.Id),
-                FollowingsCount = user.Relationships.Count(r => r.FollowerId == user.Id),
+                //FollowingsCount = user.Relationships.Count(r => r.FollowerId == user.Id),
+                FollowingsCount = followingIds.Count(),
                 Posts = postModels,
                 Comments = commentModels,
                 Followers = followers,
@@ -481,6 +500,29 @@ namespace AOMForum.Services.Data.Services
             }).ToListAsync();
 
             return userModels;
+        }
+
+        public async Task<UserDeleteModel?> GetUserDeleteModelForDeletedAsync(string id)
+        {
+            ApplicationUser? user = await this.usersRepository.AllAsNoTrackingWithDeleted().Where(u => u.Id == id && u.IsDeleted).FirstOrDefaultAsync();
+            if (user == null)
+            {
+                return null;
+            }
+
+            UserDeleteModel deleteModel = new UserDeleteModel()
+            {
+                Id = user.Id,
+                UserName = user.UserName,
+                Email = user.Email,
+                FirstName = user.FirstName,
+                SecondName = user.SecondName,
+                LastName = user.LastName,
+                BirthDate = user.BirthDate.ToString(GlobalConstants.UsedDateFormat),
+                ProfilePictureURL = user.ProfilePictureURL
+            };
+
+            return deleteModel;
         }
 
         public async Task<bool> UndeleteAsync(string id)

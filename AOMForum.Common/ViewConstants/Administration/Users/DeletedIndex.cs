@@ -7,6 +7,7 @@
         public const string AltImage = "Образ на ";
         public const string ActionsTitle = "Действия";
 
+        public const string GoToIndex = "Отиди при активните потребители";
         public const string UndeleteAction = "Възстанови потребителя";
     }
 }

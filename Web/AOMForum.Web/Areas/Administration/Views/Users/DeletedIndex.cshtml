@@ -64,6 +64,7 @@
                     <img src="@user.ProfilePictureURL" alt="@(AltImage + user.FullName)" width="100" />
                 </td>
                 <td>
+                    <a asp-area="Administration" asp-controller="Users" asp-action="Index">@GoToIndex</a> |
                     <a asp-area="Administration" asp-controller="Users" asp-action="Undelete" asp-route-id="@user.Id">@UndeleteAction</a>
                 </td>
             </tr>

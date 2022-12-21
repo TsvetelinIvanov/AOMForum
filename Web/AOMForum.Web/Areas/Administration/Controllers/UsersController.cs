@@ -58,7 +58,7 @@ namespace AOMForum.Web.Areas.Administration.Controllers
         // GET: Administration/Users/Undelete/1
         public async Task<IActionResult> Undelete(string id)
         {
-            UserDeleteModel? deleteModel = await this.usersService.GetUserDeleteModelAsync(id);
+            UserDeleteModel? deleteModel = await this.usersService.GetUserDeleteModelForDeletedAsync(id);
             if (deleteModel == null)
             {
                 return this.NotFound();

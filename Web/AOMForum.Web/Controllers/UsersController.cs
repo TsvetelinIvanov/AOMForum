@@ -112,7 +112,7 @@ namespace AOMForum.Web.Controllers
                 return this.BadRequest();
             }
 
-            return this.Ok(isFollower);
+            return this.RedirectToAction(nameof(Details), new { id = id });
         }
 
         // POST: Users/Follow/id
@@ -137,7 +137,7 @@ namespace AOMForum.Web.Controllers
                 return this.BadRequest();
             }
 
-            return this.Ok(isNotFollower);
+            return this.RedirectToAction(nameof(Details), new { id = id });
         }
     }
 }

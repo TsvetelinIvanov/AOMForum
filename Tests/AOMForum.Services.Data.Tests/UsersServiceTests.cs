@@ -699,6 +699,27 @@ namespace AOMForum.Services.Data.Tests
         }
 
         [Fact]
+        public async Task GetUserDeleteModelAsync_ShouldReturnReturnNull_IfInexistant()
+        {
+            DbContextOptions<ApplicationDbContext> options = new DbContextOptionsBuilder<ApplicationDbContext>().UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString()).Options;
+            using ApplicationDbContext dbContext = new ApplicationDbContext(options);
+            await dbContext.Users.AddAsync(this.testOtherUser);
+            await dbContext.Users.AddAsync(this.testPresentUser);
+            await dbContext.SaveChangesAsync();
+
+            using IDeletableEntityRepository<ApplicationUser> usersRepository = new EfDeletableEntityRepository<ApplicationUser>(dbContext);
+            using IDeletableEntityRepository<Post> postsRepository = new EfDeletableEntityRepository<Post>(dbContext);
+            using IDeletableEntityRepository<Comment> commentsRepository = new EfDeletableEntityRepository<Comment>(dbContext);
+            using IDeletableEntityRepository<Relationship> relationshipsRepository = new EfDeletableEntityRepository<Relationship>(dbContext);
+            using IDeletableEntityRepository<ApplicationRole> rolesRepository = new EfDeletableEntityRepository<ApplicationRole>(dbContext);
+            UsersService service = new UsersService(usersRepository, postsRepository, commentsRepository, relationshipsRepository, rolesRepository);
+
+            UserDeleteModel? actualModel = await service.GetUserDeleteModelAsync(TestUserId);
+
+            Assert.Null(actualModel);
+        }
+
+        [Fact]
         public async Task DeleteAsync_ShouldDelete()
         {
             DbContextOptions<ApplicationDbContext> options = new DbContextOptionsBuilder<ApplicationDbContext>().UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString()).Options;
@@ -816,6 +837,79 @@ namespace AOMForum.Services.Data.Tests
             Assert.Contains(actualModels, u => u.FirstName == this.testOtherUser.FirstName);
             Assert.Contains(actualModels, u => u.SecondName == this.testOtherUser.SecondName);
             Assert.Contains(actualModels, u => u.LastName == this.testOtherUser.LastName);
+        }
+
+        [Fact]
+        public async Task GetUserDeleteModelForDeletedAsync_ShouldReturnExpectedUserDeleteModel()
+        {
+            DbContextOptions<ApplicationDbContext> options = new DbContextOptionsBuilder<ApplicationDbContext>().UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString()).Options;
+            using ApplicationDbContext dbContext = new ApplicationDbContext(options);
+            this.testUser.IsDeleted = true;
+            await dbContext.Users.AddAsync(this.testUser);
+            await dbContext.Users.AddAsync(this.testOtherUser);
+            await dbContext.Users.AddAsync(this.testPresentUser);
+            await dbContext.SaveChangesAsync();
+
+            using IDeletableEntityRepository<ApplicationUser> usersRepository = new EfDeletableEntityRepository<ApplicationUser>(dbContext);
+            using IDeletableEntityRepository<Post> postsRepository = new EfDeletableEntityRepository<Post>(dbContext);
+            using IDeletableEntityRepository<Comment> commentsRepository = new EfDeletableEntityRepository<Comment>(dbContext);
+            using IDeletableEntityRepository<Relationship> relationshipsRepository = new EfDeletableEntityRepository<Relationship>(dbContext);
+            using IDeletableEntityRepository<ApplicationRole> rolesRepository = new EfDeletableEntityRepository<ApplicationRole>(dbContext);
+            UsersService service = new UsersService(usersRepository, postsRepository, commentsRepository, relationshipsRepository, rolesRepository);
+
+            UserDeleteModel? actualModel = await service.GetUserDeleteModelForDeletedAsync(TestUserId);
+
+            Assert.NotNull(actualModel);
+            Assert.Equal(TestUserId, actualModel.Id);
+            Assert.Equal(this.testUser.UserName, actualModel.UserName);
+            Assert.Equal(this.testUser.Email, actualModel.Email);
+            Assert.Equal(this.testUser.FirstName, actualModel.FirstName);
+            Assert.Equal(this.testUser.SecondName, actualModel.SecondName);
+            Assert.Equal(this.testUser.LastName, actualModel.LastName);
+            Assert.Equal(this.testUser.ProfilePictureURL, actualModel.ProfilePictureURL);
+        }
+
+        [Fact]
+        public async Task GetUserDeleteModelForDeletedAsync_ShouldReturnReturnNull_IfInexistant()
+        {
+            DbContextOptions<ApplicationDbContext> options = new DbContextOptionsBuilder<ApplicationDbContext>().UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString()).Options;
+            using ApplicationDbContext dbContext = new ApplicationDbContext(options);
+            await dbContext.Users.AddAsync(this.testOtherUser);
+            await dbContext.Users.AddAsync(this.testPresentUser);
+            await dbContext.SaveChangesAsync();
+
+            using IDeletableEntityRepository<ApplicationUser> usersRepository = new EfDeletableEntityRepository<ApplicationUser>(dbContext);
+            using IDeletableEntityRepository<Post> postsRepository = new EfDeletableEntityRepository<Post>(dbContext);
+            using IDeletableEntityRepository<Comment> commentsRepository = new EfDeletableEntityRepository<Comment>(dbContext);
+            using IDeletableEntityRepository<Relationship> relationshipsRepository = new EfDeletableEntityRepository<Relationship>(dbContext);
+            using IDeletableEntityRepository<ApplicationRole> rolesRepository = new EfDeletableEntityRepository<ApplicationRole>(dbContext);
+            UsersService service = new UsersService(usersRepository, postsRepository, commentsRepository, relationshipsRepository, rolesRepository);
+
+            UserDeleteModel? actualModel = await service.GetUserDeleteModelForDeletedAsync(TestUserId);
+
+            Assert.Null(actualModel);
+        }
+
+        [Fact]
+        public async Task GetUserDeleteModelForDeletedAsync_ShouldReturnReturnNull_IfNotDeleted()
+        {
+            DbContextOptions<ApplicationDbContext> options = new DbContextOptionsBuilder<ApplicationDbContext>().UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString()).Options;
+            using ApplicationDbContext dbContext = new ApplicationDbContext(options);
+            await dbContext.Users.AddAsync(this.testUser);
+            await dbContext.Users.AddAsync(this.testOtherUser);
+            await dbContext.Users.AddAsync(this.testPresentUser);
+            await dbContext.SaveChangesAsync();
+
+            using IDeletableEntityRepository<ApplicationUser> usersRepository = new EfDeletableEntityRepository<ApplicationUser>(dbContext);
+            using IDeletableEntityRepository<Post> postsRepository = new EfDeletableEntityRepository<Post>(dbContext);
+            using IDeletableEntityRepository<Comment> commentsRepository = new EfDeletableEntityRepository<Comment>(dbContext);
+            using IDeletableEntityRepository<Relationship> relationshipsRepository = new EfDeletableEntityRepository<Relationship>(dbContext);
+            using IDeletableEntityRepository<ApplicationRole> rolesRepository = new EfDeletableEntityRepository<ApplicationRole>(dbContext);
+            UsersService service = new UsersService(usersRepository, postsRepository, commentsRepository, relationshipsRepository, rolesRepository);
+
+            UserDeleteModel? actualModel = await service.GetUserDeleteModelForDeletedAsync(TestUserId);
+
+            Assert.Null(actualModel);
         }
 
         [Fact]
