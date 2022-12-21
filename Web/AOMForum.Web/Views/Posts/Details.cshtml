@@ -217,7 +217,7 @@
                 </td>
                 <td>
                     <a asp-area="" asp-controller="Comments" asp-action="Details" asp-route-id="@comment.Id">@DetailsAction</a> |
-                    <a asp-area="" asp-controller="CommentReports" asp-action="Create">@CreateReport</a>
+                    <a asp-area="" asp-controller="CommentReports" asp-action="Create" asp-route-id="@comment.Id">@CreateReport</a>
                     @if (comment.AuthorId == this.User.Id() || this.User.IsInRole(AdministratorRoleName))
                     {
                         @:|

@@ -16,9 +16,9 @@ namespace AOMForum.Web.Controllers
         }
 
         // GET: CommentReports/Create/1
-        public async Task<IActionResult> Create(int commentId)
+        public async Task<IActionResult> Create(int id)
         {
-            CommentReportInputModel? inputModel = await this.commentReportsService.GetCommentReportInputModelAsync(commentId);
+            CommentReportInputModel? inputModel = await this.commentReportsService.GetCommentReportInputModelAsync(id);
             if (inputModel == null)
             {
                 return this.NotFound();
@@ -30,20 +30,20 @@ namespace AOMForum.Web.Controllers
         // POST: CommentReports/Create/1
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(CommentReportInputModel? inputModel)
+        public async Task<IActionResult> Create(int id, CommentReportInputModel? inputModel)
         {
             if (!this.ModelState.IsValid)
             {
                 return this.View(inputModel);
             }
 
-            bool isCreated = await this.commentReportsService.CreateAsync(inputModel.Content, inputModel.CommentId, this.User.Id());
+            bool isCreated = await this.commentReportsService.CreateAsync(inputModel.Content, id, this.User.Id());
             if (!isCreated)
             {
                 return this.BadRequest();
             }
 
-            return this.RedirectToAction("Details", "Posts", new { id = inputModel.CommentId });
+            return this.RedirectToAction("Details", "Comments", new { id = id });
         }
     }
 }

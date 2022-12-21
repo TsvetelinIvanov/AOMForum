@@ -15,9 +15,9 @@ namespace AOMForum.Web.Controllers
         }
 
         // GET: PostReports/Create/1
-        public async Task<IActionResult> Create(int postId)
+        public async Task<IActionResult> Create(int id)
         {
-            PostReportInputModel? inputModel = await this.postReportsService.GetPostReportInputModelAsync(postId);
+            PostReportInputModel? inputModel = await this.postReportsService.GetPostReportInputModelAsync(id);
             if (inputModel == null)
             {
                 return this.NotFound();
@@ -29,20 +29,20 @@ namespace AOMForum.Web.Controllers
         // POST: PostReports/Create/1
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(PostReportInputModel? inputModel)
+        public async Task<IActionResult> Create(int id, PostReportInputModel? inputModel)
         {
             if (!this.ModelState.IsValid)
             {
                 return this.View(inputModel);
             }
 
-            bool isCreated = await this.postReportsService.CreateAsync(inputModel.Content, inputModel.PostId, this.User.Id());
+            bool isCreated = await this.postReportsService.CreateAsync(inputModel.Content, id, this.User.Id());
             if (!isCreated)
             {
                 return this.BadRequest();
             }
 
-            return this.RedirectToAction("Details", "Posts", new { id = inputModel.PostId });
+            return this.RedirectToAction("Details", "Posts", new { id = id });
         }
     }
 }
