@@ -15,9 +15,12 @@ namespace AOMForum.Services.Data.Tests
         private const int TestOtherCommentId = 11;
         private const int TestCommentForActionId = 101;
         private const int TestPostId = 100;
+        private const int TestOtherPostId = 110;
+        private const int TestLastPostId = 111;
         private const int TestCategoryPostId = 1000;
         private const string TestCommentAuthorId = "TestCommentAuthorId";
         private const string TestOtherCommentAuthorId = "TestOtherCommentAuthorId";
+        private const string TestLastCommentAuthorId = "TestLastCommentAuthorId";
         private const string TestPostAuthorId = "TestCommentPostAuthorId";
         private const string TestCommentContent = "Test Comment Content";
         private const string TestOtherCommentContent = "Test Other Comment Content";
@@ -45,7 +48,7 @@ namespace AOMForum.Services.Data.Tests
             PostId = TestPostId,
             Post = new Post()
             {
-                Id = TestCategoryPostId,
+                Id = TestPostId,
                 Title = "Test Post Title",
                 Type = PostType.Text,
                 ImageUrl = "TestPostImageUrl",
@@ -62,7 +65,7 @@ namespace AOMForum.Services.Data.Tests
             AuthorId = TestOtherCommentAuthorId,
             Author = new ApplicationUser()
             {
-                Id = TestCommentAuthorId,
+                Id = TestOtherCommentAuthorId,
                 UserName = "TestAuthor",
                 Email = "testauthor@mail.com",
                 FirstName = "Test",
@@ -75,10 +78,10 @@ namespace AOMForum.Services.Data.Tests
                 ProfilePictureURL = "ProfilePictureURL",
                 EmailConfirmed = true
             },
-            PostId = TestPostId,
+            PostId = TestOtherPostId,
             Post = new Post()
             {
-                Id = TestCategoryPostId,
+                Id = TestOtherPostId,
                 Title = "Test Post Title",
                 Type = PostType.Text,
                 ImageUrl = "TestPostImageUrl",
@@ -92,10 +95,10 @@ namespace AOMForum.Services.Data.Tests
         {
             Id = TestCommentForActionId,
             Content = TestCommentContent,
-            AuthorId = TestCommentAuthorId,
+            AuthorId = TestLastCommentAuthorId,
             Author = new ApplicationUser()
             {
-                Id = TestCommentAuthorId,
+                Id = TestLastCommentAuthorId,
                 UserName = "TestAuthor",
                 Email = "testauthor@mail.com",
                 FirstName = "Test",
@@ -108,10 +111,10 @@ namespace AOMForum.Services.Data.Tests
                 ProfilePictureURL = "ProfilePictureURL",
                 EmailConfirmed = true
             },
-            PostId = TestPostId,
+            PostId = TestLastPostId,
             Post = new Post()
             {
-                Id = TestCategoryPostId,
+                Id = TestLastPostId,
                 Title = "Test Post Title",
                 Type = PostType.Text,
                 ImageUrl = "TestPostImageUrl",
@@ -175,7 +178,6 @@ namespace AOMForum.Services.Data.Tests
             Comment? comment = await dbContext.Comments.FirstOrDefaultAsync(c => c.Content == TestCommentContent);
 
             Assert.NotNull(comment);
-            Assert.Equal(TestCommentId, comment.Id);
             Assert.Equal(TestPostId, comment.PostId);
             Assert.Equal(TestCommentAuthorId, comment.AuthorId);
         }
@@ -391,7 +393,7 @@ namespace AOMForum.Services.Data.Tests
             Assert.Equal(TestCommentContent, comment.Content);
             Assert.Equal(this.testComment.Author.UserName, comment.Author.UserName);
             Assert.Equal(this.testComment.Author.ProfilePictureURL, comment.Author.ProfilePictureURL);
-            Assert.Equal(TestPostId, comment.PostId);
+            Assert.Equal(TestLastPostId, comment.PostId);
             Assert.Equal(this.testComment.Post.Title, comment.Post.Title);
         }
 
@@ -418,7 +420,7 @@ namespace AOMForum.Services.Data.Tests
             Assert.Equal(TestCommentContent, comment.Content);
             Assert.Equal(this.testComment.Author.UserName, comment.Author.UserName);
             Assert.Equal(this.testComment.Author.ProfilePictureURL, comment.Author.ProfilePictureURL);
-            Assert.Equal(TestPostId, comment.PostId);
+            Assert.Equal(TestLastPostId, comment.PostId);
             Assert.Equal(this.testComment.Post.Title, comment.Post.Title);
         }
 

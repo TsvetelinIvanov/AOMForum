@@ -178,7 +178,6 @@ namespace AOMForum.Services.Data.Tests
             Category? category = await dbContext.Categories.FirstOrDefaultAsync(c => c.Name == TestCategoryName);
 
             Assert.NotNull(category);
-            Assert.Equal(TestCategoryId, category.Id);
             Assert.Equal(TestCategoryDescription, category.Description);
             Assert.Equal(TestCategoryImageUrl, category.ImageUrl);
         }
@@ -363,7 +362,7 @@ namespace AOMForum.Services.Data.Tests
             Assert.True(category.IsDeleted);
             Assert.Equal(TestCategoryForActionId, category.Id);
             Assert.Equal(TestCategoryName, category.Name);
-            Assert.Equal(TestOtherCategoryDescription, category.Description);
+            Assert.Equal(TestCategoryDescription, category.Description);
             Assert.Equal(TestCategoryImageUrl, category.ImageUrl);
         }
 
@@ -388,7 +387,7 @@ namespace AOMForum.Services.Data.Tests
             Assert.True(category.IsDeleted);
             Assert.Equal(TestCategoryForActionId, category.Id);
             Assert.Equal(TestCategoryName, category.Name);
-            Assert.Equal(TestOtherCategoryDescription, category.Description);
+            Assert.Equal(TestCategoryDescription, category.Description);
             Assert.Equal(TestCategoryImageUrl, category.ImageUrl);
         }
 

@@ -16,7 +16,6 @@ namespace AOMForum.Services.Data.Tests
         private const int TestTagId = 10;
         private const int TestOtherTagId = 11;
         private const int TestInexistantTagId = 101;
-        private const string TestPostAuthorId = "TestPostAuthorId";
         private const string TestTagName = "Test Tag Name";
         private const string TestOtherTagName = "Test Other Tag Name";
         private const string TestSearch = "Other";
@@ -220,7 +219,6 @@ namespace AOMForum.Services.Data.Tests
             Tag? tag = await dbContext.Tags.FirstOrDefaultAsync(t => t.Name == TestTagName);
 
             Assert.NotNull(tag);
-            Assert.Equal(TestTagId, tag.Id);
         }
 
         [Fact]

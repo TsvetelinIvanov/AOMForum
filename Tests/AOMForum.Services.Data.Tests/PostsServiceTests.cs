@@ -15,8 +15,11 @@ namespace AOMForum.Services.Data.Tests
         private const int TestOtherPostId = 11;
         private const int TestPostForActionId = 101;        
         private const int TestCategoryPostId = 100;
+        private const int TestCategoryOtherPostId = 110;
+        private const int TestCategoryPostForActionId = 111;
         private const string TestPostAuthorId = "TestPostAuthorId";
-        private const string TestOtherPostAuthorId = "TestOtherPostAuthorId";        
+        private const string TestOtherPostAuthorId = "TestOtherPostAuthorId";
+        private const string TestPostAuthorForActionId = "TestPostAuthorForActionId";
         private const string TestPostTitle = "Test Post Title";
         private const string TestOtherPostTitle = "Test Other Post Title";
         private const string TestPostContent = "Test Post Content";
@@ -83,7 +86,7 @@ namespace AOMForum.Services.Data.Tests
             CategoryId = TestCategoryPostId,
             Category = new Category()
             {
-                Id = TestCategoryPostId,
+                Id = TestCategoryOtherPostId,
                 Name = "Test Category Name",
                 Description = "Test Category Description",
                 ImageUrl = "TestCategoryImageUrl"
@@ -100,7 +103,7 @@ namespace AOMForum.Services.Data.Tests
             AuthorId = TestPostAuthorId,
             Author = new ApplicationUser()
             {
-                Id = TestPostAuthorId,
+                Id = TestPostAuthorForActionId,
                 UserName = "TestAuthor",
                 Email = "testauthor@mail.com",
                 FirstName = "Test",
@@ -116,7 +119,7 @@ namespace AOMForum.Services.Data.Tests
             CategoryId = TestCategoryPostId,
             Category = new Category()
             {
-                Id = TestCategoryPostId,
+                Id = TestCategoryPostForActionId,
                 Name = "Test Category Name",
                 Description = "Test Category Description",
                 ImageUrl = "TestCategoryImageUrl"
@@ -628,8 +631,8 @@ namespace AOMForum.Services.Data.Tests
             Assert.Equal(TestPostForActionId, post.Id);            
             Assert.Equal(TestPostTitle, post.Title);            
             Assert.Equal(TestPostContent, post.Content);            
-            Assert.Equal(TestPostAuthorId, post.AuthorId);            
-            Assert.Equal(TestCategoryPostId, post.CategoryId);
+            Assert.Equal(TestPostAuthorForActionId, post.AuthorId);            
+            Assert.Equal(TestCategoryPostForActionId, post.CategoryId);
         }
 
         [Fact]
@@ -657,8 +660,8 @@ namespace AOMForum.Services.Data.Tests
             Assert.Equal(TestPostForActionId, post.Id);
             Assert.Equal(TestPostTitle, post.Title);
             Assert.Equal(TestPostContent, post.Content);
-            Assert.Equal(TestPostAuthorId, post.AuthorId);
-            Assert.Equal(TestCategoryPostId, post.CategoryId);
+            Assert.Equal(TestPostAuthorForActionId, post.AuthorId);
+            Assert.Equal(TestCategoryPostForActionId, post.CategoryId);
         }
 
         [Fact]

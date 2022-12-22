@@ -31,9 +31,9 @@ namespace AOMForum.Services.Data.Tests
         {
             DbContextOptions<ApplicationDbContext> options = new DbContextOptionsBuilder<ApplicationDbContext>().UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString()).Options;
             using ApplicationDbContext dbContext = new ApplicationDbContext(options);
-            dbContext.Settings.Add(new Setting());
-            dbContext.Settings.Add(new Setting());
-            dbContext.Settings.Add(new Setting());
+            dbContext.Settings.Add(new Setting() {  Name = "Name", Content = "Content"});
+            dbContext.Settings.Add(new Setting() { Name = "OtherName", Content = "OtherContent" });
+            dbContext.Settings.Add(new Setting() { Name = "NewName", Content = "NewContent" });
             await dbContext.SaveChangesAsync();
 
             using IDeletableEntityRepository<Setting> repository = new EfDeletableEntityRepository<Setting>(dbContext);

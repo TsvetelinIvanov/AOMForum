@@ -122,7 +122,6 @@ namespace AOMForum.Services.Data.Tests
             IEnumerable<PostReportListViewModel> actualModels = await service.GetPostReportListViewModelsAsync();
 
             Assert.NotNull(actualModels);
-            Assert.IsAssignableFrom<IEnumerable<CommentReportListViewModel>>(actualModels);
             Assert.Equal(2, actualModels.Count());
             foreach (PostReportListViewModel actualModel in actualModels)
             {
@@ -167,7 +166,6 @@ namespace AOMForum.Services.Data.Tests
             PostReportDetailsViewModel? actualModel = await service.GetPostReportDetailsViewModelAsync(TestPostReportId);
 
             Assert.NotNull(actualModel);
-            Assert.IsType<CommentReportDetailsViewModel>(actualModel);
             Assert.Equal(TestPostReportId, actualModel.Id);
             Assert.Equal(this.testPostReport.Content, actualModel.Content);
             Assert.Equal(this.testPostReport.PostId, actualModel.PostId);
@@ -213,7 +211,6 @@ namespace AOMForum.Services.Data.Tests
             PostReportInputModel? actualModel = await service.GetPostReportInputModelAsync(TestPostId);
 
             Assert.NotNull(actualModel);
-            Assert.IsType<CommentReportInputModel>(actualModel);
             Assert.Equal(TestPostId, actualModel.PostId);
         }
 
@@ -250,7 +247,6 @@ namespace AOMForum.Services.Data.Tests
             PostReport? postReport = await dbContext.PostReports.FirstOrDefaultAsync(p => p.Content == TestPostReportContent);
 
             Assert.NotNull(postReport);
-            Assert.Equal(TestPostReportId, postReport.Id);
             Assert.Equal(TestPostReportAuthorId, postReport.AuthorId);
             Assert.Equal(TestPostId, postReport.PostId);
         }
@@ -272,7 +268,6 @@ namespace AOMForum.Services.Data.Tests
 
             Assert.True(isCreated);
             Assert.NotNull(postReport);
-            Assert.Equal(TestPostReportId, postReport.Id);
             Assert.Equal(TestPostReportAuthorId, postReport.AuthorId);
             Assert.Equal(TestPostId, postReport.PostId);
         }
@@ -412,7 +407,7 @@ namespace AOMForum.Services.Data.Tests
             using IDeletableEntityRepository<Post> postsRepository = new EfDeletableEntityRepository<Post>(dbContext);
             PostReportsService service = new PostReportsService(postReportsRepository, postsRepository);
 
-            bool isDeleted = await service.DeleteAsync(TestPostReportId);
+            bool isDeleted = await service.DeleteAsync(TestInexistantPostReportId);
             PostReport? postReport = await dbContext.PostReports.FindAsync(TestInexistantPostReportId);
 
             Assert.False(isDeleted);

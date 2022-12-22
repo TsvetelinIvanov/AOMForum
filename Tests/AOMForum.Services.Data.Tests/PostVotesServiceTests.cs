@@ -82,7 +82,6 @@ namespace AOMForum.Services.Data.Tests
             PostVote? postVote = await dbContext.PostVotes.FirstOrDefaultAsync(v => v.AuthorId == TestVotedUserId && v.PostId == TestPostId);
 
             Assert.NotNull(postVote);
-            Assert.Equal(TestVoteId, postVote.Id);
             Assert.Equal(TestVotedUserId, postVote.AuthorId);
             Assert.Equal(TestPostId, postVote.PostId);
             Assert.Equal(VoteType.UpVote, postVote.Type);
@@ -101,7 +100,6 @@ namespace AOMForum.Services.Data.Tests
             PostVote? postVote = await dbContext.PostVotes.FirstOrDefaultAsync(v => v.AuthorId == TestVotedUserId && v.PostId == TestPostId);
 
             Assert.NotNull(postVote);
-            Assert.Equal(TestVoteId, postVote.Id);
             Assert.Equal(TestVotedUserId, postVote.AuthorId);
             Assert.Equal(TestPostId, postVote.PostId);
             Assert.Equal(VoteType.DownVote, postVote.Type);

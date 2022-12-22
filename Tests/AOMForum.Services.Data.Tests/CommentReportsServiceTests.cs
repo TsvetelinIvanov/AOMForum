@@ -255,7 +255,6 @@ namespace AOMForum.Services.Data.Tests
             CommentReport? commentReport = await dbContext.CommentReports.FirstOrDefaultAsync(c => c.Content == TestCommentReportContent);
 
             Assert.NotNull(commentReport);
-            Assert.Equal(TestCommentReportId, commentReport.Id);
             Assert.Equal(TestCommentReportAuthorId, commentReport.AuthorId);
             Assert.Equal(TestCommentId, commentReport.CommentId);
         }
@@ -277,7 +276,6 @@ namespace AOMForum.Services.Data.Tests
 
             Assert.True(isCreated);
             Assert.NotNull(commentReport);
-            Assert.Equal(TestCommentReportId, commentReport.Id);
             Assert.Equal(TestCommentReportAuthorId, commentReport.AuthorId);
             Assert.Equal(TestCommentId, commentReport.CommentId);
         }
@@ -417,7 +415,7 @@ namespace AOMForum.Services.Data.Tests
             using IDeletableEntityRepository<Comment> commentsRepository = new EfDeletableEntityRepository<Comment>(dbContext);
             CommentReportsService service = new CommentReportsService(commentReportsRepository, commentsRepository);
 
-            bool isDeleted = await service.DeleteAsync(TestCommentReportId);
+            bool isDeleted = await service.DeleteAsync(TestInexistantCommentReportId);
             CommentReport? commentReport = await dbContext.CommentReports.FindAsync(TestInexistantCommentReportId);
             
             Assert.False(isDeleted);

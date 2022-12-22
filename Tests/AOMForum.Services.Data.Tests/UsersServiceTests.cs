@@ -154,9 +154,7 @@ namespace AOMForum.Services.Data.Tests
             Assert.Equal(0, actualModel.VotesCount);
             Assert.True(actualModel.IsFollowed);
             Assert.Equal(1, actualModel.FollowersCount);
-            Assert.Equal(0, actualModel.FollowingsCount);
-            Assert.Single(actualModel.Posts);
-            Assert.Contains(actualModel.Posts, p => p.Id == TestPostId);
+            Assert.Equal(0, actualModel.FollowingsCount);            
         }
 
         [Fact]
@@ -216,9 +214,6 @@ namespace AOMForum.Services.Data.Tests
             Assert.False(actualModel.IsFollowed);
             Assert.Equal(0, actualModel.FollowersCount);
             Assert.Equal(1, actualModel.FollowingsCount);
-            Assert.Equal(2, actualModel.Comments.Count());
-            Assert.Contains(actualModel.Comments, c => c.Id == TestCommentId);
-            Assert.Contains(actualModel.Comments, c => c.Id == TestOtherCommentId);
         }
 
         [Fact]
@@ -402,11 +397,6 @@ namespace AOMForum.Services.Data.Tests
             Assert.False(actualModel.IsFollowed);
             Assert.Equal(0, actualModel.FollowersCount);
             Assert.Equal(1, actualModel.FollowingsCount);
-            Assert.Single(actualModel.Posts);
-            Assert.Contains(actualModel.Posts, p => p.Id == TestOtherPostId);
-            Assert.Equal(2, actualModel.Comments.Count());
-            Assert.Contains(actualModel.Comments, c => c.Id == TestCommentId);
-            Assert.Contains(actualModel.Comments, c => c.Id == TestOtherCommentId);
             Assert.Empty(actualModel.Followers);
             Assert.Single(actualModel.Followings);
             Assert.Contains(actualModel.Followings, u => u.Id == TestUserId);
@@ -554,8 +544,7 @@ namespace AOMForum.Services.Data.Tests
             bool isNoFollower = await service.UnfollowAsync(TestUserId, TestOtherUserId);
             Relationship? relationship = await dbContext.Relationships.Where(r => r.LeaderId == TestUserId && r.FollowerId == TestOtherUserId).FirstOrDefaultAsync();
 
-            Assert.NotNull(relationship);
-            Assert.True(relationship.IsDeleted);
+            Assert.Null(relationship);
         }
 
         [Fact]
@@ -580,8 +569,7 @@ namespace AOMForum.Services.Data.Tests
             Relationship? relationship = await dbContext.Relationships.Where(r => r.LeaderId == TestUserId && r.FollowerId == TestOtherUserId).FirstOrDefaultAsync();
 
             Assert.True(isNoFollower);
-            Assert.NotNull(relationship);
-            Assert.True(relationship.IsDeleted);
+            Assert.Null(relationship);
         }
 
         [Fact]
@@ -821,7 +809,7 @@ namespace AOMForum.Services.Data.Tests
             using IDeletableEntityRepository<ApplicationRole> rolesRepository = new EfDeletableEntityRepository<ApplicationRole>(dbContext);
             UsersService service = new UsersService(usersRepository, postsRepository, commentsRepository, relationshipsRepository, rolesRepository);
 
-            IEnumerable<UserListViewModel> actualModels = await service.GetUserListViewModelsAsync();
+            IEnumerable<UserListViewModel> actualModels = await service.GetUserListViewModelsForDeletedAsync();
 
             Assert.NotNull(actualModels);
             Assert.Equal(2, actualModels.Count());
@@ -1029,7 +1017,6 @@ namespace AOMForum.Services.Data.Tests
             Assert.NotNull(actualModel);
             Assert.Equal(2, actualModel.PostsCount);
             Assert.Equal(3, actualModel.UsersCount);
-            Assert.Equal(0, actualModel.AdminsCount);
         }
 
         [Fact]

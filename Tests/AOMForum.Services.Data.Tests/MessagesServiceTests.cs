@@ -13,12 +13,13 @@ namespace AOMForum.Services.Data.Tests
     {
         private const int TestMessageId = 10;
         private const int TestOtherMessageId = 11;
+        private const int TestNewMessageId = 110;
         private const string TestUserId = "TestUserId";
         private const string TestOtherUserId = "TestOtherUserId";
-        private const string TestPresentUserId = "TestOtherUserId";
+        private const string TestNewUserId = "TestNewUserId";
         private const string TestMessageContent = "Test Message Content";
         private const string TestOtherMessageContent = "Test Other Message Content";
-        private const string TestPresentMessageContent = "Test Present Message Content";
+        private const string TestNewMessageContent = "Test New Message Content";
 
         private readonly ApplicationUser testUser = new ApplicationUser()
         {
@@ -52,13 +53,13 @@ namespace AOMForum.Services.Data.Tests
             EmailConfirmed = true
         };
 
-        private readonly ApplicationUser testPresentUser = new ApplicationUser()
+        private readonly ApplicationUser testNewUser = new ApplicationUser()
         {
-            Id = TestPresentUserId,
-            UserName = "TestPresentUser",
+            Id = TestNewUserId,
+            UserName = "TestNewtUser",
             Email = "testuser@mail.com",
             FirstName = "Test",
-            SecondName = "Present",
+            SecondName = "New",
             LastName = "User",
             BirthDate = new DateTime(1999, 1, 1),
             Age = 23,
@@ -84,11 +85,11 @@ namespace AOMForum.Services.Data.Tests
             ReceiverId = TestUserId
         };
 
-        Message testPresentMessage = new Message()
+        Message testNewMessage = new Message()
         {
-            Id = TestOtherMessageId,
-            Content = TestPresentMessageContent,
-            SenderId = TestPresentUserId,
+            Id = TestNewMessageId,
+            Content = TestNewMessageContent,
+            SenderId = TestNewUserId,
             ReceiverId = TestUserId
         };
 
@@ -99,7 +100,7 @@ namespace AOMForum.Services.Data.Tests
             using ApplicationDbContext dbContext = new ApplicationDbContext(options);
             await dbContext.Users.AddAsync(this.testUser);
             await dbContext.Users.AddAsync(this.testOtherUser);
-            await dbContext.Users.AddAsync(this.testPresentUser);
+            await dbContext.Users.AddAsync(this.testNewUser);
             await dbContext.SaveChangesAsync();
             
             using IDeletableEntityRepository<Message> messagesRepository = new EfDeletableEntityRepository<Message>(dbContext);
@@ -111,7 +112,7 @@ namespace AOMForum.Services.Data.Tests
             Assert.NotNull(actualModel);
             Assert.Equal(2, actualModel.MessagePartners.Count());
             Assert.Contains(actualModel.MessagePartners, mp => mp.Id == TestOtherUserId);
-            Assert.Contains(actualModel.MessagePartners, mp => mp.Id == TestPresentUserId);
+            Assert.Contains(actualModel.MessagePartners, mp => mp.Id == TestNewUserId);
         }
 
         [Fact]
@@ -172,12 +173,12 @@ namespace AOMForum.Services.Data.Tests
             using ApplicationDbContext dbContext = new ApplicationDbContext(options);
             await dbContext.Users.AddAsync(this.testUser);
             await dbContext.Users.AddAsync(this.testOtherUser);
-            await dbContext.Users.AddAsync(this.testPresentUser);
+            await dbContext.Users.AddAsync(this.testNewUser);
             await dbContext.SaveChangesAsync();
 
             await dbContext.Messages.AddAsync(this.testMessage);
             await dbContext.Messages.AddAsync(this.testOtherMessage);
-            await dbContext.Messages.AddAsync(this.testPresentMessage);
+            await dbContext.Messages.AddAsync(this.testNewMessage);
             await dbContext.SaveChangesAsync();
 
             using IDeletableEntityRepository<Message> messagesRepository = new EfDeletableEntityRepository<Message>(dbContext);
@@ -199,10 +200,10 @@ namespace AOMForum.Services.Data.Tests
             DbContextOptions<ApplicationDbContext> options = new DbContextOptionsBuilder<ApplicationDbContext>().UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString()).Options;
             using ApplicationDbContext dbContext = new ApplicationDbContext(options);
             await dbContext.Users.AddAsync(this.testUser);            
-            await dbContext.Users.AddAsync(this.testPresentUser);
+            await dbContext.Users.AddAsync(this.testNewUser);
             await dbContext.SaveChangesAsync();
             
-            await dbContext.Messages.AddAsync(this.testPresentMessage);
+            await dbContext.Messages.AddAsync(this.testNewMessage);
             await dbContext.SaveChangesAsync();
 
             using IDeletableEntityRepository<Message> messagesRepository = new EfDeletableEntityRepository<Message>(dbContext);
@@ -221,12 +222,12 @@ namespace AOMForum.Services.Data.Tests
             using ApplicationDbContext dbContext = new ApplicationDbContext(options);
             await dbContext.Users.AddAsync(this.testUser);
             await dbContext.Users.AddAsync(this.testOtherUser);
-            await dbContext.Users.AddAsync(this.testPresentUser);
+            await dbContext.Users.AddAsync(this.testNewUser);
             await dbContext.SaveChangesAsync();
 
             await dbContext.Messages.AddAsync(this.testMessage);
             await dbContext.Messages.AddAsync(this.testOtherMessage);
-            await dbContext.Messages.AddAsync(this.testPresentMessage);
+            await dbContext.Messages.AddAsync(this.testNewMessage);
             await dbContext.SaveChangesAsync();
 
             using IDeletableEntityRepository<Message> messagesRepository = new EfDeletableEntityRepository<Message>(dbContext);
@@ -238,9 +239,7 @@ namespace AOMForum.Services.Data.Tests
             Assert.NotNull(actualModels);            
             Assert.Equal(2, actualModels.Count());
             Assert.Contains(actualModels, lm => lm.Id == TestOtherUserId);
-            Assert.Contains(actualModels, lm => lm.Id == TestPresentUserId);
-            Assert.Contains(actualModels, m => m.LastMessage == TestOtherMessageContent);
-            Assert.Contains(actualModels, m => m.LastMessage == TestPresentMessageContent);
+            Assert.Contains(actualModels, lm => lm.Id == TestNewUserId);
         }
 
         [Fact]
@@ -250,7 +249,7 @@ namespace AOMForum.Services.Data.Tests
             using ApplicationDbContext dbContext = new ApplicationDbContext(options);
             await dbContext.Users.AddAsync(this.testUser);
             await dbContext.Users.AddAsync(this.testOtherUser);
-            await dbContext.Users.AddAsync(this.testPresentUser);
+            await dbContext.Users.AddAsync(this.testNewUser);
             await dbContext.SaveChangesAsync();
 
             using IDeletableEntityRepository<Message> messagesRepository = new EfDeletableEntityRepository<Message>(dbContext);
@@ -271,7 +270,7 @@ namespace AOMForum.Services.Data.Tests
             DbContextOptions<ApplicationDbContext> options = new DbContextOptionsBuilder<ApplicationDbContext>().UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString()).Options;
             using ApplicationDbContext dbContext = new ApplicationDbContext(options);
             await dbContext.Users.AddAsync(this.testUser);            
-            await dbContext.Users.AddAsync(this.testPresentUser);
+            await dbContext.Users.AddAsync(this.testNewUser);
             await dbContext.SaveChangesAsync();
 
             using IDeletableEntityRepository<Message> messagesRepository = new EfDeletableEntityRepository<Message>(dbContext);
