@@ -13,6 +13,7 @@
         public const string GoToPosts = "Отиди на постовете";
         public const string GoToAOMSite = "Отиди на сайта на АОМ";
         public const string GoToMessages = "Изпрати съобщение";
+        public const string GoToChat = "Започни разговор";
         public const string GoToPrivacy = "Виж страницата за поверителност";
         public const string GoToUsers = "Виж потребителите";
         public const string GoToAdmins = "Виж администраторите";

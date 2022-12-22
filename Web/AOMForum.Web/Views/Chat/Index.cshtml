@@ -1,0 +1,44 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using static AOMForum.Common.ViewConstants.Chat.Index
+
+@{
+    ViewData["Title"] = ViewTitle;
+}
+
+<h1 class="text-center">@this.ViewData["Title"]</h1>
+<hr />
+
+<div class="container">
+    <div class="row">&nbsp;</div>
+    <div class="row">
+        <div class="col-2">@UserInput</div>
+        @*<div class="col-4"><input type="text" id="userInput" /></div>*@
+        <div class="col-4">
+            <input type="hidden" id="userInput" value="@this.User.Identity?.Name" />
+            <p>@this.User.Identity?.Name</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-2">@MessageInput</div>
+        <div class="col-4"><input type="text" id="messageInput" /></div>
+    </div>
+    <div class="row">&nbsp;</div>
+    <div class="row">
+        <div class="col-6">
+            <input class="btn btn-primary" type="button" id="sendButton" value="@SendInput" />
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-12">
+        <hr />
+    </div>
+</div>
+<div class="row">
+    <div class="col-6">
+        <ul id="messagesList"></ul>
+    </div>
+</div>
+
+<script src="~/lib/microsoft/signalr/dist/browser/signalr.js"></script>
+<script src="~/js/chat.js"></script>
