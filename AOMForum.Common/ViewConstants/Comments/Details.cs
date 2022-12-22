@@ -17,7 +17,6 @@
         public const string PostCommentsHeading = "Коментари към същия пост";
         public const string CommentContentTitle = "Съдържание";
         public const string CommentCreatedOnTitle = "Създаден на";
-        public const string CommentVotesCountTitle = "Вотове";
         public const string CommentAuthorTitle = "Автор на коментара";
         public const string CommentAuthorImageTitle = "Образ на автора на коментара";
 

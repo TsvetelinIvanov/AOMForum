@@ -23,8 +23,7 @@
         public const string UserNameTitle = "Потребителско име";
         public const string ProfilePictureURLTitle = "Образ";
         public const string PostsCountTitle = "Брой на постовете";
-        public const string CommentsCountTitle = "Брой на коментарите";
-        public const string VotesCountTitle = "Брой на гласовете";
+        public const string CommentsCountTitle = "Брой на коментарите";        
 
         public const string ActionsTitle = "Действия";
 

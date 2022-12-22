@@ -90,7 +90,6 @@ namespace AOMForum.Services.Data.Services
                 .Include(p => p.Category)
                 .Include(p => p.Comments)
                 .Include(p => p.Reports)
-                .Include(p => p.Votes)
                 .Include(p => p.Tags)
                     .ThenInclude(pt => pt.Tag)
                 .AsNoTracking().Where(p => p.Id == postId).FirstOrDefaultAsync();
@@ -99,8 +98,7 @@ namespace AOMForum.Services.Data.Services
                     PostListViewModel postViewModel = new PostListViewModel()
                     {
                         Id = post.Id,
-                        Title = post.Title,
-                        VotesCount = post.Votes.Count,
+                        Title = post.Title,                        
                         CommentsCount = post.Comments.Count,
                         AuthorId = post.AuthorId,
                         AuthorUserName = post.Author.UserName,

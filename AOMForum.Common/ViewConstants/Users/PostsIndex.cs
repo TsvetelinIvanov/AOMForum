@@ -20,8 +20,7 @@
         public const string UnfollowAction = "Прекрати следването на потребителя";
 
         public const string PostsHeading = "Постове";
-        public const string PostTitleTitle = "Заглавие";
-        public const string PostVotesCountTitle = "Брой на гласовете";
+        public const string PostTitleTitle = "Заглавие";        
         public const string PostCommentsCountTitle = "Брой на коментарите";
         public const string PostCategoryNameTitle = "Категдия";
         public const string PostTagsTitle = "Тагове";

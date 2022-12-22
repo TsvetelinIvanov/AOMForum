@@ -4,7 +4,6 @@ using AOMForum.Data.Models;
 using AOMForum.Data.Models.Enums;
 using AOMForum.Data.Repositories;
 using AOMForum.Services.Data.Services;
-using AOMForum.Web.Models.Categories;
 using Microsoft.EntityFrameworkCore;
 using AOMForum.Web.Models.UserRelationships;
 using AOMForum.Web.Models.Home;
@@ -151,7 +150,6 @@ namespace AOMForum.Services.Data.Tests
             Assert.Equal(this.testUser.ProfilePictureURL, actualModel.ProfilePictureURL);
             Assert.Equal(1, actualModel.PostsCount);
             Assert.Equal(0, actualModel.CommentsCount);
-            Assert.Equal(0, actualModel.VotesCount);
             Assert.True(actualModel.IsFollowed);
             Assert.Equal(1, actualModel.FollowersCount);
             Assert.Equal(0, actualModel.FollowingsCount);            
@@ -210,7 +208,6 @@ namespace AOMForum.Services.Data.Tests
             Assert.Equal(this.testOtherUser.ProfilePictureURL, actualModel.ProfilePictureURL);
             Assert.Equal(1, actualModel.PostsCount);
             Assert.Equal(2, actualModel.CommentsCount);
-            Assert.Equal(0, actualModel.VotesCount);
             Assert.False(actualModel.IsFollowed);
             Assert.Equal(0, actualModel.FollowersCount);
             Assert.Equal(1, actualModel.FollowingsCount);
@@ -269,7 +266,6 @@ namespace AOMForum.Services.Data.Tests
             Assert.Equal(this.testUser.ProfilePictureURL, actualModel.ProfilePictureURL);
             Assert.Equal(1, actualModel.PostsCount);
             Assert.Equal(0, actualModel.CommentsCount);
-            Assert.Equal(0, actualModel.VotesCount);
             Assert.True(actualModel.IsFollowed);
             Assert.Equal(1, actualModel.FollowersCount);
             Assert.Equal(0, actualModel.FollowingsCount);
@@ -330,7 +326,6 @@ namespace AOMForum.Services.Data.Tests
             Assert.Equal(this.testOtherUser.ProfilePictureURL, actualModel.ProfilePictureURL);
             Assert.Equal(1, actualModel.PostsCount);
             Assert.Equal(2, actualModel.CommentsCount);
-            Assert.Equal(0, actualModel.VotesCount);
             Assert.False(actualModel.IsFollowed);
             Assert.Equal(0, actualModel.FollowersCount);
             Assert.Equal(1, actualModel.FollowingsCount);
@@ -393,7 +388,6 @@ namespace AOMForum.Services.Data.Tests
             Assert.Equal(this.testOtherUser.ProfilePictureURL, actualModel.ProfilePictureURL);
             Assert.Equal(1, actualModel.PostsCount);
             Assert.Equal(2, actualModel.CommentsCount);
-            Assert.Equal(0, actualModel.VotesCount);
             Assert.False(actualModel.IsFollowed);
             Assert.Equal(0, actualModel.FollowersCount);
             Assert.Equal(1, actualModel.FollowingsCount);

@@ -35,9 +35,6 @@ namespace AOMForum.Web.Models.Comments
         [Display(Name = DisplayProfilePictureURL)]
         public string? AuthorProfilePictureURL { get; init; }
 
-        [Display(Name = DisplayVotesCount)]
-        public int VotesCount { get; init; }
-
         public int PostId { get; init; }
 
         public string? PostAuthorId { get; init; }

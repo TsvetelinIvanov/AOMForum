@@ -18,8 +18,5 @@ namespace AOMForum.Web.Models.UserRelationships
 
         [Display(Name = DisplayUserCommentsCount)]
         public int CommentsCount { get; init; }
-
-        [Display(Name = DisplayUserVotesCount)]
-        public int VotesCount { get; init; }
     }
 }

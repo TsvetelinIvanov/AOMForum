@@ -30,7 +30,7 @@ namespace AOMForum.Data.Seeding
                     Age = 44,
                     Gender = GenderType.Male,
                     Biography = "Роден съм в град София. Завършил съм специалност \"Гранична полиция\" в Академията на МВР-София. Сега съм началник смяна в Гранична полиция на летище София. В АОМ съм Координатор на политики по вътрешните работи.",
-                    ProfilePictureURL = "..\\..\\wwwroot\\images\\images-personalPhoto.png",
+                    ProfilePictureURL = "~/images/images-personalPhoto.png",
                     EmailConfirmed = true
                 };
 
@@ -55,7 +55,7 @@ namespace AOMForum.Data.Seeding
                     Age = 52,
                     Gender = GenderType.Male,
                     Biography = "Роден съм в град Преслав. Завършил съм Национален военен университет \"Васил Левски\" във Велико Търново. В момента съм началник физическа охрана на група обекти във \"Форс Делта\" ООД и Координатор на политики по национална сигурност и отбрана в АОМ.",
-                    ProfilePictureURL = "..\\..\\wwwroot\\images\\images-personalPhoto.png",
+                    ProfilePictureURL = "~/images/images-personalPhoto.png",
                     EmailConfirmed = true
                 };
 
@@ -80,7 +80,7 @@ namespace AOMForum.Data.Seeding
                     Age = 37,
                     Gender = GenderType.Male,
                     Biography = "Роден съм в град Плевен. Имам висше образование от Юридическия факултет (магистър) на Софийски университет \"Св. Климент Охридски\". Адвокатски сътрудник съм в адвокатска кантора \"Расташки\", а в АОМ съм Координатор на политики за правосъдие.",
-                    ProfilePictureURL = "..\\..\\wwwroot\\images\\images-personalPhoto.png",
+                    ProfilePictureURL = "~/images/images-personalPhoto.png",
                     EmailConfirmed = true
                 };
 
@@ -105,7 +105,7 @@ namespace AOMForum.Data.Seeding
                     Age = 31,
                     Gender = GenderType.Male,
                     Biography = "Роден съм в град София. Имам висше образование от Философския факултет (бакалавър и магистър) на Софийски университет \"Св. Климент Охридски\". Сега съм учител по философски дисциплини в Софийска математическа гимназия \"Паисий Хилендарски\" и Координатор на политики за наука и култура в АОМ.",
-                    ProfilePictureURL = "..\\..\\wwwroot\\images\\images-personalPhoto.png",
+                    ProfilePictureURL = "~/images/images-personalPhoto.png",
                     EmailConfirmed = true
                 };
 
@@ -130,7 +130,7 @@ namespace AOMForum.Data.Seeding
                     Age = 22,
                     Gender = GenderType.Female,
                     Biography = "Родена съм в град София. Завършила съм Националната гимназия за древни езици и култури \"Св. Константин-Кирил Философ\", а сега уча история в Софийски университет \"Св. Климент Охридски\" и съм Координатор на политики за медии и комуникации в АОМ.",
-                    ProfilePictureURL = "..\\..\\wwwroot\\images\\images-personalPhoto.png",
+                    ProfilePictureURL = "~/images/images-personalPhoto.png",
                     EmailConfirmed = true
                 };
 
@@ -155,7 +155,7 @@ namespace AOMForum.Data.Seeding
                     Age = 62,
                     Gender = GenderType.Male,
                     Biography = "Роден съм в град Русе. Имам висше образование от Педагогическия факултет (магистър) на Софийски университет \"Св. Климент Охридски\". Работя като начален учител в 119 СУ \"Акад. Михаил Арнаудов\". В АОМ съм Координатор на политики за образование.",
-                    ProfilePictureURL = "..\\..\\wwwroot\\images\\images-personalPhoto.png",
+                    ProfilePictureURL = "~/images/images-personalPhoto.png",
                     EmailConfirmed = true
                 };
 
@@ -180,7 +180,7 @@ namespace AOMForum.Data.Seeding
                     Age = 36,
                     Gender = GenderType.Female,
                     Biography = "Родена съм в град Своге. Имам висше образование от Педагогическия факултет (магистър) на Софийски университет \"Св. Климент Охридски\". Към момента съм начален учител в 112 ОУ \"Стоян Заимов\" и Координатор на политики по семейните въпроси в АОМ.",
-                    ProfilePictureURL = "..\\..\\wwwroot\\images\\images-personalPhoto.png",
+                    ProfilePictureURL = "~/images/images-personalPhoto.png",
                     EmailConfirmed = true
                 };
 
@@ -205,7 +205,7 @@ namespace AOMForum.Data.Seeding
                     Age = 21,
                     Gender = GenderType.Female,
                     Biography = "Родена съм в град София. Завършила съм Националната гимназия за древни езици и култури \"Св. Константин-Кирил Философ\", а сега уча история в Софийски университет \"Св. Климент Охридски\" и съм Координатор на политики по еврочленство и евроитеграция  в АОМ.",
-                    ProfilePictureURL = "..\\..\\wwwroot\\images\\images-personalPhoto.png",
+                    ProfilePictureURL = "~/images/images-personalPhoto.png",
                     EmailConfirmed = true
                 };
 
@@ -230,7 +230,7 @@ namespace AOMForum.Data.Seeding
                     Age = 56,
                     Gender = GenderType.Male,
                     Biography = "Роден съм в град Враца. Имам висше образование от Юридическия факултет (магистър) на Софийски университет \"Св. Климент Охридски\". Работя като консултант в адвокатска кантора \"Иванчов & Партньори\". В АОМ съм Координатор на политики за външна политика.",
-                    ProfilePictureURL = "..\\..\\wwwroot\\images\\images-personalPhoto.png",
+                    ProfilePictureURL = "~/images/images-personalPhoto.png",
                     EmailConfirmed = true
                 };
 
@@ -255,7 +255,7 @@ namespace AOMForum.Data.Seeding
                     Age = 26,
                     Gender = GenderType.Female,
                     Biography = "Родена съм в град Ямбол. Имам висше образование от Историческия факултет (бакалавър и магистър) на Софийски университет \"Св. Климент Охридски\". Учителка съм по \"История и цивилизация\" в НПГ по прецизна техника и оптика \"М. В. Ломоносов\", а в АОМ съм Координатор на политики за транспорт.",
-                    ProfilePictureURL = "..\\..\\wwwroot\\images\\images-personalPhoto.png",
+                    ProfilePictureURL = "~/images/images-personalPhoto.png",
                     EmailConfirmed = true
                 };
 
@@ -280,7 +280,7 @@ namespace AOMForum.Data.Seeding
                     Age = 42,
                     Gender = GenderType.Male,
                     Biography = "Роден съм в град Кърджали. Имам висше образование от Техническия университет в София. Работя като техник в Ел Инс Проект-ЕООД и съм Координатор на политики за селско стопанство в АОМ.",
-                    ProfilePictureURL = "..\\..\\wwwroot\\images\\images-personalPhoto.png",
+                    ProfilePictureURL = "~/images/images-personalPhoto.png",
                     EmailConfirmed = true
                 };
 
@@ -305,7 +305,7 @@ namespace AOMForum.Data.Seeding
                     Age = 31,
                     Gender = GenderType.Female,
                     Biography = "Родена съм в град Ловеч. Имам висше образование от Историческия факултет (бакалавър и магистър) на Софийски университет \"Св. Климент Охридски\". Учителка съм по \"История и цивилизация\" в Софийска професионална гимназия по туризъм, а в АОМ съм Координатор на политики за енергетика и екология.",
-                    ProfilePictureURL = "..\\..\\wwwroot\\images\\images-personalPhoto.png",
+                    ProfilePictureURL = "~/images/images-personalPhoto.png",
                     EmailConfirmed = true
                 };
 

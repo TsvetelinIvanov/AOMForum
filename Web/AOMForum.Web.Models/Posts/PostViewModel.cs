@@ -8,7 +8,7 @@ using static AOMForum.Common.DisplayNames.ApplicationUser;
 
 namespace AOMForum.Web.Models.Posts
 {
-    public class PostViewModel : IMapFrom<Post>, IMapTo<Post>, IHaveCustomMappings
+    public class PostViewModel
     {
         public int Id { get; init; }
 
@@ -25,20 +25,8 @@ namespace AOMForum.Web.Models.Posts
         public DateTime CreatedOn { get; init; }
 
         [Display(Name = DisplayUserName)]
-        public string? AuthorUserName { get; init; }
-
-        [Display(Name = DisplayVotesCount)]
-        public int VotesCount { get; init; }
+        public string? AuthorUserName { get; init; }        
 
         public IEnumerable<PostCommentViewModel> Comments { get; set; } = new HashSet<PostCommentViewModel>();
-
-        public void CreateMappings(IProfileExpression configuration)
-        {
-            configuration.CreateMap<Post, PostViewModel>()
-                .ForMember(x => x.VotesCount, options =>
-                {
-                    options.MapFrom(p => p.Votes.Sum(v => (int)v.Type));
-                });
-        }
     }
 }

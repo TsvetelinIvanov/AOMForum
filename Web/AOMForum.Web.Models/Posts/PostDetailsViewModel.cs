@@ -34,10 +34,7 @@ namespace AOMForum.Web.Models.Posts
         public string? ImageUrl { get; init; }
 
         [Display(Name = DisplayCommentsCount)]
-        public int CommentsCount { get; init; }      
-
-        [Display(Name = DisplayVotesCount)]
-        public int VotesCount { get; init; }
+        public int CommentsCount { get; init; }
 
         public string? AuthorId { get; init; }
 

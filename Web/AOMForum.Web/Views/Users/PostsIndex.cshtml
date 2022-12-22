@@ -37,12 +37,6 @@
             @Html.DisplayFor(model => model.CommentsCount)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.VotesCount)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.VotesCount)
-        </dd>
-        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.FollowersCount)
         </dt>
         <dd class="col-sm-10">
@@ -94,9 +88,6 @@ else
                 @PostTitleTitle
             </th>
             <th>
-                @PostVotesCountTitle
-            </th>
-            <th>
                 @PostCommentsCountTitle
             </th>
             <th>
@@ -116,9 +107,6 @@ else
             <tr>
                 <td>
                     @Html.DisplayFor(modelItem => post.Title)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => post.VotesCount)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => post.CommentsCount)

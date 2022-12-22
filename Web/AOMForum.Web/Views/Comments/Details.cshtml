@@ -99,9 +99,6 @@
                 @CommentContentTitle
             </th>
             <th>
-                @CommentVotesCountTitle
-            </th>
-            <th>
                 @CommentCreatedOnTitle
             </th>
             <th>
@@ -121,9 +118,6 @@
             <tr>
                 <td>
                     @Html.DisplayFor(modelItem => comment.SanitizedContent)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => comment.VotesCount)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => comment.CreatedOn)

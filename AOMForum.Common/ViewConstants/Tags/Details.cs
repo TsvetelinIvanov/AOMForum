@@ -15,7 +15,6 @@
         public const string CreateNewPost = "Създай нов пост";
 
         public const string TitleTitle = "Име на поста";
-        public const string VotesCountTitle = "Вотове";
         public const string CommentsCountTitle = "Брой на коментарите";
         public const string AuthorTitle = "Автор";
         public const string AuthorImageTitle = "Образ на автора";

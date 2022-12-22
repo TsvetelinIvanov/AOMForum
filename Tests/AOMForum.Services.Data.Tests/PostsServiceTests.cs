@@ -580,7 +580,6 @@ namespace AOMForum.Services.Data.Tests
             Assert.Equal(TestPostTitle, actualModel.Title);
             Assert.Equal(TestPostContent, actualModel.Content);
             Assert.Equal(0, actualModel.CommentsCount);
-            Assert.Equal(0, actualModel.VotesCount);
             Assert.Equal(this.testPost.Author.UserName, actualModel.AuthorUserName);
             Assert.Equal(this.testPost.Author.ProfilePictureURL, actualModel.AuthorProfilePictureURL);
             Assert.Equal(TestCategoryPostId, actualModel.Category.Id);

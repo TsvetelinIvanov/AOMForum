@@ -37,12 +37,6 @@
             @Html.DisplayFor(model => model.CommentsCount)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.VotesCount)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.VotesCount)
-        </dd>
-        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.FollowersCount)
         </dt>
         <dd class="col-sm-10">
@@ -100,9 +94,6 @@ else
                 @CommentPostCategoryNameTitle
             </th>
             <th>
-                @CommentVotesCountTitle
-            </th>
-            <th>
                 @ActionsTitle
             </th>
         </tr>
@@ -119,9 +110,6 @@ else
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => comment.PostCategoryName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => comment.VotesCount)
                 </td>
                 <td>
                     <a asp-area="" asp-controller="Comments" asp-action="Details" asp-route-id="@comment.Id">@DetailsAction</a> |

@@ -37,12 +37,6 @@
             @Html.DisplayFor(model => model.CommentsCount)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.VotesCount)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.VotesCount)
-        </dd>
-        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.FollowersCount)
         </dt>
         <dd class="col-sm-10">
@@ -103,9 +97,6 @@ else
                 @CommentsCountTitle
             </th>
             <th>
-                @VotesCountTitle
-            </th>
-            <th>
                 @ActionsTitle
             </th>
         </tr>
@@ -125,10 +116,7 @@ else
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => following.CommentsCount)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => following.VotesCount)
-                </td>
+                </td>                
                 <td>
                     <a asp-area="" asp-controller="Users" asp-action="Details" asp-route-id="@following.Id">@DetailsAction</a>
                 </td>

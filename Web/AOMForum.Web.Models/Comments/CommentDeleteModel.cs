@@ -36,10 +36,7 @@ namespace AOMForum.Web.Models.Comments
         public int PostId { get; init; }
 
         [Display(Name = DisplayPostTitle)]
-        public string? PostTitle { get; init; }
-
-        [Display(Name = DisplayVotesCount)]
-        public int VotesCount { get; init; }
+        public string? PostTitle { get; init; }        
 
         [Display(Name = DisplayChildrenCount)]
         public int ChildrenCount { get; init; }

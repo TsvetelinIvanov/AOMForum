@@ -21,7 +21,6 @@
 
         public const string PostsHeading = "Постове";
         public const string PostTitleTitle = "Заглавие";
-        public const string PostVotesCountTitle = "Брой на гласовете";
         public const string PostCommentsCountTitle = "Брой на коментарите";        
         public const string PostCategoryNameTitle = "Категдия";
         public const string PostTagsTitle = "Тагове";
@@ -30,14 +29,12 @@
         public const string CommentPostTitleTitle = "Заглавие на поста";
         public const string CommentContentTitle = "Съдържание";
         public const string CommentPostCategoryNameTitle = "Категория на поста";
-        public const string CommentVotesCountTitle = "Брой на гласовете";
 
         public const string FollowersHeading = "Последователи";
         public const string UserNameTitle = "Потребителско име";
         public const string ProfilePictureURLTitle = "Образ";
         public const string PostsCountTitle = "Брой на постовете";
         public const string CommentsCountTitle = "Брой на коментарите";
-        public const string VotesCountTitle = "Брой на гласовете";        
 
         public const string FollowingsHeading = "Следвани";
 

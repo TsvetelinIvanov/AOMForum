@@ -12,10 +12,7 @@ namespace AOMForum.Web.Models.Posts
         public string? Title { get; init; }
 
         [Display(Name = DisplayImageUrl)]
-        public string? ImageUrl { get; init; }
-
-        [Display(Name = DisplayVotesCount)]
-        public int VotesCount { get; init; }
+        public string? ImageUrl { get; init; }        
 
         [Display(Name = DisplayCommentsCount)]
         public int CommentsCount { get; init; }

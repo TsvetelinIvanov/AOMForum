@@ -30,8 +30,5 @@ namespace AOMForum.Web.Models.UserRelationships
 
         [Display(Name = DisplayPostCategoryName)]
         public string? PostCategoryName { get; init; }
-
-        [Display(Name = DisplayVotesCount)]
-        public int VotesCount { get; init; }
     }
 }

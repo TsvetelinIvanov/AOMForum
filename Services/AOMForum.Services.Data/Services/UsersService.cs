@@ -30,9 +30,7 @@ namespace AOMForum.Services.Data.Services
         {
             ApplicationUser? user = await this.usersRepository.All()
                 .Include(u => u.Posts)
-                .Include(u => u.PostVotes)
                 .Include(u => u.Comments)
-                .Include(u => u.CommentVotes)
                 .Include(u => u.Relationships)
                 .AsNoTracking().Where(u => u.Id == id).FirstOrDefaultAsync();
             if (user == null)
@@ -42,7 +40,6 @@ namespace AOMForum.Services.Data.Services
 
             IEnumerable<int> postIds = user.Posts.Select(p => p.Id);
             IEnumerable<UserPostViewModel> postModels = await this.postsRepository.All()
-                .Include(p => p.Votes)
                 .Include(p => p.Comments)
                 .Include(p => p.Category)
                 .Include(p => p.Tags).ThenInclude(pt => pt.Tag)
@@ -50,7 +47,6 @@ namespace AOMForum.Services.Data.Services
                 {
                     Id = p.Id,
                     Title = p.Title,
-                    VotesCount = p.Votes.Sum(pv => (int)pv.Type),
                     CommentsCount = p.Comments.Count(),
                     Category = new CategoryInUserPostViewModel()
                     {
@@ -77,7 +73,6 @@ namespace AOMForum.Services.Data.Services
                 ProfilePictureURL = user.ProfilePictureURL,
                 PostsCount = user.Posts.Count(),
                 CommentsCount = user.Comments.Count(),
-                VotesCount = user.PostVotes.Sum(pv => (int)pv.Type) + user.CommentVotes.Sum(cv => (int)cv.Type),
                 IsFollowed = user.Relationships.Any(r => r.LeaderId == user.Id && r.FollowerId == currentUserId),
                 FollowersCount = user.Relationships.Count(r => r.LeaderId == user.Id),
                 FollowingsCount = followingIds.Count(),
@@ -91,9 +86,7 @@ namespace AOMForum.Services.Data.Services
         {
             ApplicationUser? user = await this.usersRepository.All()
                 .Include(u => u.Posts)
-                .Include(u => u.PostVotes)
                 .Include(u => u.Comments)
-                .Include(u => u.CommentVotes)
                 .Include(u => u.Relationships)
                 .AsNoTracking().Where(u => u.Id == id).FirstOrDefaultAsync();
             if (user == null)
@@ -103,7 +96,6 @@ namespace AOMForum.Services.Data.Services
 
             IEnumerable<int> commentIds = user.Comments.Select(c => c.Id);
             IEnumerable<UserCommentViewModel> commentModels = await this.commentsRepository.All()
-                .Include(c => c.Votes)
                 .Include(c => c.Post).ThenInclude(p => p.Category)
                 .AsNoTracking().Where(c => commentIds.Contains(c.Id)).Select(c => new UserCommentViewModel()
                 {
@@ -112,8 +104,7 @@ namespace AOMForum.Services.Data.Services
                     PostTitle = c.Post.Title,
                     Content = c.Content,
                     PostCategoryId = c.Post.CategoryId,
-                    PostCategoryName = c.Post.Category.Name,
-                    VotesCount = c.Votes.Sum(cv => (int)cv.Type)
+                    PostCategoryName = c.Post.Category.Name
                 }).ToListAsync();
 
             IEnumerable<string?> followingIds = await this.relationshipsRepository.AllAsNoTracking()
@@ -129,7 +120,6 @@ namespace AOMForum.Services.Data.Services
                 ProfilePictureURL = user.ProfilePictureURL,
                 PostsCount = user.Posts.Count(),
                 CommentsCount = user.Comments.Count(),
-                VotesCount = user.PostVotes.Sum(pv => (int)pv.Type) + user.CommentVotes.Sum(cv => (int)cv.Type),
                 IsFollowed = user.Relationships.Any(r => r.LeaderId == user.Id && r.FollowerId == currentUserId),
                 FollowersCount = user.Relationships.Count(r => r.LeaderId == user.Id),
                 FollowingsCount = followingIds.Count(),
@@ -143,9 +133,7 @@ namespace AOMForum.Services.Data.Services
         {
             ApplicationUser? user = await this.usersRepository.All()
                 .Include(u => u.Posts)
-                .Include(u => u.PostVotes)
                 .Include(u => u.Comments)
-                .Include(u => u.CommentVotes)
                 .Include(u => u.Relationships)
                 .AsNoTracking().Where(u => u.Id == id).FirstOrDefaultAsync();
             if (user == null)
@@ -159,18 +147,15 @@ namespace AOMForum.Services.Data.Services
                 .Where(i => i != null)
                 .ToListAsync();
             IEnumerable<UserFollowerViewModel> followers = await this.usersRepository.All()
-                .Include(u => u.Posts)
-                .Include(u => u.PostVotes)
+                .Include(u => u.Posts)                
                 .Include(u => u.Comments)
-                .Include(u => u.CommentVotes)
                 .AsNoTracking().Where(u => followerIds.Contains(u.Id)).Select(u => new UserFollowerViewModel()
                 {
                     Id = u.Id,
                     UserName = u.UserName,
                     ProfilePictureURL = u.ProfilePictureURL,
                     PostsCount = u.Posts.Count(),
-                    CommentsCount = u.Comments.Count(),
-                    VotesCount = u.PostVotes.Sum(pv => (int)pv.Type) + u.CommentVotes.Sum(cv => (int)cv.Type)
+                    CommentsCount = u.Comments.Count()
                 }).ToListAsync();
 
             IEnumerable<string?> followingIds = await this.relationshipsRepository.AllAsNoTracking()
@@ -186,7 +171,6 @@ namespace AOMForum.Services.Data.Services
                 ProfilePictureURL = user.ProfilePictureURL,
                 PostsCount = user.Posts.Count(),
                 CommentsCount = user.Comments.Count(),
-                VotesCount = user.PostVotes.Sum(pv => (int)pv.Type) + user.CommentVotes.Sum(cv => (int)cv.Type),
                 IsFollowed = user.Relationships.Any(r => r.LeaderId == user.Id && r.FollowerId == currentUserId),
                 FollowersCount = user.Relationships.Count(r => r.LeaderId == user.Id),
                 FollowingsCount = followingIds.Count(),
@@ -200,9 +184,7 @@ namespace AOMForum.Services.Data.Services
         {
             ApplicationUser? user = await this.usersRepository.All()
                 .Include(u => u.Posts)
-                .Include(u => u.PostVotes)
                 .Include(u => u.Comments)
-                .Include(u => u.CommentVotes)
                 .Include(u => u.Relationships)
                 .AsNoTracking().Where(u => u.Id == id).FirstOrDefaultAsync();
             if (user == null)
@@ -217,17 +199,14 @@ namespace AOMForum.Services.Data.Services
                 .ToListAsync();
             IEnumerable<UserFollowingViewModel> followings = await this.usersRepository.All()
                 .Include(u => u.Posts)
-                .Include(u => u.PostVotes)
                 .Include(u => u.Comments)
-                .Include(u => u.CommentVotes)
                 .AsNoTracking().Where(u => followingIds.Contains(u.Id)).Select(u => new UserFollowingViewModel()
                 {
                     Id = u.Id,
                     UserName = u.UserName,
                     ProfilePictureURL = u.ProfilePictureURL,
                     PostsCount = u.Posts.Count(),
-                    CommentsCount = u.Comments.Count(),
-                    VotesCount = u.PostVotes.Sum(pv => (int)pv.Type) + u.CommentVotes.Sum(cv => (int)cv.Type)
+                    CommentsCount = u.Comments.Count()
                 }).ToListAsync();
 
             UserFollowingsIndexViewModel viewModel = new UserFollowingsIndexViewModel()
@@ -237,7 +216,6 @@ namespace AOMForum.Services.Data.Services
                 ProfilePictureURL = user.ProfilePictureURL,
                 PostsCount = user.Posts.Count(),
                 CommentsCount = user.Comments.Count(),
-                VotesCount = user.PostVotes.Sum(pv => (int)pv.Type) + user.CommentVotes.Sum(cv => (int)cv.Type),
                 IsFollowed = user.Relationships.Any(r => r.LeaderId == user.Id && r.FollowerId == currentUserId),
                 FollowersCount = user.Relationships.Count(r => r.LeaderId == user.Id),
                 FollowingsCount = followingIds.Count(),
@@ -251,9 +229,7 @@ namespace AOMForum.Services.Data.Services
         {
             ApplicationUser? user = await this.usersRepository.All()
                 .Include(u => u.Posts)
-                .Include(u => u.PostVotes)
                 .Include(u => u.Comments)
-                .Include(u => u.CommentVotes)
                 .Include(u => u.Relationships)
                 .AsNoTracking().Where(u => u.Id == id).FirstOrDefaultAsync();
             if (user == null)
@@ -263,7 +239,6 @@ namespace AOMForum.Services.Data.Services
 
             IEnumerable<int> postIds = user.Posts.Select(p => p.Id);
             IEnumerable<UserPostViewModel> postModels = await this.postsRepository.All()
-                .Include(p => p.Votes)
                 .Include(p => p.Comments)
                 .Include(p => p.Category)
                 .Include(p => p.Tags).ThenInclude(pt => pt.Tag)
@@ -271,7 +246,6 @@ namespace AOMForum.Services.Data.Services
                 {
                     Id = p.Id,
                     Title = p.Title,
-                    VotesCount = p.Votes.Sum(pv => (int)pv.Type),
                     CommentsCount = p.Comments.Count(),
                     Category = new CategoryInUserPostViewModel()
                     {
@@ -296,8 +270,7 @@ namespace AOMForum.Services.Data.Services
                     PostTitle = c.Post.Title,
                     Content = c.Content,
                     PostCategoryId = c.Post.CategoryId,
-                    PostCategoryName = c.Post.Category.Name,
-                    VotesCount = c.Votes.Sum(cv => (int)cv.Type)
+                    PostCategoryName = c.Post.Category.Name
                 }).ToListAsync();
 
             IEnumerable<string?> followerIds = await this.relationshipsRepository.AllAsNoTracking()
@@ -307,17 +280,14 @@ namespace AOMForum.Services.Data.Services
                 .ToListAsync();
             IEnumerable<UserFollowerViewModel> followers = await this.usersRepository.All()
                 .Include(u => u.Posts)
-                .Include(u => u.PostVotes)
                 .Include(u => u.Comments)
-                .Include(u => u.CommentVotes)
                 .AsNoTracking().Where(u => followerIds.Contains(u.Id)).Select(u => new UserFollowerViewModel()
                 {
                     Id = u.Id,
                     UserName = u.UserName,
                     ProfilePictureURL = u.ProfilePictureURL,
                     PostsCount = u.Posts.Count(),
-                    CommentsCount = u.Comments.Count(),
-                    VotesCount = u.PostVotes.Sum(pv => (int)pv.Type) + u.CommentVotes.Sum(cv => (int)cv.Type)
+                    CommentsCount = u.Comments.Count()
                 }).ToListAsync();
 
             IEnumerable<string?> followingIds = await this.relationshipsRepository.AllAsNoTracking()
@@ -327,17 +297,14 @@ namespace AOMForum.Services.Data.Services
                 .ToListAsync();
             IEnumerable<UserFollowingViewModel> followings = await this.usersRepository.All()
                 .Include(u => u.Posts)
-                .Include(u => u.PostVotes)
                 .Include(u => u.Comments)
-                .Include(u => u.CommentVotes)
                 .AsNoTracking().Where(u => followingIds.Contains(u.Id)).Select(u => new UserFollowingViewModel()
                 {
                     Id = u.Id,
                     UserName = u.UserName,
                     ProfilePictureURL = u.ProfilePictureURL,
                     PostsCount = u.Posts.Count(),
-                    CommentsCount = u.Comments.Count(),
-                    VotesCount = u.PostVotes.Sum(pv => (int)pv.Type) + u.CommentVotes.Sum(cv => (int)cv.Type)
+                    CommentsCount = u.Comments.Count()
                 }).ToListAsync();
 
             UserDetailsViewModel viewModel = new UserDetailsViewModel()
@@ -347,7 +314,6 @@ namespace AOMForum.Services.Data.Services
                 ProfilePictureURL = user.ProfilePictureURL,
                 PostsCount = user.Posts.Count(),
                 CommentsCount = user.Comments.Count(),
-                VotesCount = user.PostVotes.Sum(pv => (int)pv.Type) + user.CommentVotes.Sum(cv => (int)cv.Type),
                 IsFollowed = user.Relationships.Any(r => r.LeaderId == user.Id && r.FollowerId == currentUserId),
                 FollowersCount = user.Relationships.Count(r => r.LeaderId == user.Id),
                 //FollowingsCount = user.Relationships.Count(r => r.FollowerId == user.Id),

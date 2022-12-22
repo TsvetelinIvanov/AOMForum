@@ -34,7 +34,7 @@ namespace AOMForum.Data.Seeding
                 new Tag { Name = "Логистика" },
                 new Tag { Name = "Транспорт" },
                 new Tag { Name = "Замърсяване" },
-                new Tag { Name = "Заторляне" },
+                new Tag { Name = "Затопляне" },
                 new Tag { Name = "Пари" },
                 new Tag { Name = "Валута" },
                 new Tag { Name = "Евро" },

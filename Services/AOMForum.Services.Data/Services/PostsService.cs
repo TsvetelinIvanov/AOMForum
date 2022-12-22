@@ -43,7 +43,6 @@ namespace AOMForum.Services.Data.Services
                 .Include(p => p.Category)                
                 .Include(p => p.Comments)
                 .Include(p => p.Reports)
-                .Include(p => p .Votes)
                 .Include(p => p.Tags)
                     .ThenInclude(pt => pt.Tag)
                 .AsNoTracking()
@@ -63,7 +62,6 @@ namespace AOMForum.Services.Data.Services
                 Id = p.Id,
                 Title = p.Title,
                 ImageUrl = p.ImageUrl,
-                VotesCount = p.Votes.Count,
                 CommentsCount = p.Comments.Count,
                 AuthorId = p.AuthorId,
                 AuthorUserName = p.Author.UserName,
@@ -103,7 +101,6 @@ namespace AOMForum.Services.Data.Services
                 .Include(p => p.Category)
                 .Include(p => p.Comments)
                 .Include(p => p.Reports)
-                .Include(p => p.Votes)
                 .Include(p => p.Tags)
                     .ThenInclude(pt => pt.Tag)
                 .AsNoTracking().Where(p => p.Id == id).FirstOrDefaultAsync();
@@ -127,7 +124,6 @@ namespace AOMForum.Services.Data.Services
                 Content = post.Content,
                 ImageUrl = post.ImageUrl,
                 CommentsCount = post.Comments.Count,
-                VotesCount = post.Votes.Count,
                 AuthorId = post.AuthorId,
                 AuthorUserName = post.Author.UserName,
                 AuthorProfilePictureURL = post.Author.ProfilePictureURL,
@@ -145,7 +141,6 @@ namespace AOMForum.Services.Data.Services
                 {
                     Id = c.Id,
                     Content = c.Content,
-                    //VotesCount = c.Votes.Count,
                     CreatedOn = c.CreatedOn.ToString(UsedDateTimeFormat),
                     //ParentId = c.ParentId,
                     AuthorId = c.AuthorId,
@@ -308,7 +303,6 @@ namespace AOMForum.Services.Data.Services
                 .Include(p => p.Category)
                 .Include(p => p.Comments)
                 .Include(p => p.Reports)
-                .Include(p => p.Votes)
                 .Include(p => p.Tags)
                     .ThenInclude(pt => pt.Tag)
                 .AsNoTracking().Where(c => c.Id == id).FirstOrDefaultAsync();
@@ -324,7 +318,6 @@ namespace AOMForum.Services.Data.Services
                 CreatedOn = post.CreatedOn.ToString(UsedDateTimeFormat),
                 Content = post.Content,
                 CommentsCount = post.Comments.Count,
-                VotesCount = post.Votes.Count,
                 AuthorUserName = post.Author.UserName,
                 AuthorProfilePictureURL = post.Author.ProfilePictureURL,
                 Category = new CategoryInPostViewModel()

@@ -31,10 +31,7 @@ namespace AOMForum.Web.Models.Posts
         public string? SanitizedContent => this.sanitizer.Sanitize(this.Content ?? string.Empty);
 
         [Display(Name = DisplayCommentsCount)]
-        public int CommentsCount { get; init; }        
-
-        [Display(Name = DisplayVotesCount)]
-        public int VotesCount { get; init; }        
+        public int CommentsCount { get; init; }
 
         [Display(Name = DisplayUserName)]
         public string? AuthorUserName { get; init; }

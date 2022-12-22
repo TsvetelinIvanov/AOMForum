@@ -21,7 +21,6 @@ namespace AOMForum.Services.Data.Services
             Comment? comment = await this.commentsRepository.All()
                 .Include(c => c.Author)
                 .Include(c => c.Post)
-                .Include(c => c.Votes)
                 .AsNoTracking().Where(c => c.Id == id).FirstOrDefaultAsync();
             if (comment == null)
             {
@@ -37,14 +36,12 @@ namespace AOMForum.Services.Data.Services
                 AuthorUserName = comment.Author.UserName,
                 AuthorProfilePictureURL = comment.Author.ProfilePictureURL,
                 PostId = comment.PostId,
-                PostAuthorId = comment.Post.AuthorId,
-                VotesCount = comment.Votes.Count()
+                PostAuthorId = comment.Post.AuthorId
             };
 
             List<CommentDetailsViewModel> postComments = await this.commentsRepository.All()
                 .Include(c => c.Author)
                 .Include(c => c.Post)
-                .Include(c => c.Votes)
                 .AsNoTracking().Where(c => c.PostId == viewModel.PostId).Select(c => new CommentDetailsViewModel
                 {
                     Id = c.Id,
@@ -54,8 +51,7 @@ namespace AOMForum.Services.Data.Services
                     AuthorUserName = c.Author.UserName,
                     AuthorProfilePictureURL = c.Author.ProfilePictureURL,
                     PostId = c.PostId,
-                    PostAuthorId = c.Post.AuthorId,
-                    VotesCount = c.Votes.Count()
+                    PostAuthorId = c.Post.AuthorId
                 }).ToListAsync();
 
             viewModel.Comments = postComments;
@@ -124,7 +120,6 @@ namespace AOMForum.Services.Data.Services
             Comment? comment = await this.commentsRepository.All()
                 .Include(c => c.Author)
                 .Include(c => c.Post)
-                .Include(c => c.Votes)
                 .AsNoTracking()
                 .Where(c => c.Id == id).FirstOrDefaultAsync();
             if (comment == null)
@@ -141,7 +136,6 @@ namespace AOMForum.Services.Data.Services
                 AuthorProfilePictureURL = comment.Author.ProfilePictureURL,
                 PostId = comment.PostId,
                 PostTitle = comment.Post.Title,
-                VotesCount = comment.Votes.Count(),
                 ChildrenCount = this.commentsRepository.AllAsNoTracking().Where(c => c.ParentId == comment.Id).Count()
             };
 

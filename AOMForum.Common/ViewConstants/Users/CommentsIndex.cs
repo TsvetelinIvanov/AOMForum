@@ -23,7 +23,6 @@
         public const string CommentPostTitleTitle = "Заглавие на поста";
         public const string CommentContentTitle = "Съдържание";
         public const string CommentPostCategoryNameTitle = "Категория на поста";
-        public const string CommentVotesCountTitle = "Брой на гласовете";        
 
         public const string ActionsTitle = "Действия";
 
