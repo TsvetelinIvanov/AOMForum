@@ -1,12 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using AOMForum.Data;
-using AOMForum.Data.Models;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using AOMForum.Services.Data.Interfaces;
 using AOMForum.Web.Models.Messages;
@@ -25,7 +17,7 @@ namespace AOMForum.Web.Controllers
         }
 
         // GET: Messages
-        public IActionResult Index()        {
+        public IActionResult Index(){
             
             return this.View();
         }

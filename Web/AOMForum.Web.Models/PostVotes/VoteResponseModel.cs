@@ -1,6 +1,6 @@
 ﻿namespace AOMForum.Web.Models.PostVotes
 {
-    public class PostVotesCountModel
+    public class VoteResponseModel
     {
         public int VotesCount { get; init; }
     }

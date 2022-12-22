@@ -313,7 +313,7 @@ namespace AOMForum.Services.Data.Services
                 UserName = user.UserName,
                 ProfilePictureURL = user.ProfilePictureURL,
                 PostsCount = user.Posts.Count(),
-                CommentsCount = user.Comments.Count(),
+                CommentsCount = user.Comments.Count(),                
                 IsFollowed = user.Relationships.Any(r => r.LeaderId == user.Id && r.FollowerId == currentUserId),
                 FollowersCount = user.Relationships.Count(r => r.LeaderId == user.Id),
                 //FollowingsCount = user.Relationships.Count(r => r.FollowerId == user.Id),

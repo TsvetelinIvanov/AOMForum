@@ -101,6 +101,7 @@ namespace AOMForum.Services.Data.Services
                 .Include(p => p.Category)
                 .Include(p => p.Comments)
                 .Include(p => p.Reports)
+                //.Include(p => p.Votes)
                 .Include(p => p.Tags)
                     .ThenInclude(pt => pt.Tag)
                 .AsNoTracking().Where(p => p.Id == id).FirstOrDefaultAsync();
@@ -124,6 +125,7 @@ namespace AOMForum.Services.Data.Services
                 Content = post.Content,
                 ImageUrl = post.ImageUrl,
                 CommentsCount = post.Comments.Count,
+                //VotesCount = post.Votes.Sum(v => (int)v.Type),
                 AuthorId = post.AuthorId,
                 AuthorUserName = post.Author.UserName,
                 AuthorProfilePictureURL = post.Author.ProfilePictureURL,

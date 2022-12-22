@@ -22,12 +22,12 @@ namespace AOMForum.Web.Controllers
         // Response body: {"votesCount":1}
         [Authorize]
         [HttpPost]
-        public async Task<ActionResult<PostVotesCountModel>> Post(PostVoteInputModel inputModel)
+        public async Task<ActionResult<VoteResponseModel>> Post(PostVoteInputModel inputModel)
         {            
             await this.postVotesService.VoteAsync(inputModel.PostId, this.User.Id(), inputModel.IsUpVote);
             int votesCount = this.postVotesService.GetVotes(inputModel.PostId);
 
-            return new PostVotesCountModel { VotesCount = votesCount };
+            return new VoteResponseModel { VotesCount = votesCount };
         }
     }
 }

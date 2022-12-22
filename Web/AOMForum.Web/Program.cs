@@ -62,7 +62,7 @@ builder.Services.AddTransient<ICommentsService, CommentsService>();
 builder.Services.AddTransient<ICommentReportsService, CommentReportsService>();
 builder.Services.AddTransient<IUsersService, UsersService>();
 builder.Services.AddTransient<ISettingsService, SettingsService>();
-builder.Services.AddTransient<IMessagesService, MessagesService>();
+//builder.Services.AddTransient<IMessagesService, MessagesService>();
 
 
 
